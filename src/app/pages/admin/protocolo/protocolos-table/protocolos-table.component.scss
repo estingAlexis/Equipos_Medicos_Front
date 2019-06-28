@@ -1,0 +1,36 @@
+.search{
+    margin: 0 14px;
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    padding: 6px;
+    outline: none;
+}
+
+.tbody td{
+    border: 0px;
+    border-bottom: 0.5px solid #ccc;
+    background-color: #fff !important;
+    text-align: center;
+}
+
+.tbody:hover{
+    color: #690000;
+}
+
+.bg th{
+    color:  #49be7c;
+}
+
+.theader-color::ng-deep th {
+    background-color: #fff !important;
+    /*background-color: #1d96b2  !important;
+    border: 1px solid #1d96b2  !important;
+    font-weight: normal;
+    text-align: center;
+    color: white;*/
+}
+
+.tbody-color::ng-deep td {
+    //background-color: #ccc !important;
+}

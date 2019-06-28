@@ -1,0 +1,20 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button (click)="openDialog()" mat-flat-button color="warn">
+                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Equipo
+                            </button>
+                        </div>
+                    </mat-toolbar>
+                    <div class="list-content" perfectScrollbar>
+                      <app-equipos-table [data]="equipos"></app-equipos-table>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+  </div>

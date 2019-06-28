@@ -1,0 +1,43 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button mat-flat-button color="warn">
+                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cliente
+                            </button>
+                        </div>
+                    </mat-toolbar>
+                    <div class="list-content" perfectScrollbar>
+                        <p-table #dt [value]="clientes" [paginator]="true" [rows]="7">
+                            <ng-template pTemplate="header">
+                                    <tr class="bg" >
+                                            <th width="10%">#_ID</th>
+                                            <th width="20%">Nombre</th>
+                                            <th width="15%">Celular</th>
+                                            <th width="15%">Direccion</th>
+                                            <th width="15%">Ciudad</th>
+                                            <th width="15%">Email</th>
+                                            <th width="10%">Estado</th>
+                                        </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item>
+                                    <tr class="tbody">
+                                            <td>{{item.documento}}</td>
+                                            <td style="text-align: left">{{item.nombre}}</td>
+                                            <td>{{item.celular}}</td>
+                                            <td style="text-align: left">{{item.direccion}}</td>
+                                            <td style="text-align: left">{{item.telefonoCelular}}</td>
+                                            <td style="text-align: left">{{item.email}}</td>
+                                            <td >{{item.estado}}</td>
+                                        </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+  </div>
