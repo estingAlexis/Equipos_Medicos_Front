@@ -3,6 +3,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { PagesComponent } from './pages/pages.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
+import { LoginComponent } from './pages/login/login.component';
 export const routes: Routes = [
     { 
         path: '', 
@@ -18,6 +19,7 @@ export const routes: Routes = [
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
         ]
     },
+    { path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent }
 ];
