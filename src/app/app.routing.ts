@@ -19,7 +19,8 @@ export const routes: Routes = [
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
         ]
     },
-    { path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
+    { path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
+    //{ path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent }
 ];

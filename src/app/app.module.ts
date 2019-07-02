@@ -34,7 +34,6 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { AppService } from './app.service';
-import { LoginModule } from './pages/login/login.module';
 @NgModule({
   imports: [
     BrowserModule,
@@ -48,8 +47,7 @@ import { LoginModule } from './pages/login/login.module';
     CalendarModule.forRoot(),
     SharedModule,
     PipesModule,
-    routing,
-    LoginModule
+    routing
   ],
   declarations: [
     AppComponent,
