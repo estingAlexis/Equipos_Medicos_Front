@@ -26,7 +26,7 @@ export class AppService {
 
 
  getHeaders(){
-  this.token = sessionStorage.getItem('user');
+  this.token = sessionStorage.getItem('token');
   this.httpOptions = {headers: new HttpHeaders({  'Content-Type': 'application/json' , 'Authorization': 'Bearer ' + this.token})};
  }
 
