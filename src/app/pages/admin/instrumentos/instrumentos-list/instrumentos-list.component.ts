@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-instrumentos-list',
   templateUrl: './instrumentos-list.component.html',
@@ -16,8 +16,16 @@ export class InstrumentosListComponent implements OnInit {
   ngOnInit() {
     this.getInstrumentos();
   }
+
+  //GET INSTRUMENTOS
   public getInstrumentos(){
-    this._AppService.get(`instrumentos/list`, data =>{ this.instrumentos = data, console.log(data)});
+    this._AppService.get(`instrumentos/list`).subscribe(
+      result=>{
+        this.instrumentos = result;
+      },
+      error =>{
+        console.log(error);
+      });
   }
 
 }
