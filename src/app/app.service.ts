@@ -43,7 +43,7 @@ export class AppService {
 
 
 
-
+  
   // @Get actividades 
   public getActividadesPorProtocolos(id: string) {
     return this.http.get(this.url + 'actividades/protocolo/' + id, httpOptions);
