@@ -32,6 +32,9 @@ import { ClientesListComponent } from './clientes/clientes-list/clientes-list.co
 import { ActividadesFormComponent } from './actividades/actividades-form/actividades-form.component';
 import { EquiposFormComponent } from './equipos/equipos-form/equipos-form.component';
 import {PaginatorModule} from 'primeng/paginator';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import {MatIconModule} from '@angular/material/icon';
+
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
   { path: 'actividades', component: ActividadesComponent, data: { breadcrumb: 'Actividades' }},
@@ -59,7 +62,9 @@ export const routes = [
     CardModule,
     ButtonModule,
     InputTextModule,
-    PaginatorModule
+    PaginatorModule,
+    NgxSmartModalModule,
+    MatIconModule
   ],
   declarations: [
     AdminComponent,

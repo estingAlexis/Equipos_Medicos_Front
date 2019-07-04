@@ -1,22 +1,37 @@
 <p-table #dt [value]="data" [paginator]="true" [rows]="9">
         <ng-template pTemplate="header">
                 <tr class="bg">
-                        <th width="10%">ID</th>
-                        <th width="70%">Descripcion</th>
-                        <th width="10%">Orden</th>
-                        <th width="10%">Estado</th>
+                        <th width="8%">Orden</th>
+                        <th width="52%">Descripcion</th>
+
+                        <th width="15%">Estado<br>orden</th>
+                        <th width="25%">Estado</th>
                 </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-item>
+        <ng-template pTemplate="body" let-item style="display: flex;justify-content: center;">
                 <tr class="tbody">
-                        <td>{{item.idActividades}}</td>
-                        <td style="text-align: left">{{item.actividades}}</td>
                         <td>{{item.orden}}</td>
+                        <td style="text-align: left">{{item.actividades}}</td>
+
                         <td>
-                                <div *ngIf="item.estado == 0"><img class="img-table-icon"
-                                                [src]="getImg('error-icon.png')" alt="error"></div>
+                                <div *ngIf="item.estado == 0">
+                                        <mat-chip-list aria-label="Fish selection" style="display: flex; justify-content: center;">
+                                                <mat-chip selected style="background-color:darkseagreen; color: black;"><small><strong>creada</strong></small></mat-chip>
+                                              </mat-chip-list>
+                                </div>
                                 <div *ngIf="item.estado == 1"><img class="img-table-icon"
                                                 [src]="getImg('success-icon.png')" alt="success"></div>
+                        </td>
+                        <td class="space-around">
+                              
+                            
+                                <button mat-mini-fab style="background-color: #8dc3ab !important;"><i class="material-icons">mode_edit</i></button>
+                                
+                                <button mat-mini-fab style="background-color: #436fc3 !important;"><i class="material-icons">info_outline</i></button>
+
+                                <button mat-mini-fab color="warn"><i class="material-icons">delete</i></button>
+                               
+                           
                         </td>
                 </tr>
         </ng-template>

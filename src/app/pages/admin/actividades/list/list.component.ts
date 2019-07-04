@@ -5,6 +5,10 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/app.service';
 import { ActividadesFormComponent } from '../actividades-form/actividades-form.component';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -18,10 +22,13 @@ export class ListComponent implements OnInit {
   public protocolos: any;
   public searchText:string;
   public nombreProtocolo: string;
+  public Usuario;
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
               public dialog: MatDialog,
-              private _AppService: AppService) { 
+              private _AppService: AppService,
+              public ngxSmartModalService: NgxSmartModalService,
+              public auth: AuthService) { 
     this.settings = this.appSettings.settings; 
   }
   ngOnInit() {    
@@ -29,6 +36,8 @@ export class ListComponent implements OnInit {
       this.sidenavOpen = false;
     }
     this.getProtocolos();
+    this.Usuario = this.auth.obtenerDatosUser();
+    console.log(Usuario);
   }
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
@@ -38,19 +47,31 @@ export class ListComponent implements OnInit {
     (window.innerWidth <= 992) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
   public getProtocolos(){
-    this._AppService.get(`protocolos/list`,data =>{ this.protocolos = data, console.log(data)});
+    this._AppService.get(`protocolos/list`,data =>{ this.protocolos = data});
   }
   public getActividadesPorProtocolos(id: string){
     this._AppService.get(`actividades/protocolo/${id}`, data => { this.actividades = data, console.log(data)});
   }
   public openForm(){
     let dialogRef = this.dialog.open(ActividadesFormComponent, {
+
     });
+  }
 /*
     dialogRef.afterClosed().subscribe(user => {
         if(user){
             (user.id) ? this.updateUser(user) : this.addUser(user);
         }
-    });*/
+    });
 }
+*/
+
+/* public getUsuario() {
+  // FIXME: Obtener datos usuario
+  this.Usuario = this.auth.obtenerDatosUser();
+  console.log(this.Usuario);
+  return true;
+  }
+ */
+
 }

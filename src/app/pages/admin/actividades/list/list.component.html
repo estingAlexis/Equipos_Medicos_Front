@@ -4,12 +4,14 @@
             <mat-sidenav-container>
                 <mat-sidenav #sidenav [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
                     class="list-sidenav mat-elevation-z1">
-                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles5.png'); color: #333"  class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles5.png'); color: #333"
+                        class="p-0" fxLayout="row" fxLayoutAlign="space-between center">
                         <input [(ngModel)]="searchText" type="text" placeholder="Buscar Por..."
                             class="search mat-elevation-z3">
                     </mat-toolbar>
                     <mat-nav-list class="p-0 list-sidenav-list" perfectScrollbar>
-                        <div *ngFor="let item of protocolos | filter: {codigo: searchText, descripcion: searchText, nombre: searchText}" (click)="getActividadesPorProtocolos(item.idProtocolo); setNombreProtocolo(item.nombre)">
+                        <div *ngFor="let item of protocolos | filter: {codigo: searchText, descripcion: searchText, nombre: searchText}"
+                            (click)="getActividadesPorProtocolos(item.idProtocolo); setNombreProtocolo(item.nombre)">
                             <mat-list-item style="height: 65px">
                                 <div matLine fxLayout="row" fxLayoutAlign="space-between space-between">
                                     <h4 class="text-truncate sender">{{item.codigo}}</h4>
@@ -21,15 +23,56 @@
                         </div>
                     </mat-nav-list>
                 </mat-sidenav>
+
+                <!-- ----------- MODAL -----------  -->
+                <ngx-smart-modal [dismissable]="false" [escapable]="false" #myModal identifier="myModal" style="text-align: center;">
+                    <h1>Añadir Actividad</h1>
+                    <br>
+                    <form class="example-form">
+                        <mat-form-field class="example-full-width" *ngFor="let item of Usuario">
+                          <input matInput placeholder="Empresa" value="{{item.nombre}}">
+                          
+                        </mat-form-field>
+                        &nbsp;
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Favorite food">
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Favorite food">
+                          </mat-form-field>
+                          &nbsp;
+                          <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Favorite food">
+                            </mat-form-field>
+                            <br>
+                    </form>
+
+                    <hr>
+                    <br> 
+
+                    <button mat-raised-button (click)="myModal.close()">Cerrar</button>
+                    &nbsp;
+                    <button mat-raised-button style="background-color: #42BD75;" (click)="myModal.close()">Crear</button>
+
+                </ngx-smart-modal>
+                <!-- ----------- MODAL -----------  -->
                 <div>
-                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-toolbar
+                        style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white;"
+                        fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
                             <button mat-icon-button (click)="sidenav.toggle()">
                                 <mat-icon>list</mat-icon>
                             </button>
                         </div>
                         <button mat-raised-button color="warn">{{nombreProtocolo}}</button>
-                        <button mat-raised-button color="warn" (click)="openForm()"><mat-icon>add</mat-icon>&nbsp; Nueva Actividad</button>
+
+                        <button mat-raised-button color="warn"
+                            (click)="ngxSmartModalService.getModal('myModal').open()">
+                            <mat-icon>add</mat-icon>&nbsp; Nueva Actividad
+                        </button>
+
                     </mat-toolbar>
                     <mat-menu #moreMenu="matMenu" xPosition="before" overlapTrigger="true">
                     </mat-menu>
@@ -37,8 +80,13 @@
                         <app-actividades-table *ngIf="actividades != null" [data]="actividades"></app-actividades-table>
                         <div *ngIf="!actividades" fxLayout="column" fxLayoutAlign="center center" class="h-100 empty">
                             <h2 style="color: rgb(104, 172, 70);">Selecciona Un Protocolo</h2>
-                            <div *ngIf="!actividades" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-                        </div> 
+                            <div *ngIf="!actividades" class="lds-ellipsis">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </mat-sidenav-container>

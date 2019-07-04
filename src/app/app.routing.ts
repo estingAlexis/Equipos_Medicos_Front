@@ -1,10 +1,15 @@
+import { AuthGuard } from './guards/auth.guard';
 import { Routes, RouterModule, PreloadAllModules  } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { PagesComponent } from './pages/pages.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
 import { LoginComponent } from './pages/login/login.component';
+
 export const routes: Routes = [
+    
+    { path: 'login', component: LoginComponent},
+
     { 
         path: '', 
         component: PagesComponent, children: [
@@ -17,10 +22,10 @@ export const routes: Routes = [
             { path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
             { path: 'mailbox', loadChildren: './pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
-        ]
+        ],
+        canActivate: [AuthGuard]
     },
-    { path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
-    //{ path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
+    //{ path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', component: NotFoundComponent }
 ];

@@ -1,30 +1,46 @@
-<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20,100]">
+<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [paginator]="true" [rows]="5"
+        [rowsPerPageOptions]="[5,10,20,100]">
         <ng-template pTemplate="header">
                 <tr class="bg">
-                        <th width="10%">Codigo</th>
-                        <th width="20%">Nombre</th>
-                        <th width="30%">Descripcion</th>
-                        <th width="15%">Responsable</th>
-                        <th width="15%">Revision</th>
-                        <th width="10%">Acciones</th>
+                        <th width="12%">Acciones</th>
+                        <th width="8%">Codigo</th>
+                        <th width="15%">Nombre</th>
+                        <th width="10%">Responsable</th>
+                        <th width="20%">Revision</th>
+                        <th width="18%">Acciones</th>
                 </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
                 <tr>
-                        <td>{{item.codigo}}</td>
-                        <td style="text-align: left">{{item.nombre}}</td>
-                        <td style="text-align: left">{{item.descripcion}}</td>
-                        <td style="text-align: left">{{item.responsable}}</td>
-                        <td>{{item.revision}}</td>
                         <td>
-                                <button mat-icon-button pTooltip="Ver Actividades" tooltipPosition="top"
+                                <button mat-flat-button style="background-color: #487777 !important"
+                                        pTooltip="Ver Actividades" tooltipPosition="top"
                                         (click)="getActividadesPorProtocolo(item.idProtocolo)">
-                                        <mat-icon>ballot</mat-icon>
+                                        <mat-icon style="color:white !important;">ballot</mat-icon>
                                 </button>
-                                <button mat-icon-button pTooltip="Ver Instrumentos" tooltipPosition="top"
+                                <button mat-flat-button style="background-color: #8dc3ab !important"
+                                        pTooltip="Ver Instrumentos" tooltipPosition="top"
                                         (click)="getInstrumentosPorProtocolos(item.idProtocolo)">
                                         <mat-icon>widgets</mat-icon>
                                 </button>
+                        </td>
+                        <td>{{item.codigo}}</td>
+                        <td style="text-align: left">{{item.nombre}}</td>
+
+                        <td style="text-align: left">{{item.responsable}}</td>
+                        <td>{{item.revision}}</td>
+                        <td class="space-around">
+
+                                <button mat-mini-fab style="background-color: #8dc3ab !important;"><i
+                                                class="material-icons">mode_edit</i></button>
+
+                                <button mat-mini-fab style="background-color: #436fc3 !important;color:white;"><i
+                                                class="material-icons">info_outline</i></button>
+
+                                <button mat-mini-fab color="warn">
+                                        <mat-icon>delete</mat-icon>
+                                </button>
+
                         </td>
                 </tr>
         </ng-template>
@@ -54,8 +70,10 @@
                         <td style="text-align: left">{{item.actividades}}</td>
                         <td>{{item.orden}}</td>
                         <td>
-                                <div *ngIf="item.estado == 0"><img class="img-table-icon" [src]="getImg('error-icon.png')" alt="error"></div>
-                                <div *ngIf="item.estado == 1"><img class="img-table-icon" [src]="getImg('success-icon.png')" alt="success"></div>
+                                <div *ngIf="item.estado == 0"><img class="img-table-icon"
+                                                [src]="getImg('error-icon.png')" alt="error"></div>
+                                <div *ngIf="item.estado == 1"><img class="img-table-icon"
+                                                [src]="getImg('success-icon.png')" alt="success"></div>
                         </td>
                 </tr>
         </ng-template>

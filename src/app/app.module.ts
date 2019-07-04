@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +35,13 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { AppService } from './app.service';
+import { LoginComponent } from './pages/login/login.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import {PanelModule} from 'primeng/panel';
+import { MatIconModule } from '@angular/material';
+
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -47,7 +55,11 @@ import { AppService } from './app.service';
     CalendarModule.forRoot(),
     SharedModule,
     PipesModule,
-    routing
+    routing,
+    HttpClientModule,
+    NgxSmartModalModule.forRoot(),
+    PanelModule,
+    MatIconModule
   ],
   declarations: [
     AppComponent,
@@ -62,7 +74,9 @@ import { AppService } from './app.service';
     FullScreenComponent,
     ApplicationsComponent,
     MessagesComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    LoginComponent,
+    
   ],
   entryComponents:[
     VerticalMenuComponent

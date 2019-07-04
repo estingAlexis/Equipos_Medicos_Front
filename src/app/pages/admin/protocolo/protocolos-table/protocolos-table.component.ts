@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/app.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-protocolos-table',
   templateUrl: './protocolos-table.component.html',
@@ -13,8 +14,10 @@ export class ProtocolosTableComponent implements OnInit {
   public actividades: any;
   public instrumentos: any;
   public table: number;
-  constructor(public appSettings: AppSettings, private _AppService: AppService) { this.settings = this.appSettings.settings; this.table = 0; }
+
+  constructor(public appSettings: AppSettings, private _AppService: AppService, private auth: AuthService) { this.settings = this.appSettings.settings; this.table = 0; }
   ngOnInit() {
+
   }
   public getImg(imgNombre: string): string{
     return '../../../../../assets/img/'+imgNombre;
@@ -36,6 +39,7 @@ export class ProtocolosTableComponent implements OnInit {
       }
     );
   }
+  
   public getInstrumentosPorProtocolos(id: string) {
     this._AppService.getInstrumentosPorProtocolos(id).subscribe(
       data => {

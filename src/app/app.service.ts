@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { APP } from './constants';
-const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+/* const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }; */
+const token = sessionStorage.getItem("token");
+const httpOptions = { headers: new HttpHeaders({
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ' + token
+  }) 
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -9,9 +15,9 @@ export class AppService {
   public url: String = APP.ApiEndpoint;
   constructor(private http: HttpClient) { }
 
-  // @Post
+  // @Get
   public get(url, callback){
-    return this.http.post<any>(this.url+url, httpOptions).subscribe(
+    return this.http.get<any>(this.url+url, httpOptions).subscribe(
       result => { callback(result); },
       error => { callback(error); }
     );
