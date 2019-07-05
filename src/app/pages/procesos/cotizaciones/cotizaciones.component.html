@@ -1,3 +1,2 @@
-<p>
-  cotizaciones works!
-</p>
+<app-cotizaciones-form *ngIf="showForm == true" [idCot]="idcot"></app-cotizaciones-form>
+<app-cotizaciones-list *ngIf="showList == true" (setidcot)="openForm($event)"></app-cotizaciones-list>

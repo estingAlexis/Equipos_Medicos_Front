@@ -3,21 +3,16 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
-import { Mail } from './mail.model';
-import { ProcesosService } from './procesos.service';
 
 @Component({
   selector: 'app-procesos',
   templateUrl: './procesos.component.html',
-  styleUrls: ['./procesos.component.scss'],
-  providers: [ ProcesosService ]
+  styleUrls: ['./procesos.component.scss']
 })
 export class ProcesosComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
   public settings: Settings;
   public sidenavOpen:boolean = true;
-  public mails: Array<Mail>;
-  public mail: Mail;
   public newMail: boolean;
   public type:string = 'all';
   public searchText: string;
@@ -25,13 +20,11 @@ export class ProcesosComponent implements OnInit {
 
   constructor(public appSettings:AppSettings, 
               public formBuilder: FormBuilder, 
-              public snackBar: MatSnackBar,
-              private procesosService:ProcesosService) { 
+              public snackBar: MatSnackBar) { 
     this.settings = this.appSettings.settings; 
   }
 
-  ngOnInit() {
-    this.getMails();      
+  ngOnInit() { 
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
@@ -46,73 +39,6 @@ export class ProcesosComponent implements OnInit {
   @HostListener('window:resize')
   public onWindowResize():void {
     (window.innerWidth <= 992) ? this.sidenavOpen = false : this.sidenavOpen = true;
-  }
-
-  public getMails(){
-    switch (this.type) {
-      case 'all': 
-        this.mails = this.procesosService.getAllMails();
-        break;
-      case 'starred':
-        this.mails =  this.procesosService.getStarredMails();
-        break;
-      case 'sent':
-        this.mails =  this.procesosService.getSentMails();
-        break;
-      case 'drafts':
-        this.mails =  this.procesosService.getDraftMails();
-        break;
-      case 'trash':
-        this.mails =  this.procesosService.getTrashMails();
-        break;
-      default:
-        this.mails =  this.procesosService.getDraftMails();
-    }  
-  }
-
-  public viewDetail(mail){
-    this.mail = this.procesosService.getMail(mail.id);    
-    this.mails.forEach(m => m.selected = false);
-    this.mail.selected = true;
-    this.mail.unread = false;
-    this.newMail = false;
-    if(window.innerWidth <= 992){
-      this.sidenav.close(); 
-    }
-  }
-
-  public compose(){
-    this.mail = null;
-    this.newMail = true;
-  }
-
-  public setAsRead(){
-    this.mail.unread = false;
-  }
-
-  public setAsUnRead(){
-    this.mail.unread = true;
-  }
-
-  public delete() {
-    this.mail.trash = true;
-    this.mail.sent = false;
-    this.mail.draft = false; 
-    this.mail.starred = false; 
-    this.getMails();
-    this.mail = null;
-  }
-
-  public changeStarStatus() {       
-    this.mail.starred = !this.mail.starred;
-    this.getMails(); 
-  }
-
-  public restore(){
-    this.mail.trash = false;
-    this.type = 'all';
-    this.getMails();
-    this.mail = null; 
   }
 
   public onSubmit(mail){

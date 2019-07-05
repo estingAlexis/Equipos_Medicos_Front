@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-protocolos-table',
   templateUrl: './protocolos-table.component.html',
@@ -22,32 +22,31 @@ export class ProtocolosTableComponent implements OnInit {
   public return(){
     this.table = 0;
   }
+
+   // @Get actividades por protocolo
   public getActividadesPorProtocolo(id: string) {
-    this._AppService.getActividadesPorProtocolos(id).subscribe(
-      data => {
-        console.log(data);
-        this.actividades = data;
-        if (this.actividades.length > 0) {
-          this.table = 1;
-        } else {
-          if (this.actividades.lenght == 0) {
-          }
-        }
-      }
-    );
+    this._AppService.get('actividades/protocolo/'.concat(id)).subscribe(
+      result => {
+        this.actividades = result;
+        if (this.actividades.length > 0) {this.table = 1;} else {if (this.actividades.lenght == 0) {  }}
+      },
+      error =>{
+        console.log(error);
+      });
   }
+
+  // @Get instrumentos por Protocolos
   public getInstrumentosPorProtocolos(id: string) {
-    this._AppService.getInstrumentosPorProtocolos(id).subscribe(
-      data => {
-        console.log(data);
-        this.instrumentos = data;
-        if (this.instrumentos.length > 0) {
-          this.table = 2;
-        } else {
-          if (this.instrumentos.lenght == 0) {
-          }
-        }
-      }
-    );
+    this._AppService.get('ip/1/protocolo/'.concat(id)).subscribe(
+      result => {
+        this.instrumentos = result;
+        if (this.instrumentos.length > 0) {this.table = 2;} else {if (this.instrumentos.lenght == 0) {  }}
+      },
+      error =>{
+        console.log(error);
+      });
   }
+
+
+
 }

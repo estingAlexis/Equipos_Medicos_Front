@@ -8,7 +8,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { PipesModule } from '../../theme/pipes/pipes.module';
 import { ProcesosComponent } from './procesos.component';
 import { CotizacionesComponent } from './cotizaciones/cotizaciones.component';
+import { CotizacionesFormComponent } from './cotizaciones/cotizaciones-form/cotizaciones-form.component';
+import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/cotizaciones-list.component';
 import { OrdenTrabajoComponent } from './orden-trabajo/orden-trabajo.component';
+import {TableModule} from 'primeng/table';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
@@ -25,12 +29,17 @@ export const routes = [
     PerfectScrollbarModule,
     QuillModule,
     SharedModule,
-    PipesModule
+    PipesModule,
+    TableModule,
+    NgxSmartModalModule.forRoot()
+    
   ],
   declarations: [
     ProcesosComponent,
     CotizacionesComponent,
-    OrdenTrabajoComponent
+    OrdenTrabajoComponent,
+    CotizacionesFormComponent,
+    CotizacionesListComponent
   ]
 })
 export class ProcesosModule { }

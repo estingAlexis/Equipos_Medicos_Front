@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-equipos-table',
   templateUrl: './equipos-table.component.html',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 @Component({

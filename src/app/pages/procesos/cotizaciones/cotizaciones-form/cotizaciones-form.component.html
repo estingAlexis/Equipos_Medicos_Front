@@ -1,0 +1,103 @@
+<mat-card>
+    <mat-card-header class="text-success">
+      <mat-icon>add</mat-icon> &nbsp;<h3>Nueva Cotizacion</h3>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="datos" (ngSubmit)="submit()" class="form-sample">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="content">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Empresa</mat-label>
+                      <mat-select  formControlName="idEmpresa" name="idEmpresa" (selectionChange)="getParametros()">
+                        <mat-option *ngFor="let item of empresas" [value]="item.idEmpresa">{{item.nombreEmpresa}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="content">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Cliente</mat-label>
+                        <mat-select  formControlName="idCliente" name="idCliente">
+                          <mat-option *ngFor="let item of clientes" [value]="item.idCliente">{{item.nombre}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+              </div>
+               <div class="col-md-4">
+                    <div class="content">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Responsable</mat-label>
+                          <mat-select  formControlName="resp" name="resp">
+                            <mat-option [value]="'tecnico'">Tecnico</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>   
+               </div>
+               <div class="col-md-4">
+                  <div class="content">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Condicion De Pago</mat-label>
+                      <mat-select  formControlName="cp" name="cp">
+                        <mat-option *ngFor="let item of parametros" [value]="item.nombre">{{item.nombre}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>   
+               </div>
+                <div class="col-md-4">
+                     <div class="content">
+                        <mat-form-field appearance="outline">
+                                <mat-label>Valor Viatico</mat-label>
+                                <input type="number" matInput  formControlName="viatico" name="viatico" placeholder="$000">
+                                <mat-icon matSuffix>attach_money</mat-icon>
+                        </mat-form-field>
+                     </div>   
+                </div>
+                <div class="col-md-4">
+                        <div class="content">
+                            <mat-form-field appearance="outline">
+                                <input matInput [matDatepicker]="picker"  formControlName="fecha" name="fecha" (dateChange)="getDate()" placeholder="Fecha de Entrega">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #picker></mat-datepicker>
+                              </mat-form-field>
+                        </div>   
+                </div>
+                <div class="col-md-3">
+                  <button [disabled]="!datos.valid" mat-raised-button  [ngClass]="datos.valid ? 'bg-success text-white' : 'bg-danger text-white'"><mat-icon class="mat-18">build</mat-icon>&nbsp;Seleccionar Equipos</button>
+                </div>
+                <div class="col-md-12">
+                    <div class="content">
+                        <mat-accordion>
+                            <mat-expansion-panel   [disabled]="!datos.valid">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title  [ngClass]="equiposSelected.length > 0 ? 'text-success' : 'text-danger'">
+                                  <mat-icon>build</mat-icon>&nbsp;
+                                  Equipos Seleccionados: {{equiposSelected.length}}
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                  <mat-icon>keyboard_arrow_down</mat-icon>&nbsp; Ver Equipos
+                                </mat-panel-description>
+                              </mat-expansion-panel-header>
+                          
+                              <mat-form-field>
+                                <input matInput placeholder="First name">
+                              </mat-form-field>
+                          
+                              <mat-form-field>
+                                <input matInput placeholder="Age">
+                              </mat-form-field>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+                <div class="col-md-12"><br>
+                  <button mat-raised-button color="warn"><mat-icon class="mat-18">cancel</mat-icon>Cancelar</button>
+                  <button  [disabled]="!datos.valid" style="float: right" type="submit" mat-raised-button color="primary"><mat-icon class="mat-18">save</mat-icon>Guardar</button>
+                </div>
+
+        </div>
+        
+        </form>
+    </mat-card-content>
+  </mat-card>

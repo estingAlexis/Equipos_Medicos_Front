@@ -13,7 +13,7 @@ import { InstrumentosComponent } from './instrumentos/instrumentos.component';
 import { EquiposComponent } from './equipos/equipos.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 import { ActividadesTableComponent } from './actividades/actividades-table/actividades-table.component';
 import {TableModule} from 'primeng/table';
 import {ListComponent} from './actividades/list/list.component';

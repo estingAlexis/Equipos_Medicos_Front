@@ -1,0 +1,91 @@
+<!--
+
+        <ngx-smart-modal #myModal identifier="myModal" [closable]="false" [escapable]="false"
+[dismissable]="false" customClass="modal-smart-95 modal-smart-top-25">
+        <div class="row">
+                <div class="col-md-4">
+                     <div class="content">
+                        <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Placeholder">
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                        </mat-form-field>
+                     </div>   
+                </div>
+                <div class="col-md-4">
+                     <div class="content">
+                        <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Placeholder">
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                        </mat-form-field>
+                     </div>   
+                </div>
+                <div class="col-md-4">
+                        <div class="content">
+                                <mat-form-field appearance="outline">
+                                        <mat-label>Outline form field</mat-label>
+                                        <input matInput placeholder="Placeholder">
+                                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                </mat-form-field>
+                        </div>   
+                </div>
+        </div>
+        <button mat-raised-button color="warn" (click)="myModal.close()">Close</button>
+</ngx-smart-modal>
+(click)="ngxSmartModalService.getModal('myModal').open()"
+-->
+
+
+<div *ngIf="data" fxLayout="row wrap">
+	<div fxFlex="100" class="flex-p">
+		<mat-card class="p-0 list">
+			<mat-sidenav-container>
+				<div>
+					<mat-toolbar
+						style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
+						fxLayout="row" fxLayoutAlign="space-between center">
+						<div fxLayout="row" fxLayoutAlign="start center">
+							<button (click)="openForm()" mat-flat-button style="background-color: #49be7c; color: #fff">
+								<mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cotizacion
+							</button>
+						</div>
+					</mat-toolbar>
+					<div class="list-content" perfectScrollbar>
+						<p-table #dt [value]="data" [paginator]="true" [rows]="9">
+							<ng-template pTemplate="header">
+								<tr class="bg">
+									<th>Codigo</th>
+									<th>Empresa</th>
+									<th>Cliente</th>
+									<th>Vigencia</th>
+									<th>Entrega</th>
+									<th>Condicion Pago</th>
+									<th>Responsable</th>
+									<th>Estado</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item>
+								<tr class="tbody">
+									<td>{{item.codigo}}</td>
+									<td>{{item.fkCliente.nombre}}</td>
+									<td>{{item.fkEmpresa.nombreEmpresa}}</td>
+									<td>{{item.vigencia}}</td>
+									<td>{{item.entrega}}</td>
+									<td>{{item.condicionPago}}</td>
+									<td>{{item.responsable}}</td>
+									<td>
+										<div *ngIf="item.estado == 0"><img class="img-table-icon" [src]="getImg('error-icon.png')"
+												alt="error"></div>
+										<div *ngIf="item.estado == 1"><img class="img-table-icon" [src]="getImg('success-icon.png')"
+												alt="success"></div>
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</mat-sidenav-container>
+		</mat-card>
+	</div>
+</div>
