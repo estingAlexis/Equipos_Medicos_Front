@@ -39,8 +39,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import {PanelModule} from 'primeng/panel';
 import { MatIconModule } from '@angular/material';
-
-
+import {DropdownModule} from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
   imports: [
@@ -59,7 +59,9 @@ import { MatIconModule } from '@angular/material';
     HttpClientModule,
     NgxSmartModalModule.forRoot(),
     PanelModule,
-    MatIconModule
+    MatIconModule,
+    DropdownModule,
+    InputTextareaModule
   ],
   declarations: [
     AppComponent,

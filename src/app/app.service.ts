@@ -1,19 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { APP } from './constants';
-/* const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }; */
+import swal from'sweetalert2';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Usuario } from './services/usuario';
+import { AuthService } from './services/auth.service';
+import { APP } from './services/constants';
+
 const token = sessionStorage.getItem("token");
 const httpOptions = { headers: new HttpHeaders({
   'Content-Type': 'application/json',
   'Authorization': 'Bearer ' + token
   }) 
 };
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
+   //public url = 'http://impuestos.local/api/v1/';
+/*    public url = 'http://localhost:5000/rest/v1/'; */
+   public publicUrl = 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/';
+  //public url = 'http://backend.tributo.co/rest/v1/';
+
   public url: String = APP.ApiEndpoint;
-  constructor(private http: HttpClient) { }
+
+
+  constructor(private http: HttpClient, private auth: AuthService, private router: Router) { }
+
+
 
   // @Get
   public get(url, callback){
@@ -48,6 +64,29 @@ export class AppService {
   } 
 
 
+  clearSession(){
+    this.auth.logout();
+    swal.fire({
+      title: 'Error!',
+      text: 'Su sesion ha expirado',
+      type: 'error'
+    })
+    this.router.navigate(['/login']);
+   }  
+
+   
+   login(usuario: Usuario): Observable<any> {
+    const credenciales = btoa('angularapp' + ':' + '12345');
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/x-www-form-urlencoded',
+      'Authorization' : 'Basic ' + credenciales,
+    });
+    let params = new URLSearchParams();
+    params.set ('grant_type', 'password');
+    params.set ('username', usuario.username);
+    params.set ('password', usuario.password);
+    return this.http.post<any>(this.publicUrl.concat('oauth/token'), params.toString(), {headers: httpHeaders});
+  }
 
   
   // @Get actividades 
@@ -81,6 +120,10 @@ export class AppService {
   // @Get parametros
   public getParametros() {
     return this.http.get(this.url + 'parametro/list', httpOptions);
+  }
+   // @Get parametro By Id
+   public getParametroById(id) {
+    return this.http.get(this.url + 'parametro/'+id, httpOptions);
   }
   // @Get protocolos
   public getProtocolos() {

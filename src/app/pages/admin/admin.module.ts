@@ -34,6 +34,8 @@ import { EquiposFormComponent } from './equipos/equipos-form/equipos-form.compon
 import {PaginatorModule} from 'primeng/paginator';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import {MatIconModule} from '@angular/material/icon';
+import { DropdownModule } from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
@@ -64,7 +66,9 @@ export const routes = [
     InputTextModule,
     PaginatorModule,
     NgxSmartModalModule,
-    MatIconModule
+    MatIconModule,
+    DropdownModule,
+    InputTextareaModule
   ],
   declarations: [
     AdminComponent,

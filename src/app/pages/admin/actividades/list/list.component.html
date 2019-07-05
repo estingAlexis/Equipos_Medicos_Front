@@ -24,39 +24,44 @@
                     </mat-nav-list>
                 </mat-sidenav>
 
-                <!-- ----------- MODAL -----------  -->
-                <ngx-smart-modal [dismissable]="false" [escapable]="false" #myModal identifier="myModal" style="text-align: center;">
+                <!-- ----------- MODAL NUEVA ACTIVIDAD -----------  -->
+                <ngx-smart-modal [dismissable]="false" [escapable]="false" #modalNuevaActividad identifier="modalNuevaActividad"
+                    style="text-align: center;">
                     <h1>Añadir Actividad</h1>
                     <br>
-                    <form class="example-form">
-                        <mat-form-field class="example-full-width" *ngFor="let item of Usuario">
-                          <input matInput placeholder="Empresa" value="{{item.nombre}}">
-                          
-                        </mat-form-field>
-                        &nbsp;
-                        <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Favorite food">
-                          </mat-form-field>
-                          <br>
-                          <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Favorite food">
-                          </mat-form-field>
-                          &nbsp;
-                          <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Favorite food">
-                            </mat-form-field>
-                            <br>
+                    <form [formGroup]="nueva_actividad">
+
+                        <h3>Empresa</h3>
+                        <input type="text" pInputText value="{{usuario.empresa.nombreEmpresa}}" disabled/>
+                         
+                        <br><br>
+
+                        <h3 class="first">Protocolo</h3>
+                        <p-dropdown [options]="protocolos" [(ngModel)]="protocoloSeleccionado.id_protocolo"
+                            placeholder="Selecionar protocolo" optionLabel="nombre" [showClear]="true" [filter]="true">
+                        </p-dropdown>
+
+                        <br><br>
+                        <h3>Descripción</h3>
+                        <textarea pInputTextarea></textarea>
+
+                        <br><br>
+                      
+                        
+
+                        <br>
                     </form>
 
                     <hr>
-                    <br> 
+                    <br>
 
-                    <button mat-raised-button (click)="myModal.close()">Cerrar</button>
-                    &nbsp;
-                    <button mat-raised-button style="background-color: #42BD75;" (click)="myModal.close()">Crear</button>
+                    <button mat-raised-button style="background-color: #42BD75;"
+                        (click)="modalNuevaActividad.close()">Crear</button>
+                        &nbsp;
+                        <button mat-raised-button (click)="modalNuevaActividad.close()">Cerrar</button>
 
                 </ngx-smart-modal>
-                <!-- ----------- MODAL -----------  -->
+                <!-- -----------  -----------  -->
                 <div>
                     <mat-toolbar
                         style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white;"
@@ -69,7 +74,7 @@
                         <button mat-raised-button color="warn">{{nombreProtocolo}}</button>
 
                         <button mat-raised-button color="warn"
-                            (click)="ngxSmartModalService.getModal('myModal').open()">
+                            (click)="ngxSmartModalService.getModal('modalNuevaActividad').open()">
                             <mat-icon>add</mat-icon>&nbsp; Nueva Actividad
                         </button>
 

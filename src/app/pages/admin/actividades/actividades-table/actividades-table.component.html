@@ -1,38 +1,128 @@
-<p-table #dt [value]="data" [paginator]="true" [rows]="9">
-        <ng-template pTemplate="header">
-                <tr class="bg">
-                        <th width="8%">Orden</th>
-                        <th width="52%">Descripcion</th>
+<!-- ----------- MODAL EDITAR ACTIVIDAD -----------  -->
+<ngx-smart-modal
+  [dismissable]="false"
+  [escapable]="false"
+  #modalEditarActividad
+  identifier="modalEditarActividad"
+  style="text-align: center;"
+>
+  <h1>Modificar Actividad</h1>
+  <br />
+  <form [formGroup]="editar_actividad">
+    <h3>Empresa</h3>
+    <input type="text" pInputText value="" disabled />
 
-                        <th width="15%">Estado<br>orden</th>
-                        <th width="25%">Estado</th>
-                </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-item style="display: flex;justify-content: center;">
-                <tr class="tbody">
-                        <td>{{item.orden}}</td>
-                        <td style="text-align: left">{{item.actividades}}</td>
+    <br /><br />
 
-                        <td>
-                                <div *ngIf="item.estado == 0">
-                                        <mat-chip-list aria-label="Fish selection" style="display: flex; justify-content: center;">
-                                                <mat-chip selected style="background-color:darkseagreen; color: black;"><small><strong>creada</strong></small></mat-chip>
-                                              </mat-chip-list>
-                                </div>
-                                <div *ngIf="item.estado == 1"><img class="img-table-icon"
-                                                [src]="getImg('success-icon.png')" alt="success"></div>
-                        </td>
-                        <td class="space-around">
-                              
-                            
-                                <button mat-mini-fab style="background-color: #8dc3ab !important;"><i class="material-icons">mode_edit</i></button>
-                                
-                                <button mat-mini-fab style="background-color: #436fc3 !important;"><i class="material-icons">info_outline</i></button>
+    <!--             <h3 class="first">Protocolo</h3>
+                            <p-dropdown [options]="protocolos" [(ngModel)]="protocoloSeleccionado.id_protocolo"
+                                placeholder="Selecionar protocolo" optionLabel="nombre" [showClear]="true" [filter]="true">
+                            </p-dropdown>
+                 -->
+    <br /><br />
+    <h3>Descripción</h3>
+    <textarea pInputTextarea></textarea>
 
-                                <button mat-mini-fab color="warn"><i class="material-icons">delete</i></button>
-                               
-                           
-                        </td>
-                </tr>
-        </ng-template>
+    <br /><br />
+
+    <br />
+  </form>
+
+  <hr />
+  <br />
+
+  <button mat-raised-button style="background-color: #42BD75;">Crear</button>
+  &nbsp;
+  <button
+    mat-raised-button
+    style="background-color: white;"
+    (click)="modalEditarActividad.close()"
+  >
+    Cerrar
+  </button>
+</ngx-smart-modal>
+<!-- -----------  -----------  -->
+
+<div
+  style="margin: 7px"
+  fxLayout="row"
+  fxLayoutAlign="start center"
+  *ngIf="masInfo"
+>
+  <button
+    style="float: right"
+    mat-flat-button
+    color="accent"
+    (click)="masInfo = false"
+  >
+    <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
+  </button>
+</div>
+
+<p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="!masInfo">
+  <ng-template pTemplate="header">
+    <tr class="bg">
+      <th width="8%">Orden</th>
+      <th width="52%">Descripcion</th>
+
+      <th width="15%">Estado<br />orden</th>
+      <th width="25%">Estado</th>
+    </tr>
+  </ng-template>
+
+  <ng-template
+    pTemplate="body"
+    let-item
+    style="display: flex;justify-content: center;"
+  >
+    <tr class="tbody">
+      <td>{{ item.orden }}</td>
+      <td style="text-align: left">{{ item.actividades }}</td>
+
+      <td>
+        <div *ngIf="item.estado == 0">
+          <mat-chip-list
+            aria-label="Fish selection"
+            style="display: flex; justify-content: center;"
+          >
+            <mat-chip
+              selected
+              style="background-color:darkseagreen; color: black;"
+            >
+              <small><strong>creada</strong></small></mat-chip
+            >
+          </mat-chip-list>
+        </div>
+        <div *ngIf="item.estado == 1">
+          <img
+            class="img-table-icon"
+            [src]="getImg('success-icon.png')"
+            alt="success"
+          />
+        </div>
+      </td>
+
+      <td class="space-around">
+        <button
+          mat-mini-fab
+          style="background-color: #8dc3ab !important;"
+          (click)="editarActividad(item.idActividades)"
+        >
+          <i class="material-icons">mode_edit</i>
+        </button>
+
+        <button
+          mat-mini-fab
+          (click)="masInfo = true"
+          style="background-color: #436fc3 !important; color: white;"
+        >
+          <i class="material-icons">info_outline</i>
+        </button>
+
+        <button mat-mini-fab color="warn" (click)="eliminarActividad()">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>

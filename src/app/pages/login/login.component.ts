@@ -24,7 +24,22 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-
+  login(): void {
+    this.api.login(this.usuario).subscribe(
+      response => {
+        this.auth.guardarUsuario(response.access_token);
+        this.auth.guardarToken(response.access_token);
+        const usuario = this.auth.usuario;
+        this.router.navigate(['/']);
+        swal.fire('Login', `Hola ${usuario.username}, has iniciado con éxtio`, 'success');
+      },
+      err => {
+        if (err.status === 400) {
+          swal.fire('Login', `Usuario o Clave Incorrecta`, 'error');
+        }
+      }
+    );
+  }
   
 
 }

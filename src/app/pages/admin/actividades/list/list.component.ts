@@ -8,21 +8,32 @@ import { ActividadesFormComponent } from '../actividades-form/actividades-form.c
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Usuario } from 'src/app/services/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { SelectItem } from 'primeng/components/common/selectitem';
+interface protocolo {
+  id_protocolo: number;
+  nombre: string;
+}
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
+
 export class ListComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
   public settings: Settings;
   public sidenavOpen:boolean = true;
   public actividades: any;
+
   public protocolos: any;
+  public protocoloSeleccionado: string = ""; 
+
   public searchText:string;
   public nombreProtocolo: string;
-  public Usuario;
+  public usuario: Usuario;
+
+
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
               public dialog: MatDialog,
@@ -30,14 +41,17 @@ export class ListComponent implements OnInit {
               public ngxSmartModalService: NgxSmartModalService,
               public auth: AuthService) { 
     this.settings = this.appSettings.settings; 
+
+
   }
-  ngOnInit() {    
+  ngOnInit(): void {    
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
+    this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
-    this.Usuario = this.auth.obtenerDatosUser();
-    console.log(Usuario);
+    console.log(this.protocolos);
+    console.log(this.usuario);
   }
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
@@ -47,7 +61,14 @@ export class ListComponent implements OnInit {
     (window.innerWidth <= 992) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
   public getProtocolos(){
-    this._AppService.get(`protocolos/list`,data =>{ this.protocolos = data});
+    this._AppService.getProtocolos().subscribe(
+      data => {
+        this.protocolos = data;
+        console.log(data);
+      }, err => {
+        console.log(err);
+      }
+    )
   }
   public getActividadesPorProtocolos(id: string){
     this._AppService.get(`actividades/protocolo/${id}`, data => { this.actividades = data, console.log(data)});
