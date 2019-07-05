@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AgmCoreModule } from '@agm/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -34,11 +36,14 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { AppService } from './app.service';
+import { ComponentsModule } from './components/components.module';
+import { LoginComponent } from './Auth/login/login.component';
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,     
     FormsModule, 
+    HttpClientModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBNcjxo_35qnEG17dQvvftWa68eZWepYE0'
@@ -47,7 +52,9 @@ import { AppService } from './app.service';
     CalendarModule.forRoot(),
     SharedModule,
     PipesModule,
-    routing
+    routing,
+    ComponentsModule
+
   ],
   declarations: [
     AppComponent,
@@ -62,6 +69,7 @@ import { AppService } from './app.service';
     FullScreenComponent,
     ApplicationsComponent,
     MessagesComponent,
+    LoginComponent,
     UserMenuComponent
   ],
   entryComponents:[

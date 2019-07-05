@@ -3,12 +3,22 @@ import { ModuleWithProviders } from '@angular/core';
 import { PagesComponent } from './pages/pages.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './Auth/login/login.component';
+import { RegisterComponent } from './Auth/register/register.component';
+import { AdminGuard } from './Guards/admin.guard';
+import { LoginGuard } from './Guards/login.guard';
+
+
 export const routes: Routes = [
+
+    {path : 'login', component: LoginComponent, canActivate: [LoginGuard]},
+    {path : 'registro', component: RegisterComponent, canActivate: [LoginGuard]},
+    {path : '', redirectTo: 'login', pathMatch: 'full'},
+
     { 
-        path: '', 
+        path: '',
         component: PagesComponent, children: [
-            { path: '', loadChildren: './pages/dashboard/dashboard.module#DashboardModule', data: { breadcrumb: 'Dashboard' } },
+            { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardModule', data: { breadcrumb: 'Dashboard' } },
             { path: 'home', loadChildren: './pages/home/home.module#HomeModule', data: { breadcrumb: 'Home' } },
             { path: 'seguridad', loadChildren: './pages/seguridad/seguridad.module#SeguridadModule', data: { breadcrumb: 'Seguridad' } },
             { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', data: { breadcrumb: 'Administracion' } },
@@ -17,12 +27,13 @@ export const routes: Routes = [
             { path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
             { path: 'mailbox', loadChildren: './pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
-        ]
-    },
-    { path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
-    //{ path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
+        ],
+        canActivate: [AdminGuard]
+    },  
+
+
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
-    { path: '**', component: NotFoundComponent }
+    { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {
    preloadingStrategy: PreloadAllModules,  // <- comment this line for activate lazy load
