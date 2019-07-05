@@ -1,32 +1,48 @@
-<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20,100]">
-        <ng-template pTemplate="header">
-                <tr class="bg">
-                        <th width="10%">Codigo</th>
-                        <th width="20%">Nombre</th>
-                        <th width="30%">Descripcion</th>
-                        <th width="15%">Responsable</th>
-                        <th width="15%">Revision</th>
-                        <th width="10%">Acciones</th>
+<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [columns]="cols" [paginator]="true"
+        [rows]="5" [rowsPerPageOptions]="[5,10,20,100]">
+        <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+                <tr>
+                        <th *ngFor="let col of columns; let i = index" [ngClass]="i == 2 ? 'ww30' : 'w-10'">
+                                {{col.header}}
+                        </th>
                 </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-item>
-                <tr>
-                        <td>{{item.codigo}}</td>
-                        <td style="text-align: left">{{item.nombre}}</td>
-                        <td style="text-align: left">{{item.descripcion}}</td>
-                        <td style="text-align: left">{{item.responsable}}</td>
-                        <td>{{item.revision}}</td>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                        <td>
+                                {{rowData.codigo}}
+                        </td>
+                        <td>
+                                {{rowData.nombre}}
+                        </td>
+                        <td>
+                                {{rowData.descripcion}}
+                        </td>
+                        <td>
+                                {{rowData.responsable}}
+                        </td>
+                        <td>
+                                {{rowData.revision}}
+                        </td>
                         <td>
                                 <button mat-icon-button pTooltip="Ver Actividades" tooltipPosition="top"
-                                        (click)="getActividadesPorProtocolo(item.idProtocolo)">
+                                        (click)="getActividadesPorProtocolo(rowData.idProtocolo)">
                                         <mat-icon>ballot</mat-icon>
                                 </button>
                                 <button mat-icon-button pTooltip="Ver Instrumentos" tooltipPosition="top"
-                                        (click)="getInstrumentosPorProtocolos(item.idProtocolo)">
+                                        (click)="getInstrumentosPorProtocolos(rowData.idProtocolo)">
                                         <mat-icon>widgets</mat-icon>
                                 </button>
                         </td>
                 </tr>
+
         </ng-template>
 </p-table>
 <!--
@@ -54,8 +70,10 @@
                         <td style="text-align: left">{{item.actividades}}</td>
                         <td>{{item.orden}}</td>
                         <td>
-                                <div *ngIf="item.estado == 0"><img class="img-table-icon" [src]="getImg('error-icon.png')" alt="error"></div>
-                                <div *ngIf="item.estado == 1"><img class="img-table-icon" [src]="getImg('success-icon.png')" alt="success"></div>
+                                <div *ngIf="item.estado == 0"><img class="img-table-icon"
+                                                [src]="getImg('error-icon.png')" alt="error"></div>
+                                <div *ngIf="item.estado == 1"><img class="img-table-icon"
+                                                [src]="getImg('success-icon.png')" alt="success"></div>
                         </td>
                 </tr>
         </ng-template>

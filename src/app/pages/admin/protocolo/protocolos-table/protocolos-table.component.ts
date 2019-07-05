@@ -13,7 +13,19 @@ export class ProtocolosTableComponent implements OnInit {
   public actividades: any;
   public instrumentos: any;
   public table: number;
-  constructor(public appSettings: AppSettings, private _AppService: AppService) { this.settings = this.appSettings.settings; this.table = 0; }
+  public cols: any[];
+  constructor(public appSettings: AppSettings, private _AppService: AppService) { 
+    this.settings = this.appSettings.settings; 
+    this.table = 0;
+    this.cols = [
+      { field: 'codigo', header: 'Codigo' },
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'descripcion', header: 'Descripcion' },
+      { field: 'responsable', header: 'Responsable' },
+      { field: 'resvision', header: 'Revision' },
+      { field: 'acci', header: 'Acciones' }
+    ]; 
+  }
   ngOnInit() {
   }
   public getImg(imgNombre: string): string{

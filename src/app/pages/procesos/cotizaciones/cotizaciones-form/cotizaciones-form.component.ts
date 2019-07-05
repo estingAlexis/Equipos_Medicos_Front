@@ -55,7 +55,7 @@ export class CotizacionesFormComponent implements OnInit, DoCheck {
     this.cols = [
       { field: 'codigo', header: 'Codigo' },
       { field: 'nombre', header: 'Nombre' },
-      { field: '', header: 'Agregar' }
+      { field: 'accion', header: 'Agregar' }
   ];
   }
 

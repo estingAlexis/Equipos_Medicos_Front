@@ -10,18 +10,29 @@ import { AppService } from 'src/app/services/app.service';
 export class ClientesListComponent implements OnInit {
   public settings: Settings;
   public clientes: any;
-  constructor(public appSettings:AppSettings,private _AppService:AppService) {this.settings = this.appSettings.settings  }
-
-
+  public cols: any[];
+  constructor(
+    public appSettings:AppSettings,
+    private _AppService:AppService
+    ) {
+      this.settings = this.appSettings.settings;
+      this.cols = [
+        { field: 'documento', header: '#_ID' },
+        { field: 'nombre', header: 'Nombre' },
+        { field: 'telefonoCelular', header: 'Celular' },
+        { field: 'direccion', header: 'Direccion' },
+        { field: 'ciudad', header: 'Ciudad' },
+        { field: 'email', header: 'Email' }
+      ];    
+    }
 
   ngOnInit() {
     this.getTerceros();
   }
 
-
   //GET TERCEROS
   public getTerceros(){
-    this._AppService.get(`terceros/list`).subscribe(
+    this._AppService.get(`clientes/list`).subscribe(
       result =>{
         this.clientes = result;
       },
@@ -29,8 +40,4 @@ export class ClientesListComponent implements OnInit {
         console.log(error);
       });
   }
-
-
-
-
 }
