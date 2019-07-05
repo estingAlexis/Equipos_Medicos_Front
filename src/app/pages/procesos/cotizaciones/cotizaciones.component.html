@@ -1,2 +1,2 @@
-<app-cotizaciones-form *ngIf="showForm == true" [idCot]="idcot"></app-cotizaciones-form>
-<app-cotizaciones-list *ngIf="showList == true" (setidcot)="openForm($event)"></app-cotizaciones-list>
+<app-cotizaciones-form *ngIf="showForm == true" [idCot]="idcot" (return)="closeForm()"></app-cotizaciones-form>
+<app-cotizaciones-list *ngIf="showList == true" [recargar]="TableRec" (setidcot)="openForm($event)"></app-cotizaciones-list>

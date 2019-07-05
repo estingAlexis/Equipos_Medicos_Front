@@ -52,33 +52,42 @@
 						</div>
 					</mat-toolbar>
 					<div class="list-content" perfectScrollbar>
-						<p-table #dt [value]="data" [paginator]="true" [rows]="9">
-							<ng-template pTemplate="header">
+						<p-table #dt  [columns]="cols" [value]="data" [paginator]="true" [rows]="9">
+							<ng-template pTemplate="caption">
+								<div style="text-align: right">        
+									<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+									<input class="input-filter" type="text" pInputText size="50" placeholder="Buscar por..." (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+								</div>
+							</ng-template>
+							<ng-template pTemplate="header" let-columns>
 								<tr class="bg">
-									<th>Codigo</th>
-									<th>Empresa</th>
-									<th>Cliente</th>
-									<th>Vigencia</th>
-									<th>Entrega</th>
-									<th>Condicion Pago</th>
-									<th>Responsable</th>
-									<th>Estado</th>
+									<th *ngFor="let col of columns">
+										{{col.header}}
+									</th>
 								</tr>
 							</ng-template>
-							<ng-template pTemplate="body" let-item>
-								<tr class="tbody">
-									<td>{{item.codigo}}</td>
-									<td>{{item.fkCliente.nombre}}</td>
-									<td>{{item.fkEmpresa.nombreEmpresa}}</td>
-									<td>{{item.vigencia}}</td>
-									<td>{{item.entrega}}</td>
-									<td>{{item.condicionPago}}</td>
-									<td>{{item.responsable}}</td>
+							<ng-template pTemplate="body" let-rowData let-columns="columns">
+								<tr [pSelectableRow]="rowData">
 									<td>
-										<div *ngIf="item.estado == 0"><img class="img-table-icon" [src]="getImg('error-icon.png')"
-												alt="error"></div>
-										<div *ngIf="item.estado == 1"><img class="img-table-icon" [src]="getImg('success-icon.png')"
-												alt="success"></div>
+										{{rowData.codigo}}
+									</td>
+									<td>
+										{{rowData.fkEmpresa.nombreEmpresa}}	
+									</td>
+									<td>
+										{{rowData.fkCliente.nombre}}	
+									</td>
+									<td>
+										{{rowData.vigencia}}	
+									</td>
+									<td>
+										{{rowData.entrega}}	
+									</td>
+									<td>
+										{{rowData.condicionPago}}	
+									</td>
+									<td>
+										{{rowData.responsable}}	
 									</td>
 								</tr>
 							</ng-template>

@@ -13,9 +13,9 @@
                         <td style="text-align: left">{{item.actividades}}</td>
                         <td>{{item.orden}}</td>
                         <td>
-                                <div *ngIf="item.estado == 0"><img class="img-table-icon"
-                                                [src]="getImg('error-icon.png')" alt="error"></div>
                                 <div *ngIf="item.estado == 1"><img class="img-table-icon"
+                                                [src]="getImg('error-icon.png')" alt="error"></div>
+                                <div *ngIf="item.estado == 0"><img class="img-table-icon"
                                                 [src]="getImg('success-icon.png')" alt="success"></div>
                         </td>
                 </tr>

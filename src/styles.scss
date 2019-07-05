@@ -14,9 +14,19 @@
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
 
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import "app/app.component";
+
 .bg-theme{
   background-color: #49be7c;
 }
+
+
+.input-filter{
+  height: 35px;
+  border-radius: 5px;
+  color: #49be7c;
+}  
 
 .content {
   display: flex;

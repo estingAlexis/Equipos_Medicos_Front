@@ -3,7 +3,18 @@ import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@a
 import { DatePipe } from '@angular/common';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
-//import { Settings } from '../../app.settings.model';
+import { Settings } from '../../../../app.settings.model';
+import { AppSettings } from '../../../../app.settings';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+export class Equipo{
+  constructor(
+    public idEquipo:number,
+    public nombreEquipo:string,
+    public valoru:number,
+    public cant:number,
+    public calibracion:number
+  ){}
+}
 @Component({
   selector: 'app-cotizaciones-form',
   templateUrl: './cotizaciones-form.component.html',
@@ -13,11 +24,11 @@ import Swal from 'sweetalert2';
 export class CotizacionesFormComponent implements OnInit, DoCheck {
   @Output() return = new EventEmitter();
   @Input() idCot: number; 
-  //public settings: Settings;
+  public settings: Settings;
   public datos: FormGroup;
   public empresas: Array<any>;
   public clientes: Array<any>;
-  public parametros: Array<any>;
+  public parametros: Array<Equipo>;
   public equipos: Array<any>;
   public equiposSelected: Array<any>;
   public Cotizaciones: Array<any>;
@@ -30,10 +41,22 @@ export class CotizacionesFormComponent implements OnInit, DoCheck {
   public idCliente: number;
   public datoschanged: boolean = true;
   public panelOpenState = false;
-  constructor(private _AppService: AppService, private datePipe: DatePipe, private _formBuilder: FormBuilder) { 
+  public cols: any[];
+  constructor(
+    public appSettings:AppSettings,
+    private _AppService: AppService, 
+    private datePipe: DatePipe, 
+    private _formBuilder: FormBuilder,
+    public ngxSmartModalService: NgxSmartModalService) { 
     this.equipos = [];
     this.equiposSelected = [];
     this.consecutivo = [];
+    this.settings = this.appSettings.settings;
+    this.cols = [
+      { field: 'codigo', header: 'Codigo' },
+      { field: 'nombre', header: 'Nombre' },
+      { field: '', header: 'Agregar' }
+  ];
   }
 
   ngOnInit() {
@@ -133,6 +156,22 @@ export class CotizacionesFormComponent implements OnInit, DoCheck {
     this.fechaentrega = this.datePipe.transform(this.datos.value.fecha, 'yyyy-MM-dd');
     console.log(this.fechaentrega);
   }
+  public addEquipo(data:any){
+    this.equiposSelected.push(new Equipo(data.idEquipos,data.nombre,0,0,0));
+    console.log(this.equiposSelected);
+  }
+  public agregarValorUnidad(index:number, event:any){
+    console.log(index,event);
+    this.equiposSelected[index].valoru = event;
+  }
+  public agregarCantidad(index:number, event:any){
+    console.log(index,event);
+    this.equiposSelected[index].cant = event
+  }
+  public agregarCalibracion(index:number, event:any){
+    console.log(index,event);
+    this.equiposSelected[index].calibracion = event;
+  }
   public CrearDetalle(
     calibracion:number,
     cantidad:number,
@@ -158,6 +197,7 @@ export class CotizacionesFormComponent implements OnInit, DoCheck {
     );
   }
   public submit() {
+    this.settings.loadingSpinner = true;
     let datos = this.datos.value;
     console.log(datos);
     let consecutivo = parseInt(this.consecutivo[0].codigo);
@@ -182,18 +222,23 @@ export class CotizacionesFormComponent implements OnInit, DoCheck {
     console.log(contizacion);
     this._AppService.post('cotizaciones/new',contizacion).subscribe(
       (data: any) => {
+        for (let index = 0; index < this.equiposSelected.length; index++) {
+          this.CrearDetalle(
+            this.equiposSelected[index].calibracion, 
+            this.equiposSelected[index].cant,
+            this.idCot+1,
+            this.equiposSelected[index].idEquipo,
+            this.idCot+1,this.equiposSelected[index].valoru);
+        }
+        this.settings.loadingSpinner = false;
         console.log(data);
         Swal.fire({
           type: 'success',
           title: 'Grandioso',
-          text: 'Cotizacion Creada'
+          text: 'Cotizacion Creada',
+          timer: 2500
         });
-        this.equiposSelected.push(this.equipos[0]);
-        this.equiposSelected.push(this.equipos[1]);
-        this.equiposSelected.push(this.equipos[2]);
-        for (let index = 0; index < this.equiposSelected.length; index++) {
-          this.CrearDetalle(20000,1,this.idCot+1,this.equiposSelected[index].idEquipos,5,1000);
-        }
+        this.return.emit();
       }
     );
   }
