@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
 import { HttpClientModule } from '@angular/common/http';
+import { LOCALE_ID } from '@angular/core';
 
 
 import { AgmCoreModule } from '@agm/core';
@@ -79,6 +80,7 @@ import { ComponentsModule } from './components/components.module';
     VerticalMenuComponent
   ],
   providers: [ 
+    { provide: LOCALE_ID, useValue: "es-ES" },
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },

@@ -3,7 +3,9 @@
         <mat-card class="p-0 list">
             <mat-sidenav-container>
                 <div>
-                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-toolbar
+                        style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
+                        fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
                             <button mat-flat-button color="warn">
                                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cliente
@@ -11,28 +13,40 @@
                         </div>
                     </mat-toolbar>
                     <div class="list-content" perfectScrollbar>
-                        <p-table #dt [value]="clientes" [paginator]="true" [rows]="7">
-                            <ng-template pTemplate="header">
-                                    <tr class="bg" >
-                                            <th width="10%">#_ID</th>
-                                            <th width="20%">Nombre</th>
-                                            <th width="15%">Celular</th>
-                                            <th width="15%">Direccion</th>
-                                            <th width="15%">Ciudad</th>
-                                            <th width="15%">Email</th>
-                                            <th width="10%">Estado</th>
-                                        </tr>
+                        <p-table #dt [value]="clientes" [columns]="cols" [paginator]="true" [rows]="7">
+                                <ng-template pTemplate="caption">
+                                <div style="text-align: right">        
+                                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                        <input type="text" pInputText size="50" placeholder="Buscar Por..." (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div>
+                                </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns; let i = index" >
+                                        {{col.header}}
+                                    </th>
+                                </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-item>
-                                    <tr class="tbody">
-                                            <td>{{item.documento}}</td>
-                                            <td style="text-align: left">{{item.nombre}}</td>
-                                            <td>{{item.celular}}</td>
-                                            <td style="text-align: left">{{item.direccion}}</td>
-                                            <td style="text-align: left">{{item.telefonoCelular}}</td>
-                                            <td style="text-align: left">{{item.email}}</td>
-                                            <td >{{item.estado}}</td>
-                                        </tr>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr [pSelectableRow]="rowData">
+                                    <td>
+                                        {{rowData.documento}}
+                                    </td>
+                                    <td>
+                                        {{rowData.nombre}}
+                                    </td>
+                                    <td>
+                                        {{rowData.telefonoCelular}}
+                                    </td>
+                                    <td>
+                                        {{rowData.direccion}}
+                                    </td>
+                                    <td>
+                                        {{rowData.ciudad}}
+                                    </td>
+                                    <td>
+                                        {{rowData.email}}
+                                    </td>
                             </ng-template>
                         </p-table>
                     </div>
@@ -40,4 +54,4 @@
             </mat-sidenav-container>
         </mat-card>
     </div>
-  </div>
+</div>

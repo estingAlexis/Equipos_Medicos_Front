@@ -13,11 +13,17 @@ export class ActividadesTableComponent implements OnInit {
   public protocolos: any;
   public searchText:string;
   public settings: Settings;
-  public cols: any;
+  public cols: any[];
   constructor(
     public appSettings:AppSettings,
     private _AppService: AppService) { 
     this.settings = this.appSettings.settings; 
+    this.cols = [
+      { field: 'idActividades', header: 'Id' },
+      { field: 'actividades', header: 'Descripcion' },
+      { field: 'orden', header: 'Orden' },
+      { field: 'estado', header: 'Estado' }
+  ];
   }
   ngOnInit() {
   }
