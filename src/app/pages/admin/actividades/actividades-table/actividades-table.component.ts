@@ -4,6 +4,7 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-actividades-table',
   templateUrl: './actividades-table.component.html',
@@ -17,10 +18,12 @@ export class ActividadesTableComponent implements OnInit {
   public settings: Settings;
   public cols: any;
   public masInfo: boolean = false;
+
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     public appSettings:AppSettings,
     private _AppService: AppService,
+    private auth: AuthService
     ) { 
     this.settings = this.appSettings.settings; 
   }
@@ -30,18 +33,15 @@ export class ActividadesTableComponent implements OnInit {
     return '../../../../../assets/img/'+imgNombre;
   }
 
-  public parametro;
+  public actividad;
 
   public editarActividad(id) {
-    this._AppService.getParametroById(id).subscribe(
+    this._AppService.getActividadesById(id).subscribe(
       data => {
-        this.parametro = data;
-        console.log(data);
+        this.actividad = data;
       }
     );
-    console.log(this.parametro);
-    this.ngxSmartModalService.getModal('modalEditarActividad').open();
-    return true
+    console.log(this.actividad);
   }
 
   public eliminarActividad(){

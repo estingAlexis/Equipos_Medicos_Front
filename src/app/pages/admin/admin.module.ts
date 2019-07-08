@@ -36,6 +36,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import {MatIconModule} from '@angular/material/icon';
 import { DropdownModule } from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { SpinnerModule } from 'primeng/spinner';
 
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
@@ -68,7 +69,8 @@ export const routes = [
     NgxSmartModalModule,
     MatIconModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    SpinnerModule
   ],
   declarations: [
     AdminComponent,

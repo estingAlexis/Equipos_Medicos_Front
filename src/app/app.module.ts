@@ -41,6 +41,7 @@ import {PanelModule} from 'primeng/panel';
 import { MatIconModule } from '@angular/material';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {SpinnerModule} from 'primeng/spinner';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     PanelModule,
     MatIconModule,
     DropdownModule,
-    InputTextareaModule
+    InputTextareaModule,
+    SpinnerModule
   ],
   declarations: [
     AppComponent,

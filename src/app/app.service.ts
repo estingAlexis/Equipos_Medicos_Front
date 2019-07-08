@@ -93,6 +93,22 @@ export class AppService {
   public getActividadesPorProtocolos(id: string) {
     return this.http.get(this.url + 'actividades/protocolo/' + id, httpOptions);
   }
+  // @Get actividades By Id
+  public getActividadesById(id) {
+    return this.http.get(this.url + 'actividades/' + id, httpOptions);
+  }
+  // @Update actividaded
+  public updateActividadesById(id) {
+    return this.http.put(this.url + 'actividades/' + id, httpOptions);
+  }
+  // @New actividaded
+  public newActividad() {
+    return this.http.post(this.url + 'actividades/new', httpOptions);
+  }
+    // @Delete actividaded 
+    public deleteActividaded(id: string) {
+      return this.http.delete(this.url + 'actividades/' + id, httpOptions);
+    }
   // @Get empresas
   public getEmpresas() {
     return this.http.get(this.url + 'empresa/list', httpOptions);
