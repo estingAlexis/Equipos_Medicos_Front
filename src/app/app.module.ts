@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
 import { HttpClientModule } from '@angular/common/http';
-
-
 import { AgmCoreModule } from '@agm/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -35,9 +33,11 @@ import { FullScreenComponent } from './theme/components/fullscreen/fullscreen.co
 import { ApplicationsComponent } from './theme/components/applications/applications.component';
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
-import { AppService } from './app.service';
-import { ComponentsModule } from './components/components.module';
+import { AppService } from './services/app.service';
 import { LoginComponent } from './Auth/login/login.component';
+import { RegisterComponent } from './Auth/register/register.component';
+import { ComponentsModule } from './components/components.module';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -70,6 +70,7 @@ import { LoginComponent } from './Auth/login/login.component';
     ApplicationsComponent,
     MessagesComponent,
     LoginComponent,
+    RegisterComponent,
     UserMenuComponent
   ],
   entryComponents:[
