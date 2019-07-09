@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Usuario } from '../models/usuario';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Usuario } from './usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -60,11 +60,11 @@ export class AuthService {
     this._usuario.nombre = payload.nombre;
     this._usuario.apellido = payload.apellido;
     this._usuario.email = payload.email;
-    this._usuario.entidad = payload.entidad;
+    this._usuario.empresa = payload.empresa; 
     this._usuario.username = payload.user_name;
     this._usuario.roles  = payload.authorities;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
     
   }
 
@@ -103,14 +103,37 @@ export class AuthService {
   }
 
   obtenerDatosUser() {
-    if ( this._usuario !== null ) {
+    if ( this._usuario !== null && this._usuario !== undefined ) {
       return this._usuario;
-    } else if ( this._usuario === null && sessionStorage.getItem('usuario') !== null) {
+    } else if ( (this._usuario === null || this._usuario === undefined) && sessionStorage.getItem('usuario') !== null) {
       this._usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
       return this._usuario;
     }
     return new Usuario();
   }
 
+  guardarToken( access_token: string): void {
+    this._token = access_token;
+
+    sessionStorage.setItem('token', access_token);
+
+  }
+
+  estado(num) {
+    if(num == 0){
+      return 'Creado';
+    }else if(num == 1){
+      return 'En Proceso';
+    }else if(num == 2){
+      return 'Asignado';
+    }else if(num == 3){
+      return 'Orden de trabajo';
+    }else if(num == 9){
+      return 'Cancelado';
+    }
+  }
+
+
 
 }
+

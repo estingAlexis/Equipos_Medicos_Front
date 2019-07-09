@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +38,11 @@ import { AppService } from './services/app.service';
 import { LoginComponent } from './Auth/login/login.component';
 import { RegisterComponent } from './Auth/register/register.component';
 import { ComponentsModule } from './components/components.module';
+import { SpinnerModule } from 'primeng/spinner';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { MatIconModule } from '@angular/material';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   imports: [
@@ -53,8 +59,12 @@ import { ComponentsModule } from './components/components.module';
     SharedModule,
     PipesModule,
     routing,
+    NgxSmartModalModule.forRoot(),
+    MatIconModule,
+    DropdownModule,
+    InputTextareaModule,
+    SpinnerModule,
     ComponentsModule
-
   ],
   declarations: [
     AppComponent,

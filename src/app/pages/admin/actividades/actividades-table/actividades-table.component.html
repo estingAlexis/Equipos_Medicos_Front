@@ -1,22 +1,100 @@
-<p-table #dt [value]="data" [columns]="cols" [paginator]="true" [rows]="8">
-        <ng-template pTemplate="caption">
-        <div style="text-align: right">        
-                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                <input type="text" pInputText size="50" placeholder="Buscar Por..." (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+<div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center" *ngIf="masInfo">
+  <button style="float: right" mat-flat-button color="accent" (click)="masInfo = false">
+    <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
+  </button>
+</div>
+
+
+<!-- ----------- MODAL EDITAR ACTIVIDAD -----------  -->
+<ngx-smart-modal  [dismissable]="false" [escapable]="false" #modalEditarActividad identifier="modalEditarActividad"
+style="text-align: center;">
+<h1>Editar Actividad</h1>
+
+<div class="editarActividad" *ngIf="actividad">
+<hr>
+<!--   <h3>Empresa</h3>
+  <input type="text" pInputText value="{{actividad.fkEmpresa.nombreEmpresa}}" disabled />
+
+  <br><br> -->
+
+  <h3 class="first">Protocolo</h3>
+  <p-dropdown [options]="protocolos" [(ngModel)]="protocoloSeleccionado.id_protocolo"
+      placeholder="{{actividad.fkProtocolo.nombre}}" optionLabel="nombre" [filter]="true">
+  </p-dropdown>
+
+  <br><br>
+  
+  <h3>Descripción</h3>
+  <textarea pInputTextarea>{{actividad.actividades}}</textarea>
+
+  <br><br>
+
+<!--   <div class="p-grid">
+    <div class="p-col">1</div>
+    <div class="p-col">2</div>
+    <div class="p-col">3</div>
+  </div> -->
+
+  
+  <h3>Estado</h3>
+  <p-dropdown [options]="estados" [(ngModel)]="estado" placeholder="{{actividad.estadoStr}}" optionLabel="label"></p-dropdown>
+
+
+</div>
+
+<hr>
+
+
+<button mat-raised-button style="background-color: #42BD75;" (click)="modalEditarActividad.close()">Guardar</button>
+&nbsp;
+<button mat-raised-button (click)="modalEditarActividad.close()">Cerrar</button>
+
+</ngx-smart-modal>
+<!-- -----------  -----------  -->
+
+
+<p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="!masInfo">
+
+  <ng-template pTemplate="header">
+    <tr class="bg">
+      <th width="8%">Orden</th>
+      <th width="52%">Descripcion</th>
+
+      <th width="15%">Estado<br />orden</th>
+      <th width="25%">Estado</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-item style="display: flex;justify-content: center;">
+    <tr class="tbody">
+      <td>{{ item.orden }}</td>
+      <td style="text-align: left">{{ item.actividades }}</td>
+
+      <td>
+        <div *ngIf="item.estado == 0">
+            <button mat-flat-button disabled style="background-color: #A7CECB; color: black;">
+              <small><strong style="color: #3d3d3dd3;">Pendiente</strong></small></button> <!-- A3F7B5 -->
         </div>
-        </ng-template>
-        <ng-template pTemplate="header"  let-columns>
-                <tr>
-                   <th *ngFor="let col of columns; let i = index" [ngClass]="i == 1 ? 'ww70' : 'w-10'">
-                      {{col.header}}
-                   </th>
-                </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-                <tr [pSelectableRow]="rowData">
-                        <td *ngFor="let col of columns">
-                                {{rowData[col.field]}}
-                        </td>
-                </tr>
-        </ng-template>
+        <div *ngIf="item.estado == 1">
+          <img class="img-table-icon" [src]="getImg('success-icon.png')" alt="success" />
+        </div>
+      </td>
+
+      <td class="space-around">
+        <button class="btn btnEditar"
+          (click)="ngxSmartModalService.getModal('modalEditarActividad').open();editarActividad(item.idActividades);">
+          <i class="material-icons">mode_edit</i>
+        </button>
+
+        <button (click)="masInfo = true" class="btn">
+          <i class="material-icons">info_outline</i>
+        </button>
+
+        <button class="btn" (click)="eliminarActividad()">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
+

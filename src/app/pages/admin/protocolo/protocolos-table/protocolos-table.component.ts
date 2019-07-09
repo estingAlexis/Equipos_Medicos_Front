@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-protocolos-table',
@@ -13,20 +14,10 @@ export class ProtocolosTableComponent implements OnInit {
   public actividades: any;
   public instrumentos: any;
   public table: number;
-  public cols: any[];
-  constructor(public appSettings: AppSettings, private _AppService: AppService) { 
-    this.settings = this.appSettings.settings; 
-    this.table = 0;
-    this.cols = [
-      { field: 'codigo', header: 'Codigo' },
-      { field: 'nombre', header: 'Nombre' },
-      { field: 'descripcion', header: 'Descripcion' },
-      { field: 'responsable', header: 'Responsable' },
-      { field: 'resvision', header: 'Revision' },
-      { field: 'acci', header: 'Acciones' }
-    ]; 
-  }
+
+  constructor(public appSettings: AppSettings, private _AppService: AppService, private auth: AuthService) { this.settings = this.appSettings.settings; this.table = 0; }
   ngOnInit() {
+
   }
   public getImg(imgNombre: string): string{
     return '../../../../../assets/img/'+imgNombre;
@@ -46,8 +37,7 @@ export class ProtocolosTableComponent implements OnInit {
         console.log(error);
       });
   }
-
-  // @Get instrumentos por Protocolos
+  
   public getInstrumentosPorProtocolos(id: string) {
     this._AppService.get('ip/1/protocolo/'.concat(id)).subscribe(
       result => {

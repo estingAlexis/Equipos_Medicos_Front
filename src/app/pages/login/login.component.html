@@ -1,36 +1,95 @@
-<mat-sidenav-container>
+<div class="main-content" style="margin-top:7rem;">
 
-  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
 
-       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
+    <div  style="text-align: center;" >
 
-            <mat-card class="p-0 mat-elevation-z24 box">
-                <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
-                    <button mat-fab color="accent" class="mat-elevation-z12" (click)="onSubmit(form.value);">
-                        <mat-icon>exit_to_app</mat-icon>
-                    </button>
-                    <a mat-button routerLink="/register">Don't have an account? Sign up now!</a>
+      <div>
+        <img src="assets/img/logo-icon.png" alt="" srcset="">
+      </div>
+
+
+      <div>
+
+          <div>
+          
+              <h3>INICIAR SESION</h3>
+            <br>
+              <form class="form" method="post">
+                <div class="col-12 my-2 mb-md-2 my-lg-3">
+                  <mat-form-field>
+                    <span matPrefix><i class="material-icons mr-2">person</i> &nbsp;</span>
+                    <input matInput placeholder="USERNAME" type="text" [(ngModel)]="usuario.username" id="username"
+                      name="username" autofocus required>
+                  </mat-form-field>
                 </div>
-                <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
-                    <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
-                        <span class="box-content-header">member login</span>  
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Email" formControlName="email">
-                            <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
-                            <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Password" formControlName="password">
-                            <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
-                            <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
-                        </mat-form-field> 
-                    </mat-card>
-                    <button style="float: left" at-raised-button color="primary" class="mat-elevation-z12 box-button" type="submit">SIGN IN</button>
-                </mat-card-content>
-            </mat-card>
+                <div class="col-12 my-2 mb-md-2 mb-lg-3">
+                  <mat-form-field>
+                    <span matPrefix><i class="material-icons mr-2">lock</i> &nbsp;</span>
+                    <input matInput placeholder="PASSWORD" type="password" [(ngModel)]="usuario.password"
+                      name="password" id="password" placeholder="Contraseña" autocomplete="false" required>
+                  </mat-form-field>
+                </div>
+                <br>
+                <button mat-raised-button color="warn" type="submit" (click)="login()">
+                  <strong style="font-size: 24px">Iniciar Seción</strong>
+                </button>
+              </form>
+              <br>
+            </div>
             
-        </form>    
+
+           
+
+          </div>
+          <div class="row my-3">
+            <p class="col-12 text-center mb-0 mt-2">No tiens cuenta? click <a href="#">aquí</a></p>
+          </div>
   
+      </div>
+
   </div>
 
-</mat-sidenav-container>
+
+
+
+
+
+<!-- <div class="container">
+  <div class="row logo my-5">
+    <img src="/assets/img/logo_tributo_white.png" alt="logo" class="logo1">
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto my-5">
+      <form class="form my-5" method="post">
+        <div class="card card-login">
+          <div class="card-header card-header-rose text-center">
+            <h4 class="card-title">{{title}}</h4>
+          </div>
+          <div class="card-body my-2 ">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="material-icons">face</i>
+                </span>
+              </div>
+              <input class="form-control" [(ngModel)]="usuario.username" id="username" name="username" placeholder="#nit / Usuario" type="text" autofocus required>
+            </div>
+            <span class="bmd-form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="material-icons">lock_outline</i>
+                  </span>
+                </div>
+                <input class="form-control" [(ngModel)]="usuario.password" name="password" id="password" placeholder="Contraseña" type="password" autocomplete="false" required>
+              </div>
+            </span>
+          </div>
+          <div class="card-footer justify-content-center">
+            <input (click)="login()" type="submit" class="btn btn-round btn-rose btn-block " value="Iniciar">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->

@@ -1,32 +1,45 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { emailValidator } from '../../theme/utils/app-validators';
-import { AppSettings } from '../../app.settings';
-import { Settings } from '../../app.settings.model';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+import { ApiRestService } from 'src/app/services/ApiRestService.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: 'login.component.html'
 })
-export class LoginComponent {
-  public form:FormGroup;
-  public settings: Settings;
-  constructor(public appSettings:AppSettings, public fb: FormBuilder, public router:Router){
-    this.settings = this.appSettings.settings; 
-    this.form = this.fb.group({
-      'email': [null, Validators.compose([Validators.required, emailValidator])],
-      'password': [null, Validators.compose([Validators.required, Validators.minLength(6)])] 
-    });
+
+export class LoginComponent implements OnInit {
+
+  title = 'Equipos Medicos';
+
+  usuario: Usuario;
+  
+  constructor(private auth: AuthService, private router: Router, private api: ApiRestService) {
+    this.usuario = new Usuario();
   }
 
-  public onSubmit(values:Object):void {
-    if (this.form.valid) {
-      this.router.navigate(['/']);
-    }
+  ngOnInit() {
   }
 
-  ngAfterViewInit(){
-    this.settings.loadingSpinner = false; 
+  login(): void {
+    this.api.login(this.usuario).subscribe(
+      response => {
+        this.auth.guardarUsuario(response.access_token);
+        this.auth.guardarToken(response.access_token);
+        const usuario = this.auth.usuario;
+        this.router.navigate(['/']);
+        swal.fire('Login', `Hola ${usuario.username}, has iniciado con éxtio`, 'success');
+      },
+      err => {
+        if (err.status === 400) {
+          swal.fire('Login', `Usuario o Clave Incorrecta`, 'error');
+        }
+      }
+    );
   }
+  
+
 }

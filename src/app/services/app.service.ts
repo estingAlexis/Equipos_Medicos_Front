@@ -45,28 +45,28 @@ export class AppService {
  //GET
   get(ruta:string)
   {
-    if(this.auth.isAuthenticated()){let exp = this.auth.isTokenExpired(); if(!exp){ this.getHeaders();return this.http.get<any>(this.url.concat(ruta),this.httpOptions);} } 
+    if(this.auth.isAuthenticated()){if(!this.auth.isTokenExpired()){ this.getHeaders();return this.http.get<any>(this.url.concat(ruta),this.httpOptions);} } 
     this.clearSession();
   }
 
   //POST
  post(ruta: string, body: any)
  {
-  if(this.auth.isAuthenticated()){let exp = this.auth.isTokenExpired(); if(!exp){this.getHeaders();return this.http.post<any>(this.url.concat(ruta), body, this.httpOptions); }}
+  if(this.auth.isAuthenticated()){if(!this.auth.isTokenExpired()){this.getHeaders();return this.http.post<any>(this.url.concat(ruta), body, this.httpOptions); }}
   this.clearSession();
  }
 
  //DELETE
  delete(ruta: string)
  {
-  if(this.auth.isAuthenticated()){let exp = this.auth.isTokenExpired();if(!exp){ this.getHeaders(); return this.http.delete<any>(this.url.concat(ruta), this.httpOptions);}}
+  if(this.auth.isAuthenticated()){if(!this.auth.isTokenExpired()){ this.getHeaders(); return this.http.delete<any>(this.url.concat(ruta), this.httpOptions);}}
   this.clearSession();
  }
 
  //PUT
  put(ruta: string, body: any)
  { 
-  if(this.auth.isAuthenticated()){let exp = this.auth.isTokenExpired();if(!exp){this.getHeaders();return this.http.put<any>(this.url.concat(ruta), body, this.httpOptions);}}
+  if(this.auth.isAuthenticated()){if(!this.auth.isTokenExpired()){this.getHeaders();return this.http.put<any>(this.url.concat(ruta), body, this.httpOptions);}}
   this.clearSession();
  }
 

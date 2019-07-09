@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild,  HostListener  } from '@angular/co
 import { MatSnackBar } from '@angular/material';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-procolos-list',
@@ -18,7 +19,8 @@ export class ProcoloslistComponent implements OnInit {
   public nombreProtocolo: string;
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
-              private _AppService:AppService ) { 
+              private _AppService:AppService,
+              public ngxSmartModalService: NgxSmartModalService, ) { 
     this.settings = this.appSettings.settings; 
   }
   ngOnInit() {    
