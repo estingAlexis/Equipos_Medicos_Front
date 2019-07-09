@@ -9,6 +9,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Usuario } from 'src/app/services/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { SelectItem } from 'primeng/components/common/selectitem';
+import Swal from 'sweetalert2';
 interface protocolo {
   id_protocolo: number;
   nombre: string;
@@ -25,15 +26,15 @@ export class ListComponent implements OnInit {
   public settings: Settings;
   public sidenavOpen:boolean = true;
   public actividades: any;
-
   public protocolos: any;
   public protocoloSeleccionado: string = ""; 
-
   public searchText:string;
   public nombreProtocolo: string;
   public usuario: Usuario;
-
-
+  public protocolo;
+  public actividad;
+  
+  public estado;
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
               public dialog: MatDialog,
@@ -51,8 +52,6 @@ export class ListComponent implements OnInit {
 
     this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
-    console.log(this.protocolos);
-    console.log(this.usuario);
   }
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
@@ -67,33 +66,20 @@ export class ListComponent implements OnInit {
     this._AppService.get(`protocolos/list`).subscribe(
         result =>{
           this.protocolos = result;
+          console.log(result);
         },
         error =>{
           console.log(error);
         });
   }
 
-  public protocolo;
-  public actividad;
-  public estado;
-
-  guardarNuevaActividad() {
-    this._AppService.post(`actividades/${this.actividades.idActividades}`, {
-      "fkEmpresa": this.usuario.empresa.nombre ,
-      "fkProtocolo": this.protocolo ,
-      "items": 0,
-      "actividades": this.actividad ,
-/*       "orden": ,
-      "tipo": , */
-      "estado": this.estado
-    });
-  }
 
 //GET ACTIVIDADES X PROTOCOLOS
   public getActividadesPorProtocolos(id: string){
     this._AppService.get(`actividades/protocolo/${id}`).subscribe(
       result=>{
         this.actividades = result;
+        console.log(result);
       },
       error =>{
         console.log ( error)
@@ -102,7 +88,35 @@ export class ListComponent implements OnInit {
 
   }
 
+  guardarNuevaActividad() {
+    this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
+    const nueva_actividad = {
+      "fkEmpresa": this.usuario.empresa.idEmpresa ,
+      "fkProtocolo": this.protocolo.idProtocolo ,
+      "items": 1,
+      "actividades": String(this.actividad) ,
+      "orden": this.actividades.length(), 
+      "estado": this.estado
+    }
+    console.log(this.usuario.empresa.idEmpresa);
+    console.log(this.protocolo);
+    console.log(String(this.actividad));
+    this._AppService.post(`actividad/new`, nueva_actividad).subscribe(
+      result => {
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!', 
+          'success'
+        )
+      }
+    );
+    this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
+    this.protocolo = null;
+    this.actividades = null;
+    this.estado = null;
+  } 
 
+  
 
   public openForm(){
     let dialogRef = this.dialog.open(ActividadesFormComponent, {
@@ -120,7 +134,6 @@ export class ListComponent implements OnInit {
   public estadoSeleccionado = 0;
   public estados = [
     {label: 'Pendiente', value: 0},
-    {label: 'Completado', value: 1},
   ]
 
 }

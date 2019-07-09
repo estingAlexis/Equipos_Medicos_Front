@@ -46,7 +46,7 @@ export class ActividadesTableComponent implements OnInit {
 
   public actividad;
   public editarActividad(id) {
-    this._AppService.get('actividades/'+id).subscribe(
+    this._AppService.get('actividad/'+id).subscribe(
       data => {
         this.actividad = data;
         console.log(this.actividad.estado);
