@@ -4,36 +4,46 @@
   </button>
 </div>
 
-<!-- ----------- MODAL EDITAR ACTIVIDAD -----------  -->
-<ngx-smart-modal [dismissable]="false" [escapable]="false" #modalEditarActividad identifier="modalEditarActividad"
-style="text-align: center;">
-<h1>Añadir Actividad</h1>
-<br>
-<form>
 
-  <h3>Empresa</h3>
+<!-- ----------- MODAL EDITAR ACTIVIDAD -----------  -->
+<ngx-smart-modal  [dismissable]="false" [escapable]="false" #modalEditarActividad identifier="modalEditarActividad"
+style="text-align: center;">
+<h1>Editar Actividad</h1>
+
+<div class="editarActividad" *ngIf="actividad">
+<hr>
+<!--   <h3>Empresa</h3>
   <input type="text" pInputText value="{{actividad.fkEmpresa.nombreEmpresa}}" disabled />
 
-  <br><br>
+  <br><br> -->
 
-  <!--     <h3 class="first">Protocolo</h3>
+  <h3 class="first">Protocolo</h3>
   <p-dropdown [options]="protocolos" [(ngModel)]="protocoloSeleccionado.id_protocolo"
-      placeholder="Selecionar protocolo" optionLabel="nombre" [showClear]="true" [filter]="true">
+      placeholder="{{actividad.fkProtocolo.nombre}}" optionLabel="nombre" [filter]="true">
   </p-dropdown>
--->
+
   <br><br>
+  
   <h3>Descripción</h3>
-  <textarea pInputTextarea></textarea>
+  <textarea pInputTextarea>{{actividad.actividades}}</textarea>
 
   <br><br>
 
+<!--   <div class="p-grid">
+    <div class="p-col">1</div>
+    <div class="p-col">2</div>
+    <div class="p-col">3</div>
+  </div> -->
+
+  
+  <h3>Estado</h3>
+  <p-dropdown [options]="estados" [(ngModel)]="estado" placeholder="{{actividad.estadoStr}}" optionLabel="label"></p-dropdown>
 
 
-  <br>
-</form>
+</div>
 
 <hr>
-<br>
+
 
 <button mat-raised-button style="background-color: #42BD75;" (click)="modalEditarActividad.close()">Guardar</button>
 &nbsp;
@@ -41,7 +51,6 @@ style="text-align: center;">
 
 </ngx-smart-modal>
 <!-- -----------  -----------  -->
-
 
 
 <p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="!masInfo">
@@ -63,10 +72,8 @@ style="text-align: center;">
 
       <td>
         <div *ngIf="item.estado == 0">
-          <mat-chip-list aria-label="Fish selection" style="display: flex; justify-content: center;">
-            <mat-chip selected style="background-color:darkseagreen; color: black;">
-              <small><strong>creada</strong></small></mat-chip>
-          </mat-chip-list>
+            <button mat-flat-button disabled style="background-color: #A7CECB; color: black;">
+              <small><strong style="color: #3d3d3dd3;">Pendiente</strong></small></button> <!-- A3F7B5 -->
         </div>
         <div *ngIf="item.estado == 1">
           <img class="img-table-icon" [src]="getImg('success-icon.png')" alt="success" />
@@ -74,16 +81,16 @@ style="text-align: center;">
       </td>
 
       <td class="space-around">
-        <button mat-mini-fab style="background-color: #8dc3ab !important;"
+        <button class="btn btnEditar"
           (click)="ngxSmartModalService.getModal('modalEditarActividad').open();editarActividad(item.idActividades);">
           <i class="material-icons">mode_edit</i>
         </button>
 
-        <button mat-mini-fab (click)="masInfo = true" style="background-color: #436fc3 !important; color: white;">
+        <button (click)="masInfo = true" class="btn">
           <i class="material-icons">info_outline</i>
         </button>
 
-        <button mat-mini-fab color="warn" (click)="eliminarActividad()">
+        <button class="btn" (click)="eliminarActividad()">
           <i class="material-icons">delete</i>
         </button>
       </td>

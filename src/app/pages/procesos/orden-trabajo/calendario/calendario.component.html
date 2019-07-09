@@ -1,0 +1,121 @@
+<div fxLayout="row wrap">
+    <div fxFlex="30" class="flex-p">
+        <mat-card class="block p-0" style="height: 100%; padding: 5% !important">
+            <h3 mat-subheader style=" display: inline-block;   margin-bottom: 0px;
+                        padding-bottom: 6px;
+                        color: #6a7a71; font-size: large">
+                <mat-icon mat-list-icon style="margin-right: 10px">build</mat-icon> Equipos
+            </h3>
+
+            <h3 mat-subheader style="  display: inline-block;
+            margin-bottom: 0px;
+            padding-bottom: 6px;
+            color: #6a7a71;
+            font-size: large;
+            margin-left: 15%;">
+                <mat-icon mat-list-icon style="margin-right: 10px">receipt</mat-icon> {{cotizacion.codigo}}
+            </h3>
+
+            <div class="container-equipos" perfectScrollbar>
+
+            
+
+
+                <mat-list style="position: relative">
+                    <div *ngFor="let coDetalle of cotizacionDetalles">
+                        <mat-list-item style="height: 60px;">
+                            <mat-icon mat-list-icon style="font-size: 35px">devices_other</mat-icon>
+                            <h4 mat-line style="color: gray">{{coDetalle.fkEquipos.nombre}}</h4>
+                            <p mat-line>
+                                <mat-checkbox (change)="isChecked($event, coDetalle)">
+                                    {{coDetalle.fkEquipos.referencia}}</mat-checkbox>
+                            </p>
+                        </mat-list-item>
+                        <mat-divider style=" border-top-color: rgba(0, 0, 0, 0.12); width: 80%; left: 8%;"></mat-divider>
+                    </div>
+                </mat-list>
+            </div>
+            <h3 mat-subheader style="padding-bottom: 0px;color: #6a7a71;font-size: large;margin: 0px;">
+                <mat-icon mat-list-icon style="margin-right: 10px;color: #6a7a71;font-size: large; margin: 0px;margin-top: 6px;">settings</mat-icon>
+                    Configuración
+            </h3>
+
+
+            <form [formGroup]="form" style="     width: 85%;
+                          text-align: center;
+                          offset: 40px;
+                          position: relative;
+                          left: 6%;">
+
+                <mat-form-field class="w-100" style="margin-bottom: 10px">
+                    <mat-label>Tecnicos</mat-label>
+                    <mat-select formControlName="responsable">
+                        <mat-option *ngFor="let tecnico of tecnicos" [value]="tecnico.value">{{tecnico.nombre}}</mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <show-errors [control]="form.controls.responsable"></show-errors>
+                    </mat-error>
+                </mat-form-field>
+
+
+
+                <mat-form-field class="w-100">
+                    <input matInput [matDatepicker]="start" placeholder="Fecha del mantenimiento" formControlName="fecha">
+                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                    <mat-datepicker #start></mat-datepicker>
+                    <mat-error>
+                        <show-errors [control]="form.controls.fecha"></show-errors>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <button mat-flat-button color="primary" (click)="agregarMantenimiento()"><mat-icon mat-list-icon >add</mat-icon> Agregar mantenimiento</button>
+
+
+            </form>
+
+
+        </mat-card>
+    </div>
+
+
+    <div fxFlex="70" class="flex-p">
+        <mat-card class="block p-0">
+
+            <div class="bg-primary">
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
+                    class="w-100 calendar-header">
+                    <div class="">
+                        <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+                            <mat-icon *ngIf="!settings.rtl">chevron_left</mat-icon>
+                            <mat-icon *ngIf="settings.rtl">chevron_right</mat-icon>
+                        </button>
+                        <button mat-icon-button mwlCalendarToday [(viewDate)]="viewDate">
+                            <mat-icon>today</mat-icon>
+                        </button>
+                        <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+                            <mat-icon *ngIf="settings.rtl">chevron_left</mat-icon>
+                            <mat-icon *ngIf="!settings.rtl">chevron_right</mat-icon>
+                        </button>
+                    </div>
+                    <h2>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h2>
+                    <div class="">
+                        <button mat-icon-button (click)="view = 'month'">
+                            <mat-icon>view_comfy</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openScheduleDialog(null)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" locale="es" [events]="events"
+                    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)">
+                </mwl-calendar-month-view>
+            </div>
+
+        </mat-card>
+    </div>
+</div>

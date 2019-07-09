@@ -2,8 +2,8 @@ import { Component, OnInit, Input, ViewChild,  HostListener  } from '@angular/co
 import { MatSnackBar } from '@angular/material';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-procolos-list',
   templateUrl: './procolos-list.component.html',
@@ -29,10 +29,21 @@ export class ProcoloslistComponent implements OnInit {
     }
     this.getProtocolos();
   }
+
+  //GET PROTOCOLOS
   public getProtocolos(){
-    this._AppService.get(`protocolos/list`,data =>{ this.protocolos = data, console.log(data)});
+    this._AppService.get(`protocolos/list`).subscribe(
+      result =>{
+        this.protocolos = result;
+      },
+      error =>{
+        console.log(error);
+      });
   }
+
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
   }
+
+
 }

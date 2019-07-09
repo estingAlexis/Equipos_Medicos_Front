@@ -16,6 +16,45 @@
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
 
+@import "~ngx-smart-modal/ngx-smart-modal";
+@import "app/app.component";
+
+.bg-theme{
+  background-color: #49be7c;
+}
+.ww30{
+  width: 30%;
+}
+.ww40{
+  width: 40%;
+}
+.ww50{
+  width: 50%;
+}
+.ww60{
+  width: 60%;
+}
+.ww70{
+  width: 70%;
+}
+.ww80{
+  width: 80%;
+}
+.input-filter{
+  height: 35px;
+  border-radius: 5px;
+  color: #49be7c;
+}  
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content > * {
+  width: 100%;
+}
+
 .img-table-icon{
   height: 20px; width: 20px
 }
@@ -75,4 +114,3 @@
       transform: translate(19px, 0);
     }
   }
-

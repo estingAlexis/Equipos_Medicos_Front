@@ -1,10 +1,13 @@
-import { HttpClientModule } from '@angular/common/http';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
+import { HttpClientModule } from '@angular/common/http';
+import { LOCALE_ID } from '@angular/core';
+
 
 import { AgmCoreModule } from '@agm/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -34,20 +37,22 @@ import { FullScreenComponent } from './theme/components/fullscreen/fullscreen.co
 import { ApplicationsComponent } from './theme/components/applications/applications.component';
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
-import { AppService } from './app.service';
-import { LoginComponent } from './pages/login/login.component';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
-import {PanelModule} from 'primeng/panel';
+import { AppService } from './services/app.service';
+import { LoginComponent } from './Auth/login/login.component';
+import { RegisterComponent } from './Auth/register/register.component';
+import { ComponentsModule } from './components/components.module';
+import { SpinnerModule } from 'primeng/spinner';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
 import { MatIconModule } from '@angular/material';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {SpinnerModule} from 'primeng/spinner';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,     
     FormsModule, 
+    HttpClientModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBNcjxo_35qnEG17dQvvftWa68eZWepYE0'
@@ -57,13 +62,12 @@ import {SpinnerModule} from 'primeng/spinner';
     SharedModule,
     PipesModule,
     routing,
-    HttpClientModule,
     NgxSmartModalModule.forRoot(),
-    PanelModule,
     MatIconModule,
     DropdownModule,
     InputTextareaModule,
-    SpinnerModule
+    SpinnerModule,
+    ComponentsModule
   ],
   declarations: [
     AppComponent,
@@ -78,14 +82,15 @@ import {SpinnerModule} from 'primeng/spinner';
     FullScreenComponent,
     ApplicationsComponent,
     MessagesComponent,
-    UserMenuComponent,
     LoginComponent,
-    
+    RegisterComponent,
+    UserMenuComponent
   ],
   entryComponents:[
     VerticalMenuComponent
   ],
   providers: [ 
+    { provide: LOCALE_ID, useValue: "es-ES" },
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },

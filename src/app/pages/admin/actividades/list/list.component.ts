@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 import { ActividadesFormComponent } from '../actividades-form/actividades-form.component';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Usuario } from 'src/app/services/usuario';
@@ -48,6 +48,7 @@ export class ListComponent implements OnInit {
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
+
     this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
     console.log(this.protocolos);
@@ -60,19 +61,49 @@ export class ListComponent implements OnInit {
   public onWindowResize():void {
     (window.innerWidth <= 992) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
+
+  //GET PROTOCOLOS
   public getProtocolos(){
-    this._AppService.getProtocolos().subscribe(
-      data => {
-        this.protocolos = data;
-        console.log(data);
-      }, err => {
-        console.log(err);
-      }
-    )
+    this._AppService.get(`protocolos/list`).subscribe(
+        result =>{
+          this.protocolos = result;
+        },
+        error =>{
+          console.log(error);
+        });
   }
+
+  public protocolo;
+  public actividad;
+  public estado;
+
+  guardarNuevaActividad() {
+    this._AppService.post(`actividades/${this.actividades.idActividades}`, {
+      "fkEmpresa": this.usuario.empresa.nombre ,
+      "fkProtocolo": this.protocolo ,
+      "items": 0,
+      "actividades": this.actividad ,
+/*       "orden": ,
+      "tipo": , */
+      "estado": this.estado
+    });
+  }
+
+//GET ACTIVIDADES X PROTOCOLOS
   public getActividadesPorProtocolos(id: string){
-    this._AppService.get(`actividades/protocolo/${id}`, data => { this.actividades = data, console.log(data)});
+    this._AppService.get(`actividades/protocolo/${id}`).subscribe(
+      result=>{
+        this.actividades = result;
+      },
+      error =>{
+        console.log ( error)
+      }
+    );
+
   }
+
+
+
   public openForm(){
     let dialogRef = this.dialog.open(ActividadesFormComponent, {
 
@@ -86,13 +117,10 @@ export class ListComponent implements OnInit {
     });
 }
 */
-
-/* public getUsuario() {
-  // FIXME: Obtener datos usuario
-  this.Usuario = this.auth.obtenerDatosUser();
-  console.log(this.Usuario);
-  return true;
-  }
- */
+  public estadoSeleccionado = 0;
+  public estados = [
+    {label: 'Pendiente', value: 0},
+    {label: 'Completado', value: 1},
+  ]
 
 }

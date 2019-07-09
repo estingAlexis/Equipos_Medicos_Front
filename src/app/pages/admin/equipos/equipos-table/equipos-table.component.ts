@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { AppService } from 'src/app/app.service';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-equipos-table',
   templateUrl: './equipos-table.component.html',
@@ -12,7 +12,17 @@ export class EquiposTableComponent implements OnInit {
   public settings: Settings;
   public protocolos: any;
   public table:number;
-  constructor(public appSettings:AppSettings, private _AppService:AppService) { this.settings = this.appSettings.settings; this.table = 0;}
+  public cols: any[];
+  constructor(public appSettings:AppSettings, private _AppService:AppService) { 
+    this.settings = this.appSettings.settings; 
+    this.table = 0;
+    this.cols = [
+      { field: 'codigo', header: 'Codigo' },
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'referencia', header: 'Referencia' },
+      { field: 'estado', header: 'Estado' }
+    ]; 
+  }
 
   ngOnInit() {
   }
