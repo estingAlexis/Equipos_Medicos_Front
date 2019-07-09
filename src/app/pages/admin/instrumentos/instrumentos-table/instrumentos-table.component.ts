@@ -12,7 +12,18 @@ export class InstrumentosTableComponent implements OnInit {
   public settings: Settings;
   public protocolos: any;
   public table:number;
-  constructor( public appSettings:AppSettings, private _AppService:AppService) {  this.settings = this.appSettings.settings; this.table = 0; }
+  public cols: any[];
+  constructor( public appSettings:AppSettings, private _AppService:AppService) {  
+    this.settings = this.appSettings.settings; 
+    this.table = 0;
+    this.cols = [
+      { field: 'idInstrumentos', header: 'Codigo' },
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'marca', header: 'Descripcion' },
+      { field: 'modelo', header: 'Responsable' },
+      { field: 'accion', header: 'Revision' }
+    ];  
+  }
   ngOnInit() {
   }
   public return(){

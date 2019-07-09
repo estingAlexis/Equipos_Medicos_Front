@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -77,6 +77,7 @@ import { ComponentsModule } from './components/components.module';
     VerticalMenuComponent
   ],
   providers: [ 
+    { provide: LOCALE_ID, useValue: "es-ES" },
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
