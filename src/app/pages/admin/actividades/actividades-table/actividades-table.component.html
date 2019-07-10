@@ -1,30 +1,31 @@
-<div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center" *ngIf="masInfo">
-  <button style="float: right" mat-flat-button color="accent" (click)="masInfo = false">
-    <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
-  </button>
-</div>
+<div style="margin: 7px" *ngIf="accion === 'editar'">
 
+  <div class="container">
+      <br>
+      <button style="float: right" mat-flat-button color="accent" (click)="accion = ''">
+          <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
+        </button>
+      <div style="display: flex;justify-content: center; margin: 0 auto;">
+          
 
-<!-- ----------- MODAL EDITAR ACTIVIDAD -----------  -->
-<ngx-smart-modal  [dismissable]="false" [escapable]="false" #modalEditarActividad identifier="modalEditarActividad"
-style="text-align: center;">
-<h1>Editar Actividad</h1>
+            <h4 style="margin: 0 auto;">Editar Actividad</h4>
+      </div>
+      <hr>    
+<div class="editarActividad" *ngIf="actividad" style="width: 70%;padding-left: 10%;text-align: center;">
 
-<div class="editarActividad" *ngIf="actividad">
-<hr>
 <!--   <h3>Empresa</h3>
   <input type="text" pInputText value="{{actividad.fkEmpresa.nombreEmpresa}}" disabled />
 
   <br><br> -->
 
-  <h3 class="first">Protocolo</h3>
-  <p-dropdown [options]="protocolos" [(ngModel)]="protocoloSeleccionado.id_protocolo"
+  <label for="">Protocolo</label> <br>
+  <p-dropdown [options]="protocolos" [(ngModel)]="protocoloActual"
       placeholder="{{actividad.fkProtocolo.nombre}}" optionLabel="nombre" [filter]="true">
   </p-dropdown>
 
   <br><br>
   
-  <h3>Descripción</h3>
+  <label for="">Descripción</label> <br>
   <textarea pInputTextarea>{{actividad.actividades}}</textarea>
 
   <br><br>
@@ -36,24 +37,24 @@ style="text-align: center;">
   </div> -->
 
   
-  <h3>Estado</h3>
+  <label for="">Estado</label> <br>
   <p-dropdown [options]="estados" [(ngModel)]="actividad.estado" placeholder="{{actividad.estadoStr}}" optionLabel="label"></p-dropdown>
 
 
+<hr>
+<button mat-raised-button style="background-color: #42BD75;" >Guardar</button>
+&nbsp;
+<button mat-raised-button (click)="accion = ''">Cerrar</button>
+
 </div>
 
-<hr>
+  </div>
+</div>
 
 
-<button mat-raised-button style="background-color: #42BD75;" (click)="modalEditarActividad.close()">Guardar</button>
-&nbsp;
-<button mat-raised-button (click)="modalEditarActividad.close()">Cerrar</button>
-
-</ngx-smart-modal>
-<!-- -----------  -----------  -->
 
 
-<p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="!masInfo">
+<p-table #dt [value]="data" [paginator]="true" [rows]="9" *ngIf="accion === ''">
 
   <ng-template pTemplate="header">
     <tr class="bg">
@@ -82,7 +83,7 @@ style="text-align: center;">
 
       <td class="space-around">
         <button class="btn btnEditar"
-          (click)="ngxSmartModalService.getModal('modalEditarActividad').open();editarActividad(item.idActividades);">
+          (click)="editarActividad(item.idActividades);">
           <i class="material-icons">mode_edit</i>
         </button>
 

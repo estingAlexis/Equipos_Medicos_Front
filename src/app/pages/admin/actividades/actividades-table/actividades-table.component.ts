@@ -18,10 +18,10 @@ export class ActividadesTableComponent implements OnInit {
   public searchText:string;
   public settings: Settings;
   public cols: any;
-  public masInfo: boolean = false;
+  public accion = '';
   public estado;
   public protocoloSeleccionado: string = ""; 
-
+  public protocoloActual;
   constructor(
     public ngxSmartModalService: NgxSmartModalService,
     public appSettings:AppSettings,
@@ -57,7 +57,7 @@ export class ActividadesTableComponent implements OnInit {
         console.log(this.actividad.estado);
       }
     );
-    
+    this.accion = 'editar';
   }
 
   //GET PROTOCOLOS
@@ -70,9 +70,21 @@ export class ActividadesTableComponent implements OnInit {
           console.log(error);
         });
   }
-
+  public usuario = this.auth.obtenerDatosUser();
   public eliminarActividad(id){
-    this._AppService.delete('actividad/'+id).subscribe(
+    console.log(id);
+    console.log(this.protocoloActual);
+    console.log(this.actividades);
+    console.log(this.actividades);
+    const desabilitarActividad = {
+      "fkEmpresa": this.usuario.empresa.idEmpresa ,
+      "fkProtocolo": this.protocoloActual ,
+      "items": 1,
+      "actividades": String(this.actividad) ,
+      "orden": Object.keys(this.actividades).length+1 , 
+      "estado": 9
+    }
+    this._AppService.put('actividad/'+id, desabilitarActividad).subscribe(
       result => {
         Swal.fire({
           title: 'Are you sure?',
@@ -132,12 +144,12 @@ export class ActividadesTableComponent implements OnInit {
       }
     });
 }
+}
 
-
-public estados = [
+/* public estados = [
   {label: 'Pendiente', value: 0},
   {label: 'Completado', value: 1},
-]
+] */
 
 
-}
+
