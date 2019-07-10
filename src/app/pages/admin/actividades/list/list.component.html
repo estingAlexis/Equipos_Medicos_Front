@@ -12,8 +12,8 @@ actividad
     <hr>
  
     <h3 class="first">Protocolo</h3>
-    <p-dropdown [options]="protocolos" [(ngModel)]="protocolo" [ngModelOptions]="{standalone: true}"
-        placeholder="Selecionar protocolo" optionLabel="nombre" [showClear]="true" [filter]="true">
+    <p-dropdown [options]="protocolos" [(ngModel)]="protocoloActual" [ngModelOptions]="{standalone: true}"
+        placeholder="{{protocoloActual}}" optionLabel="nombre" [showClear]="true" [filter]="true">
     </p-dropdown>
 
     <br><br>
@@ -84,7 +84,7 @@ actividad
                         <h2 style="color:white;">{{nombreProtocolo}}</h2>
 
                         <button mat-raised-button style="background-color: #397367; color:white;"
-                            (click)="ngxSmartModalService.getModal('modalNuevaActividad').open()">
+                            *ngIf="nombreProtocolo" (click)="nuevaActividad();">
                             <mat-icon>add</mat-icon>&nbsp; NUEVA ACTIVIDAD
                         </button>
 

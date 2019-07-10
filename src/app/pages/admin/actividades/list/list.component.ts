@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
-
+    console.log(this.protocolo);
     this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
   }
@@ -73,33 +73,57 @@ export class ListComponent implements OnInit {
         });
   }
 
+  public getProtocoloById(id) {
+    this._AppService.get('protocolos/'+id).subscribe(
+      data => {
+        this.protocoloActual = data;
+      }
+    )
+    return this.protocoloActual;
+  }
+
+public protocoloActual
+
+  public nuevaActividad() {
+    this.ngxSmartModalService.getModal('modalNuevaActividad').open();
+    console.log(this.protocoloActual);
+    if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string' ) {
+      let x = this.getProtocoloById(this.protocoloActual);
+      this.protocoloSeleccionado = x.nombre;
+      console.log(this.protocoloSeleccionado);
+    }
+
+  }
+
 
 //GET ACTIVIDADES X PROTOCOLOS
   public getActividadesPorProtocolos(id: string){
+    this.protocoloActual = id;
+    console.log(this.protocoloActual);
+    if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string') {
     this._AppService.get(`actividades/protocolo/${id}`).subscribe(
       result=>{
         this.actividades = result;
         console.log(result);
       },
       error =>{
-        console.log ( error)
+        console.log ( error);
       }
     );
-
+    }
   }
 
   guardarNuevaActividad() {
-    this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
     const nueva_actividad = {
       "fkEmpresa": this.usuario.empresa.idEmpresa ,
-      "fkProtocolo": this.protocolo.idProtocolo ,
+      "fkProtocolo": this.protocoloActual ,
       "items": 1,
       "actividades": String(this.actividad) ,
-      "orden": this.actividades.length(), 
+      "orden": Object.keys(this.actividades).length+1 , 
       "estado": this.estado
     }
     console.log(this.usuario.empresa.idEmpresa);
-    console.log(this.protocolo);
+    console.log(this.protocolos.idProtocolo);
     console.log(String(this.actividad));
     this._AppService.post(`actividad/new`, nueva_actividad).subscribe(
       result => {
@@ -110,10 +134,15 @@ export class ListComponent implements OnInit {
         )
       }
     );
+    /* FIXME: RESOLVER PROBLEMA CON IDPROTOCOLO x
     this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
-    this.protocolo = null;
+*/
+
+    this.getActividadesPorProtocolos(this.protocoloActual.idProtocolo);
+
+/*     this.protocolo = null;
     this.actividades = null;
-    this.estado = null;
+    this.estado = null; */
   } 
 
   

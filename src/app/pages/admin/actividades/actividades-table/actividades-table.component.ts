@@ -49,14 +49,15 @@ export class ActividadesTableComponent implements OnInit {
     this._AppService.get('actividad/'+id).subscribe(
       data => {
         this.actividad = data;
+        if(this.actividad.estado == 0){
+          this.actividad.estadoStr == 'Pendiente';
+        }else if(this.actividad.estado == 1){
+          this.actividad.estadoStr == 'Completado';
+        }
         console.log(this.actividad.estado);
       }
     );
-    if(this.actividad.estado == 0){
-      this.actividad.estadoStr == 'Pendiente';
-    }else if(this.actividad.estado == 1){
-      this.actividad.estadoStr == 'Completado';
-    }
+    
   }
 
   //GET PROTOCOLOS
@@ -131,6 +132,7 @@ export class ActividadesTableComponent implements OnInit {
       }
     });
 }
+
 
 public estados = [
   {label: 'Pendiente', value: 0},
