@@ -11,6 +11,7 @@ export class ClientesListComponent implements OnInit {
   public settings: Settings;
   public clientes: any;
   public cols: any[];
+  public estado:boolean;
   constructor(
     public appSettings:AppSettings,
     private _AppService:AppService
@@ -23,7 +24,8 @@ export class ClientesListComponent implements OnInit {
         { field: 'direccion', header: 'Direccion' },
         { field: 'ciudad', header: 'Ciudad' },
         { field: 'email', header: 'Email' }
-      ];    
+      ];  
+      this.estado=true;
     }
 
   ngOnInit() {

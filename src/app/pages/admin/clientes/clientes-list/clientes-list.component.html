@@ -1,13 +1,13 @@
 <div fxLayout="row wrap">
-    <div fxFlex="100" class="flex-p">
-        <mat-card class="p-0 list">
+    <div fxFlex="100" class="flex-p" >
+        <mat-card class="p-0 list" >
             <mat-sidenav-container>
                 <div>
                     <mat-toolbar
                         style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
                         fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-flat-button color="warn">
+                            <button mat-flat-button color="warn" (click)="estado='nuevoR'">
                                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cliente
                             </button>
                         </div>
@@ -53,5 +53,7 @@
                 </div>
             </mat-sidenav-container>
         </mat-card>
+        <!--nuevo cliente-->
+
     </div>
 </div>
