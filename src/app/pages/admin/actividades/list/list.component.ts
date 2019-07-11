@@ -132,13 +132,14 @@ public protocoloActual
           'You clicked the button!', 
           'success'
         )
+        this.getActividadesPorProtocolos(this.protocoloActual.idProtocolo);
       }
     );
     /* FIXME: RESOLVER PROBLEMA CON IDPROTOCOLO x
     this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
 */
 
-    this.getActividadesPorProtocolos(this.protocoloActual.idProtocolo);
+
 
 /*     this.protocolo = null;
     this.actividades = null;

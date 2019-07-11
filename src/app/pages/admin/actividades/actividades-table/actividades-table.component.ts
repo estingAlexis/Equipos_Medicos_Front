@@ -6,6 +6,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
+import { ListComponent } from '../list/list.component';
 @Component({
   selector: 'app-actividades-table',
   templateUrl: './actividades-table.component.html',
@@ -26,7 +27,8 @@ export class ActividadesTableComponent implements OnInit {
     public ngxSmartModalService: NgxSmartModalService,
     public appSettings:AppSettings,
     private _AppService: AppService,
-    private auth: AuthService
+    private auth: AuthService,
+    private list: ListComponent
     ) { 
     this.settings = this.appSettings.settings; 
     this.cols = [
@@ -71,20 +73,10 @@ export class ActividadesTableComponent implements OnInit {
         });
   }
   public usuario = this.auth.obtenerDatosUser();
+  
   public eliminarActividad(id){
-    console.log(id);
-    console.log(this.protocoloActual);
-    console.log(this.actividades);
-    console.log(this.actividades);
-    const desabilitarActividad = {
-      "fkEmpresa": this.usuario.empresa.idEmpresa ,
-      "fkProtocolo": this.protocoloActual ,
-      "items": 1,
-      "actividades": String(this.actividad) ,
-      "orden": Object.keys(this.actividades).length+1 , 
-      "estado": 9
-    }
-    this._AppService.put('actividad/'+id, desabilitarActividad).subscribe(
+
+    this._AppService.put(`actividad/${id}/estado/9`, {}).subscribe(
       result => {
         Swal.fire({
           title: 'Are you sure?',
@@ -100,6 +92,7 @@ export class ActividadesTableComponent implements OnInit {
               'Your imaginary file has been deleted.',
               'success'
             )
+            this.list.getActividadesPorProtocolos(this.list.protocoloActual);
           // For more information about handling dismissals please visit
           // https://sweetalert2.github.io/#handling-dismissals
           } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -119,30 +112,7 @@ export class ActividadesTableComponent implements OnInit {
         }
       }
     )
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
-          'success'
-        )
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
-      }
-    });
+
 }
 }
 
