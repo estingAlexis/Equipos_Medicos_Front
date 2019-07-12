@@ -1,0 +1,66 @@
+<p-table class="theader-color tbody-color" #dt [value]="tecnicos" [columns]="cols" [paginator]="true" [rows]="5"
+  [rowsPerPageOptions]="[5,10,20,100]">
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Buscar Por..."
+        (input)="dt.filterGlobal($event.target.tecnicos, 'contains')" style="width:auto">
+    </div>
+  </ng-template>
+  <ng-template #name pTemplate="header" let-columns>
+    <tr>
+      <th>ID</th>
+      <th>DOCUMENTO</th>
+      <th>NOMBRE</th>
+      <th>EMPRESA</th>
+     <!--  <th>DIRECCION</th> -->
+      <th>CELULAR</th>
+     <!--  <th>EMAIL</th>
+      <th>CIUDAD</th -->
+      <th>ESTADO</th>
+      <th>ACCIONES</th>
+    </tr>
+  </ng-template>
+  <ng-template #name pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td>
+        {{rowData.idTecnico}}
+      </td>
+      <td>
+        {{rowData.documento}}
+      </td>
+      <td>
+        {{rowData.nombre}}
+      </td>
+      <td>
+        {{rowData.fkEmpresa.nombreEmpresa}}
+      </td>
+<!--       <td>
+        {{rowData.direccion}}
+      </td> -->
+      <td>
+        {{rowData.telefonoCelular}}
+      </td>
+  <!--     <td>
+        {{rowData.email}}
+      </td>
+      <td>
+        {{rowData.ciudad}}
+      </td> -->
+      <td>
+        {{rowData.estado}}
+      </td>
+      <td>
+        <button button mat-icon-button class="btn btnEditar" type="button"
+          (click)="editarActividad(item.idActividades);">
+          <i class="material-icons">mode_edit</i>
+        </button>
+        &nbsp;
+        <button button mat-icon-button class="btn" type="button" (click)="eliminarActividad(item.idActividades)">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>

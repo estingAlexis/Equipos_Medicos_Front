@@ -5,9 +5,13 @@
                 <div>
                     <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-flat-button color="warn" (click)="ngxSmartModalService.getModal('myModal').open()">
-                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Protocolo
+                            <button mat-raised-button style="background-color: #397367; color:white;"
+                                (click)="nuevaActividad();">
+                                <mat-icon>add</mat-icon>&nbsp; NUEVA ACTIVIDAD
                             </button>
+<!--                             <button mat-flat-button color="warn" (click)="ngxSmartModalService.getModal('myModal').open()">
+                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Protocolo
+                            </button> -->
                         </div>
                     </mat-toolbar>
                     <div class="list-content" perfectScrollbar>

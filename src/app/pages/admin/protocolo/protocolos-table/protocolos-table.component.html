@@ -1,4 +1,15 @@
-<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [columns]="cols" [paginator]="true"
+<div *ngIf="accion == 'masInfo'">
+        <button mat-flat-button (click)="accion = ''">Atrás</button>
+        <table>
+                <th>ID</th>
+                <th>EQUIPO</th>
+                <th>DESCRIPCION</th>
+                <th>TECNICO</th>
+        </table>
+</div>
+
+
+<p-table class="theader-color tbody-color" *ngIf="table == 0 && accion == ''" #dt [value]="data" [columns]="cols" [paginator]="true"
         [rows]="5" [rowsPerPageOptions]="[5,10,20,100]">
         <ng-template pTemplate="caption">
                 <div style="text-align: right">
@@ -24,6 +35,10 @@
                                 <button mat-icon-button pTooltip="Ver Instrumentos" tooltipPosition="top"
                                         (click)="getInstrumentosPorProtocolos(rowData.idProtocolo)">
                                         <mat-icon>widgets</mat-icon>
+                                </button>
+                                <button mat-button pTooltip="Mas Informacion" tooltipPosition="top"
+                                        (click)="accion = 'masInfo'" >
+                                        <mat-icon>info_outline</mat-icon>
                                 </button>
                         </td>
                         <td>
