@@ -47,6 +47,8 @@ export class ActividadesTableComponent implements OnInit {
   }
 
   public actividad;
+
+  // EDITAR ACTIVIDAD
   public editarActividad(id) {
     this._AppService.get('actividad/'+id).subscribe(
       data => {
@@ -74,22 +76,23 @@ export class ActividadesTableComponent implements OnInit {
   }
   public usuario = this.auth.obtenerDatosUser();
   
+  // ELIMINAR ACTIVIDAD
   public eliminarActividad(id){
 
     this._AppService.put(`actividad/${id}/estado/9`, {}).subscribe(
       result => {
         Swal.fire({
-          title: 'Are you sure?',
-          text: 'You will not be able to recover this imaginary file!',
+          title: 'Advertencia',
+          text: 'Estas seguro?',
           type: 'warning',
           showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'No, keep it'
+          confirmButtonText: 'Si, borrar',
+          cancelButtonText: 'No, salir'
         }).then((result) => {
           if (result.value) {
             Swal.fire(
               'Deleted!',
-              'Your imaginary file has been deleted.',
+              'Actividad Borrada con exito',
               'success'
             )
             this.list.getActividadesPorProtocolos(this.list.protocoloActual);
@@ -98,7 +101,7 @@ export class ActividadesTableComponent implements OnInit {
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire(
               'Cancelled',
-              'Your imaginary file is safe :)',
+              'No se ha realizado ningun cambio',
               'error'
             )
           }
@@ -106,7 +109,7 @@ export class ActividadesTableComponent implements OnInit {
         error => {
           Swal.fire({
             title: 'Error!',
-            text: 'Ha ocurrido un error.',
+            text: 'Error al conectar con la base de datos',
             type:'error'
           });
         }

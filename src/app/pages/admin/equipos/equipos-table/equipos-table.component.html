@@ -11,6 +11,9 @@
       <th *ngFor="let col of columns; let i = index" [ngClass]="i == 2 ? 'ww30' : 'w-10'">
         {{col.header}}
       </th>
+      <th>
+        Acciones
+      </th>
     </tr>
 
   </ng-template>
@@ -29,6 +32,18 @@
         <div *ngIf="rowData.estado == 0"><img class="img-table-icon" [src]="getImg('error-icon.png')" alt="error"></div>
         <div *ngIf="rowData.estado == 1"><img class="img-table-icon" [src]="getImg('success-icon.png')" alt="error">
         </div>
+      </td>
+      <td>
+    
+          <button mat-icon-button type="button" class="btn btnEditar"
+          (click)="editarActividad(item.idActividades);">
+          <i class="material-icons">mode_edit</i>
+        </button>
+        &nbsp;
+        <button mat-icon-button type="button" class="btn"
+        (click)="eliminarActividad(item.idActividades)">
+            <i class="material-icons">delete</i>
+          </button>
       </td>
     </tr>
   </ng-template>

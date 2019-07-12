@@ -17,21 +17,6 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr [pSelectableRow]="rowData">
                         <td>
-                                {{rowData.codigo}}
-                        </td>
-                        <td>
-                                {{rowData.nombre}}
-                        </td>
-                        <td>
-                                {{rowData.descripcion}}
-                        </td>
-                        <td>
-                                {{rowData.responsable}}
-                        </td>
-                        <td>
-                                {{rowData.revision}}
-                        </td>
-                        <td>
                                 <button mat-icon-button pTooltip="Ver Actividades" tooltipPosition="top"
                                         (click)="getActividadesPorProtocolo(rowData.idProtocolo)">
                                         <mat-icon>ballot</mat-icon>
@@ -41,6 +26,31 @@
                                         <mat-icon>widgets</mat-icon>
                                 </button>
                         </td>
+                        <td>
+                                {{rowData.codigo}}
+                        </td>
+                        <td>
+                                {{rowData.nombre}}
+                        </td>
+                        <!--                         <td>
+                                {{rowData.descripcion}}
+                        </td> -->
+                        <td>
+                                {{rowData.responsable}}
+                        </td>
+                        <td>
+                                {{rowData.revision}}
+                        </td>
+                        <td>
+                                <button button mat-icon-button class="btn btnEditar" type="button" (click)="editarActividad(item.idActividades);">
+                                        <i class="material-icons">mode_edit</i>
+                                </button>
+                                &nbsp;
+                                <button  button mat-icon-button         class="btn" type="button" (click)="eliminarActividad(item.idActividades)">
+                                        <i class="material-icons">delete</i>
+                                </button>
+                        </td>
+
                 </tr>
 
         </ng-template>
@@ -58,10 +68,11 @@
                         </div>
                 </tr>
                 <tr class="bg">
-                        <th width="10%">ID</th>
-                        <th width="70%">Descripcion</th>
+                        <th width="8%">Estado</th>
+                        <th width="8%">ID</th>
+                        <!--                         <th width="75%">Descripcion</th> -->
                         <th width="10%">Orden</th>
-                        <th width="10%">Estado</th>
+
                 </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
