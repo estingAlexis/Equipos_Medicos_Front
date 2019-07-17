@@ -2,8 +2,8 @@
 <ngx-smart-modal [dismissable]="false" [escapable]="false" #modalNuevaActividad identifier="modalNuevaActividad"
 style="text-align: center;">
 <h1>Añadir Actividad</h1>
-
-<form [formGroup]="nueva_actividad">
+actividad
+<form>
 
 <!--     <h3>Empresa</h3>
     <input type="text" pInputText value="{{usuario.empresa.nombreEmpresa}}" disabled/>
@@ -12,13 +12,13 @@ style="text-align: center;">
     <hr>
  
     <h3 class="first">Protocolo</h3>
-    <p-dropdown [options]="protocolos" [(ngModel)]="protocolo"
-        placeholder="Selecionar protocolo" optionLabel="nombre" [showClear]="true" [filter]="true" formControlName="protocolo">
+    <p-dropdown [options]="protocolos" [(ngModel)]="protocoloActual" [ngModelOptions]="{standalone: true}"
+        placeholder="{{protocoloActual}}" optionLabel="nombre" [showClear]="true" [filter]="true">
     </p-dropdown>
 
     <br><br>
     <h3>Descripción</h3>
-    <textarea pInputTextarea formControlName="actividad" [(ngModel)]="actividad"></textarea>
+    <textarea pInputTextarea [(ngModel)]="actividad" name="actividad"></textarea>
 
     <br><br>
 <!-- 
@@ -28,18 +28,20 @@ style="text-align: center;">
     <br> <br>
  -->
     <h3>Estado</h3>
-    <p-dropdown [options]="estados" [(ngModel)]="estado" placeholder="" optionLabel="label" formControlName="estado"></p-dropdown>
-
+    <p-dropdown [options]="estados" [(ngModel)]="estado" name="estado" placeholder="" optionLabel="label"></p-dropdown>
 
     <br>
     <hr>
 
-<button  mat-raised-button style="background-color: #42BD75;"
+    <button type="button" mat-raised-button style="background-color: #42BD75;"
     (click)="guardarNuevaActividad();modalNuevaActividad.close();">Crear</button>
     &nbsp;
-    <button mat-raised-button (click)="modalNuevaActividad.close()">Cerrar</button>
+    <button type="button" mat-raised-button (click)="modalNuevaActividad.close()">Cerrar</button>
+
 
 </form>
+
+
 
 </ngx-smart-modal>
 <!-- -----------  -----------  -->
@@ -81,8 +83,8 @@ style="text-align: center;">
                         </div>
                         <h2 style="color:white;">{{nombreProtocolo}}</h2>
 
-                        <button *ngIf="nombreProtocolo" mat-raised-button style="background-color: #397367; color:white;"
-                            (click)="ngxSmartModalService.getModal('modalNuevaActividad').open()">
+                        <button mat-raised-button style="background-color: #397367; color:white;"
+                            *ngIf="nombreProtocolo" (click)="nuevaActividad();">
                             <mat-icon>add</mat-icon>&nbsp; NUEVA ACTIVIDAD
                         </button>
 

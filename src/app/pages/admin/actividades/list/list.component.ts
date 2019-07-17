@@ -9,6 +9,7 @@ import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Usuario } from 'src/app/services/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { SelectItem } from 'primeng/components/common/selectitem';
+import Swal from 'sweetalert2';
 interface protocolo {
   id_protocolo: number;
   nombre: string;
@@ -25,15 +26,15 @@ export class ListComponent implements OnInit {
   public settings: Settings;
   public sidenavOpen:boolean = true;
   public actividades: any;
-
   public protocolos: any;
   public protocoloSeleccionado: string = ""; 
-
   public searchText:string;
   public nombreProtocolo: string;
   public usuario: Usuario;
-
-
+  public protocolo;
+  public actividad;
+  
+  public estado;
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
               public dialog: MatDialog,
@@ -48,11 +49,9 @@ export class ListComponent implements OnInit {
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
-
+    console.log(this.protocolo);
     this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
-    console.log(this.protocolos);
-    console.log(this.usuario);
   }
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
@@ -67,42 +66,86 @@ export class ListComponent implements OnInit {
     this._AppService.get(`protocolos/list`).subscribe(
         result =>{
           this.protocolos = result;
+          console.log(result);
         },
         error =>{
           console.log(error);
         });
   }
 
-  public protocolo;
-  public actividad;
-  public estado;
-
-  guardarNuevaActividad() {
-    this._AppService.post(`actividades/${this.actividades.idActividades}`, {
-      "fkEmpresa": this.usuario.empresa.nombre ,
-      "fkProtocolo": this.protocolo ,
-      "items": 0,
-      "actividades": this.actividad ,
-/*       "orden": ,
-      "tipo": , */
-      "estado": this.estado
-    });
+  public getProtocoloById(id) {
+    this._AppService.get('protocolos/'+id).subscribe(
+      data => {
+        this.protocoloActual = data;
+      }
+    )
+    return this.protocoloActual;
   }
+
+public protocoloActual
+
+  public nuevaActividad() {
+    this.ngxSmartModalService.getModal('modalNuevaActividad').open();
+    console.log(this.protocoloActual);
+    if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string' ) {
+      let x = this.getProtocoloById(this.protocoloActual);
+      this.protocoloSeleccionado = x.nombre;
+      console.log(this.protocoloSeleccionado);
+    }
+
+  }
+
 
 //GET ACTIVIDADES X PROTOCOLOS
   public getActividadesPorProtocolos(id: string){
+    this.protocoloActual = id;
+    console.log(this.protocoloActual);
+    if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string') {
     this._AppService.get(`actividades/protocolo/${id}`).subscribe(
       result=>{
         this.actividades = result;
+        console.log(result);
       },
       error =>{
-        console.log ( error)
+        console.log ( error);
       }
     );
-
+    }
   }
 
+  guardarNuevaActividad() {
+    const nueva_actividad = {
+      "fkEmpresa": this.usuario.empresa.idEmpresa ,
+      "fkProtocolo": this.protocoloActual ,
+      "items": 1,
+      "actividades": String(this.actividad) ,
+      "orden": Object.keys(this.actividades).length+1 , 
+      "estado": this.estado
+    }
+    console.log(this.usuario.empresa.idEmpresa);
+    console.log(this.protocolos.idProtocolo);
+    console.log(String(this.actividad));
+    this._AppService.post(`actividad/new`, nueva_actividad).subscribe(
+      result => {
+        Swal.fire(
+          'Good job!',
+          'You clicked the button!', 
+          'success'
+        )
+      }
+    );
+    /* FIXME: RESOLVER PROBLEMA CON IDPROTOCOLO x
+    this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
+*/
 
+    this.getActividadesPorProtocolos(this.protocoloActual.idProtocolo);
+
+/*     this.protocolo = null;
+    this.actividades = null;
+    this.estado = null; */
+  } 
+
+  
 
   public openForm(){
     let dialogRef = this.dialog.open(ActividadesFormComponent, {
@@ -120,7 +163,6 @@ export class ListComponent implements OnInit {
   public estadoSeleccionado = 0;
   public estados = [
     {label: 'Pendiente', value: 0},
-    {label: 'Completado', value: 1},
   ]
 
 }

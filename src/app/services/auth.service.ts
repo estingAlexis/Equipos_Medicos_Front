@@ -119,21 +119,5 @@ export class AuthService {
 
   }
 
-  estado(num) {
-    if(num == 0){
-      return 'Creado';
-    }else if(num == 1){
-      return 'En Proceso';
-    }else if(num == 2){
-      return 'Asignado';
-    }else if(num == 3){
-      return 'Orden de trabajo';
-    }else if(num == 9){
-      return 'Cancelado';
-    }
-  }
-
-
-
 }
 
