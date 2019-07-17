@@ -37,6 +37,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { DropdownModule } from 'primeng/dropdown';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { SpinnerModule } from 'primeng/spinner';
+import { TecnicosComponent } from './tecnicos/tecnicos.component';
+import { TecnicosTableComponent } from './tecnicos/tecnicos-table/tecnicos-table.component';
+import { TecnicosFormComponent } from './tecnicos/tecnicos-form/tecnicos-form.component';
 
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
@@ -45,7 +48,8 @@ export const routes = [
   { path: 'instrumentos', component: InstrumentosComponent, data: { breadcrumb: 'Instrumentos' }},
   { path: 'equipos', component: EquiposComponent, data: { breadcrumb: 'Equipos' }},
   { path: 'clientes', component: ClientesComponent, data: { breadcrumb: 'Clientes' }},
-  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' }}
+  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' }},
+  { path: 'tecnicos', component: TecnicosComponent, data: { breadcrumb: 'Tecnicos' }}
 ];
 
 @NgModule({
@@ -89,7 +93,10 @@ export const routes = [
     EquiposTableComponent,
     ClientesListComponent,
     ActividadesFormComponent,
-    EquiposFormComponent
+    EquiposFormComponent,
+    TecnicosComponent,
+    TecnicosTableComponent,
+    TecnicosFormComponent
   ],
   providers: [
     AppService

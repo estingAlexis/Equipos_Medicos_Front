@@ -14,6 +14,7 @@ export const verticalMenuItems = [
     new Menu (123, 'Instrumentos', '/admin/instrumentos', null, 'group_work', null, false, 120),
     new Menu (124, 'Equipos', '/admin/equipos', null, 'build', null, false, 120),
     new Menu (125, 'Clientes', '/admin/clientes', null, 'people', null, false, 120),
+    new Menu (126, 'Tecnicos', '/admin/tecnicos', null, 'next_week', null, false, 120),
     new Menu (130, 'Procesos', null, null, 'insert_chart', null, true, 0),
     new Menu (131, 'Cotizaciones', '/procesos/cotizaciones', null, 'attach_money', null, false, 130),
     new Menu (132, 'Ordenes de Trabajo', '/procesos/order-trabajo', null, 'gavel', null, false, 130),

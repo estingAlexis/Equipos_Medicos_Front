@@ -14,7 +14,7 @@ export class ProtocolosTableComponent implements OnInit {
   public actividades: any;
   public instrumentos: any;
   public table: number;
-
+  public accion = '';
   constructor(public appSettings: AppSettings, private _AppService: AppService, private auth: AuthService) { this.settings = this.appSettings.settings; this.table = 0; }
   ngOnInit() {
 

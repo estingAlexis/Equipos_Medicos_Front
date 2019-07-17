@@ -1,47 +1,71 @@
-<p-table class="theader-color tbody-color" *ngIf="table == 0" #dt [value]="data" [paginator]="true" [rows]="5"
-        [rowsPerPageOptions]="[5,10,20,100]">
-        <ng-template pTemplate="header">
-                <tr class="bg">
-                        <th width="12%">Acciones</th>
-                        <th width="8%">Codigo</th>
-                        <th width="15%">Nombre</th>
-                        <th width="10%">Responsable</th>
-                        <th width="20%">Revision</th>
-                        <th width="18%">Acciones</th>
-                </tr>
+<div *ngIf="accion == 'masInfo'">
+        <button mat-flat-button (click)="accion = ''">Atrás</button>
+        <table>
+                <th>ID</th>
+                <th>EQUIPO</th>
+                <th>DESCRIPCION</th>
+                <th>TECNICO</th>
+        </table>
+</div>
+
+
+<p-table class="theader-color tbody-color" *ngIf="table == 0 && accion == ''" #dt [value]="data" [columns]="cols" [paginator]="true"
+        [rows]="5" [rowsPerPageOptions]="[5,10,20,100]">
+        <ng-template pTemplate="caption">
+                <div style="text-align: right">
+                        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
                 <tr>
+                        <th *ngFor="let col of columns; let i = index" [ngClass]="i == 2 ? 'ww30' : 'w-10'">
+                                {{col.header}}
+                        </th>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
                         <td>
-                                <button mat-flat-button style="background-color: #487777 !important"
-                                        pTooltip="Ver Actividades" tooltipPosition="top"
-                                        (click)="getActividadesPorProtocolo(item.idProtocolo)">
-                                        <mat-icon style="color:white !important;">ballot</mat-icon>
+                                <button mat-icon-button pTooltip="Ver Actividades" tooltipPosition="top"
+                                        (click)="getActividadesPorProtocolo(rowData.idProtocolo)">
+                                        <mat-icon>ballot</mat-icon>
                                 </button>
-                                <button mat-flat-button style="background-color: #8dc3ab !important"
-                                        pTooltip="Ver Instrumentos" tooltipPosition="top"
-                                        (click)="getInstrumentosPorProtocolos(item.idProtocolo)">
+                                <button mat-icon-button pTooltip="Ver Instrumentos" tooltipPosition="top"
+                                        (click)="getInstrumentosPorProtocolos(rowData.idProtocolo)">
                                         <mat-icon>widgets</mat-icon>
                                 </button>
-                        </td>
-                        <td>{{item.codigo}}</td>
-                        <td style="text-align: left">{{item.nombre}}</td>
-
-                        <td style="text-align: left">{{item.responsable}}</td>
-                        <td>{{item.revision}}</td>
-                        <td class="space-around">
-
-                                <button mat-mini-fab style="background-color: #8dc3ab !important;"><i
-                                                class="material-icons">mode_edit</i></button>
-
-                                <button mat-mini-fab style="background-color: #436fc3 !important;color:white;"><i
-                                                class="material-icons">info_outline</i></button>
-
-                                <button mat-mini-fab color="warn">
-                                        <mat-icon>delete</mat-icon>
+                                <button mat-button pTooltip="Mas Informacion" tooltipPosition="top"
+                                        (click)="accion = 'masInfo'" >
+                                        <mat-icon>info_outline</mat-icon>
                                 </button>
-
                         </td>
+                        <td>
+                                {{rowData.codigo}}
+                        </td>
+                        <td>
+                                {{rowData.nombre}}
+                        </td>
+                        <!--                         <td>
+                                {{rowData.descripcion}}
+                        </td> -->
+                        <td>
+                                {{rowData.responsable}}
+                        </td>
+                        <td>
+                                {{rowData.revision}}
+                        </td>
+                        <td>
+                                <button button mat-icon-button class="btn btnEditar" type="button" (click)="editarActividad(item.idActividades);">
+                                        <i class="material-icons">mode_edit</i>
+                                </button>
+                                &nbsp;
+                                <button  button mat-icon-button         class="btn" type="button" (click)="eliminarActividad(item.idActividades)">
+                                        <i class="material-icons">delete</i>
+                                </button>
+                        </td>
+
                 </tr>
 
         </ng-template>
@@ -59,10 +83,11 @@
                         </div>
                 </tr>
                 <tr class="bg">
-                        <th width="10%">ID</th>
-                        <th width="70%">Descripcion</th>
+                        <th width="8%">Estado</th>
+                        <th width="8%">ID</th>
+                        <!--                         <th width="75%">Descripcion</th> -->
                         <th width="10%">Orden</th>
-                        <th width="10%">Estado</th>
+
                 </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
