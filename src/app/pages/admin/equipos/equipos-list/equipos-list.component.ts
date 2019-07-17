@@ -12,11 +12,13 @@ import { EquiposFormComponent } from '../equipos-form/equipos-form.component';
 export class EquiposListComponent implements OnInit {
   public settings: Settings;
   public equipos: any;
+  public estado:boolean;
   constructor(
     public appSettings: AppSettings,
     public dialog: MatDialog,
     private _AppService: AppService
-  ) { this.settings = this.appSettings.settings }
+  ) { this.settings = this.appSettings.settings
+  this.estado=true; }
   ngOnInit() {
     this.getEquipos();
   }

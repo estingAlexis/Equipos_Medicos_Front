@@ -8,7 +8,7 @@
         <img [src]="userImage" alt="user-image">
         <div class="user-info" *ngIf="usuario">
             <p class="name">{{usuario.nombre}}</p>
-            <p  class="position">{{usuario.username}} <br> <small class="muted-text">desde 2019</small></p>
+            <p  class="position">{{usuario.actname}} <br> <small class="muted-text">desde 2019</small></p>
         </div>
     </div>
     <div *ngIf="settings.menuType != 'mini'" fxLayout="row" fxLayoutAlign="space-around center" class="w-100 muted-text">
