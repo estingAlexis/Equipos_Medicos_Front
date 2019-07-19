@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Usuario } from './usuario';
+import { id } from '@swimlane/ngx-charts/release/utils';
 
 
 @Injectable({
@@ -85,84 +86,6 @@ export class ApiRestService {
 }
 
 
-  // @Get actividades 
-  public getActividadesPorProtocolos(id: string) {
-    return this.http.get(this.url + 'actividades/protocolo/' + id, this.httpOptions);
-  }
-  // @Get empresas
-  public getEmpresas() {
-    return this.http.get(this.url + 'empresa/list', this.httpOptions);
-  }
-  // @Get equipos
-  public getEquipos() {
-    return this.http.get(this.url + 'equipos/list', this.httpOptions);
-  }
-  // @Get grupos
-  public getGrupos() {
-    return this.http.get(this.url + 'grupos/list', this.httpOptions);
-  }
-  // @Get instrumentos
-  public getInstrumentos() {
-    return this.http.get(this.url + 'instrumentos/list', this.httpOptions);
-  }
-  // @Get instrumentos por Protocolos
-  public getInstrumentosPorProtocolos(id: string) {
-    return this.http.get(this.url + 'ip/1/protocolo/' + id, this.httpOptions);
-  }
-  // @Get instrumentos -- protocolos
-  public getInstrumentosProtocolos() {
-    return this.http.get(this.url + 'instrumentos_protocolo/list', this.httpOptions);
-  }
-  // @Get parametros
-  public getParametros() {
-    return this.http.get(this.url + 'parametro/list', this.httpOptions);
-  }
-  // @Get protocolos
-  public getProtocolos() {
-    return this.http.get(this.url + 'protocolos/list', this.httpOptions);
-  }
-  // @Get protocolos por Instrumentos
-  public getProtocolosPorInstrumento() {
-    return this.http.get(this.url + 'ip/1/instrumento/2', this.httpOptions);
-  }
-  // @Get terceros
-  public getTerceros() {
-    return this.http.get(this.url + 'terceros/list', this.httpOptions);
-  }
-  //@Get clientes
-  public getClientes(){
-    return this.http.get(this.url + 'clientes/list',this.httpOptions);
-  }
-  // @Get Cotizaciones
-  public getCotizaciones() {
-    return this.http.get(this.url + 'cotizaciones/list', this.httpOptions);
-  }
-  //@Get parametro por grupo
-  public getParametroGrupo(){
-    return this.http.get(this.url + 'parametro/filtro_empresa_grupo/1/2', this.httpOptions)
-  }
-  //@Get Listar cotizacion por id 
-  public getListarCotizacion(id: any){
-    return this.http.get(this.url + 'cotizaciones/'.concat(id), this.httpOptions);
-  }
-  //@Post clientes
-/*   post(ruta: string, body: any){
-    let repos = this.http.post<any>(this.url.concat(ruta), body, httpOptions); 
-  return repos;
-  } */
-  // @Get Cotizacion Detalle
-  public getCotizacionDetalle(){
-    return this.http.get(this.url + 'cotizacionesDetalle/list', this.httpOptions);
-  }
-  // @Get listar
-  public getOrden(){
-    return this.http.get(this.url + 'ordenes/list', this.httpOptions);
-  }
-
-    // @Get Metodos de Pago
-    public getMetodosDePago() {
-      return this.http.get(this.url + 'cotizaciones/medioDePago/list', this.httpOptions)
-    }
 
 
   // Modal

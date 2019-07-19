@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class InstrumentosListComponent implements OnInit {
   public settings: Settings;
   public instrumentos: any;
+  public estado:boolean;
   public Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -18,7 +19,8 @@ export class InstrumentosListComponent implements OnInit {
     timer: 3000
   });
   constructor(public appSettings:AppSettings, 
-    private _AppService:AppService) { this.settings = this.appSettings.settings }
+    private _AppService:AppService) { this.settings = this.appSettings.settings
+    this.estado=true; }
 
   ngOnInit() {
     this.getInstrumentos();

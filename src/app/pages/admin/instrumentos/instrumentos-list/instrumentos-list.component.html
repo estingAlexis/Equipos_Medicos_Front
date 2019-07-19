@@ -1,11 +1,11 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf="estado==true">
   <div fxFlex="100" class="flex-p">
       <mat-card class="p-0 list">
           <mat-sidenav-container>
               <div>
                   <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white;" fxLayout="row" fxLayoutAlign="space-between center">
                       <div fxLayout="row" fxLayoutAlign="start center">
-                          <button mat-flat-button color="warn">
+                          <button mat-flat-button color="warn" (click)="estado=false">
                               <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Instrumento
                           </button>
                       </div>
@@ -18,3 +18,15 @@
       </mat-card>
   </div>
 </div>
+<div class="container" *ngIf="estado==false">
+        <div class="row">
+                <mat-card style="width: 600px">
+                    <h2>Nuevo instrumeto</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6"></div>
+                    </div>
+                </mat-card>
+        </div>
+      </div>

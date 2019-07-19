@@ -4,6 +4,7 @@ import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import { MatDialog } from '@angular/material';
 import { EquiposFormComponent } from '../equipos-form/equipos-form.component';
+
 @Component({
   selector: 'app-equipos-list',
   templateUrl: './equipos-list.component.html',
@@ -33,7 +34,7 @@ export class EquiposListComponent implements OnInit {
         console.log(error);
       });
   }
-
+ 
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EquiposFormComponent, {
