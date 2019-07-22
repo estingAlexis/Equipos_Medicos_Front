@@ -25,7 +25,6 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import { InstrumentosListComponent } from './instrumentos/instrumentos-list/instrumentos-list.component';
-import { InstrumentosTableComponent } from './instrumentos/instrumentos-table/instrumentos-table.component';
 import { EquiposListComponent } from './equipos/equipos-list/equipos-list.component';
 import { EquiposTableComponent } from './equipos/equipos-table/equipos-table.component';
 import { ClientesListComponent } from './clientes/clientes-list/clientes-list.component';
@@ -40,6 +39,7 @@ import { SpinnerModule } from 'primeng/spinner';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { TecnicosTableComponent } from './tecnicos/tecnicos-table/tecnicos-table.component';
 import { TecnicosFormComponent } from './tecnicos/tecnicos-form/tecnicos-form.component';
+
 
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
@@ -88,7 +88,6 @@ export const routes = [
     ProcoloslistComponent,
     ProtocolosTableComponent,
     InstrumentosListComponent,
-    InstrumentosTableComponent,
     EquiposListComponent,
     EquiposTableComponent,
     ClientesListComponent,

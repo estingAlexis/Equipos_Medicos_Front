@@ -33,7 +33,7 @@ export class ProcoloslistComponent implements OnInit {
   //GET PROTOCOLOS
   public getProtocolos(){
     this._AppService.get(`protocolos/list`).subscribe(
-      result =>{
+      result =>{console.log(result)
         this.protocolos = result;
       },
       error =>{
