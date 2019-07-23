@@ -1,49 +1,132 @@
-<div fxLayout="row wrap" >
+<div fxLayout="row wrap" *ngIf="estado==true">
   <div fxFlex="100" class="flex-p">
-      <mat-card class="p-0 list">
-          <mat-sidenav-container>
-              <div>
-                  <mat-toolbar
-                      style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
-                      fxLayout="row" fxLayoutAlign="space-between center">
-                      <div fxLayout="row" fxLayoutAlign="start center">
-                          <button mat-flat-button color="warn">
-                              <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Instrumento
-                          </button>
-                      </div>
-                  </mat-toolbar>
-                  <div class="list-content" perfectScrollbar>
-                    <p-table  #dt [value]="protocolos" [paginator]="true" [rows]="7">
-                      <ng-template pTemplate="header">
-                          <tr>
-                              <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
-                                  <button style="float: right" mat-flat-button color="accent">
-                                      <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
-                                  </button>
-                              </div>
-                          </tr>
-                          <tr class="bg">
-                              <th width="10%">Codigo</th>
-                              <th width="20%">Nombre</th> 
-                              <th width="30%">Descripcion</th>
-                              <th width="20%">Responsable</th>
-                              <th width="20%">Revision</th>
-                          </tr>
-                      </ng-template>
-                      <ng-template pTemplate="body"  let-item>
-                          <tr class="tbody">
-                              <td>{{item.fkProtocolo.codigo}}</td>
-                              <td style="text-align: left">{{item.fkProtocolo.nombre}}</td>
-                              <td style="text-align: left">{{item.fkProtocolo.descripcion}}</td>
-                              <td style="text-align: left">{{item.fkProtocolo.responsable}}</td>
-                              <td>{{item.fkProtocolo.revision}}</td>
-                          </tr>     
-                      </ng-template> 
-                  </p-table>
-                      <!--Protocolo de instrumentos-->
-                  </div>
-              </div>
-          </mat-sidenav-container>
-      </mat-card>
+    <mat-card class="p-0 list">
+      <mat-sidenav-container>
+        <div>
+          <mat-toolbar
+            style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
+            fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button mat-flat-button color="warn"(click)="estado=false; crear=true">
+                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Tecnico
+              </button>
+            </div>
+          </mat-toolbar>
+          <div class="list-content" perfectScrollbar>
+            <p-table #dt [value]="tecnicos" [paginator]="true" [rows]="7">
+              <ng-template pTemplate="header">
+                <tr class="bg">
+                  <th width="5%">id</th>
+                  <th width="20%">Documento</th>
+                  <th width="30%">Nombre</th>
+                  <th width="20%">Telefono</th>
+                  <th width="30%">Correo</th>
+                  <th width="20%">Ciudad</th>
+                  <th width="20%">Empresa</th>
+                  <th width="10%">Estado</th>
+                  <th width="20%">Acciones</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item>
+                <tr class="tbody">
+                  <td>{{item.idTecnico}}</td>
+                  <td style="text-align: left">{{item.documento}}</td>
+                  <td style="text-align: left">{{item.nombre}}</td>
+                  <td style="text-align: left">{{item.telefonoCelular}}</td>
+                  <td style="text-align: left">{{item.email}}</td>
+                  <td  style="text-align: left" >{{item.ciudad}}</td>
+                  <td style="text-align: left">{{item.fkEmpresa.nombreEmpresa}}</td>
+                  <td  style="text-align: left">{{item.estado}}</td>
+                  <td>
+                    <button mat-icon-button pTooltip="Ver Protocolos" (click)="estado=false; actualizar=true; SeleTecnico(item)"
+                      tooltipPosition="top">
+                      <mat-icon>mode_edit</mat-icon>
+                    </button>
+                    <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+              </p-table>
+          </div>
+        </div>
+      </mat-sidenav-container>
+    </mat-card>
   </div>
+</div>
+<!--FORMULARIO NUEVO TECNICO-->
+<div class="container" *ngIf="estado==false">
+  <mat-card class="formulario">
+    <h2>Nuevo Tecnico</h2>
+    <hr>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input matInput placeholder="nombre" id="nombre" name="nombre" [(ngModel)]="nombre">
+      </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre corto:</mat-label>
+          <input matInput placeholder="nombre corto" id="nombreCorto" name="nombreCorto" [(ngModel)]="nombreCorto">
+      </mat-form-field>
+      </div>
+    </div>
+    <!--end row-->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Documento:</mat-label>
+          <input matInput placeholder="123456789" id="documento" name="documento" [(ngModel)]="documento">
+      </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Direccion:</mat-label>
+          <input matInput placeholder="cra..." id="direccion" name="direccion" [(ngModel)]="direccion">
+      </mat-form-field>
+      </div>
+    </div>
+    <!--end row-->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefono Fijo:</mat-label>
+          <input matInput placeholder="3012356" id="telefonoFijo" name="telefonoFijo" [(ngModel)]="telefonoFijo">
+      </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefono Celular:</mat-label>
+          <input matInput placeholder="+57" id="telefonoCelular" name="telefonoCelular" [(ngModel)]="telefonoCelular">
+      </mat-form-field>
+      </div>
+    </div>
+    <!--end row-->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Email:</mat-label>
+          <input matInput placeholder="@" id="email" name="email" [(ngModel)]="email">
+      </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Ciudad:</mat-label>
+          <input matInput placeholder="Barranquilla" id="ciudad" name="ciudad" [(ngModel)]="ciudad">
+      </mat-form-field>
+      </div>
+    </div>
+    <!--end row-->
+    <hr>
+        <button mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
+            >Crear</button>
+       <button mat-button class="botones" *ngIf="actualizar "
+            style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
+        <button mat-button class="botones" (click)="estado=true; crear=false; actualizar=false"
+            style="background: rgb(192, 66, 66); color:white;    position: relative;">Cancelar</button>
+  </mat-card>
+
 </div>
