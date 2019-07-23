@@ -1,20 +1,150 @@
-<div fxLayout="row wrap">
-  <div fxFlex="100" class="flex-p">
-      <mat-card class="p-0 list">
-          <mat-sidenav-container>
-              <div>
-                  <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white;" fxLayout="row" fxLayoutAlign="space-between center">
-                      <div fxLayout="row" fxLayoutAlign="start center">
-                          <button mat-flat-button color="warn">
-                              <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Instrumento
-                          </button>
-                      </div>
-                  </mat-toolbar>
-                  <div class="list-content" perfectScrollbar>
-                      <app-instrumentos-table [data]="instrumentos"></app-instrumentos-table>
-                  </div>
-              </div>
-          </mat-sidenav-container>
-      </mat-card>
-  </div>
+<div fxLayout="row wrap" *ngIf="estado=='listaI'">
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <mat-toolbar
+                        style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
+                        fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button mat-flat-button color="warn" (click)="estado='nuevoI'; nuevo=true">
+                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Instrumento
+                            </button>
+                        </div>
+                        <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center" *ngIf="lista=='protocolo'">
+                            <button style="position: relative;  " mat-flat-button color="accent"  (click)="estado='nuevoP'; " >
+                                <mat-icon class="mat-18">add_circle</mat-icon> &nbsp; Añadir protocolo
+                            </button>
+                        </div>
+                    </mat-toolbar>
+                    <div class="list-content" perfectScrollbar>
+                        <p-table #dt [value]="instrumentos" [columns]="cols" [paginator]="true" [rows]="7"
+                            *ngIf="lista=='instrumento'">
+                            <ng-template pTemplate="caption">
+                                <div style="text-align: right">
+                                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="50" placeholder="Buscar Por..."
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns; let i = index">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr [pSelectableRow]="rowData">
+                                    <td>
+                                        {{rowData.idInstrumentos}}
+                                    </td>
+                                    <td>
+                                        {{rowData.nombre}}
+                                    </td>
+                                    <td>
+                                        {{rowData.marca}}
+                                    </td>
+                                    <td>
+                                        {{rowData.modelo}}
+                                    </td>
+                                    <td>
+                                        <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                                            (click)="getProtocolosPorInstrumento(rowData.idInstrumentos); SelectIntrumento(id) ;lista='protocolo';">
+                                            <mat-icon>ballot</mat-icon>
+                                        </button>
+                                        <button mat-icon-button pTooltip="Ver Protocolos"
+                                            (click)="estado=false; actualizar=true" tooltipPosition="top">
+                                            <mat-icon>mode_edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                            </ng-template>
+                        </p-table>
+                        <!--Protocolo de instrumentos-->
+                        <p-table *ngIf=" lista=='protocolo';" #dt [value]="protocolos" [paginator]="true" [rows]="7">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
+                                        <button style="float: right" mat-flat-button color="accent"
+                                            (click)="lista='instrumento'">
+                                            <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
+                                        </button>
+                                    </div>
+                                </tr>
+                                <tr class="bg">
+                                    <th width="10%">Codigo</th>
+                                    <th width="20%">Nombre</th> 
+                                    <th width="30%">Descripcion</th>
+                                    <th width="20%">Responsable</th>
+                                    <th width="20%">Revision</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body"  let-item>
+                                <tr class="tbody">
+                                    <td>{{item.fkProtocolo.codigo}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.nombre}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.descripcion}}</td>
+                                    <td style="text-align: left">{{item.fkProtocolo.responsable}}</td>
+                                    <td>{{item.fkProtocolo.revision}}</td>
+                                </tr>     
+                            </ng-template> 
+                        </p-table>
+                    </div>
+                </div>
+            </mat-sidenav-container>
+        </mat-card>
+    </div>
+</div>
+<!--FORMULARIO DE NUEVO INSTRUMENTO-->
+<div class="container" *ngIf="estado=='nuevoI'">
+    <mat-card class="nuevoIntrumento">
+        <h2 *ngIf="nuevo">Nuevo instrumeto</h2>
+        <h2 *ngIf="actualizar">Actualizar instrumento</h2>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre de instrumento:</mat-label>
+                    <input matInput placeholder="nombre" id="nombre" [(ngModel)]="nombre">
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Modelo:</mat-label>
+                    <input matInput placeholder="modelo" id="modelo" [(ngModel)]="modelo">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Marca:</mat-label>
+                    <input matInput placeholder="marca" id="marca" [(ngModel)]="marca">
+                </mat-form-field>
+            </div>
+        </div>
+        <hr>
+        <button mat-button class="botones" *ngIf="nuevo" style="background: #49978e;    position: relative;left: 300px;"
+            (click)="postInstrumentos()">Crear</button>
+        <button mat-button class="botones" *ngIf="actualizar "
+            style="background: #49978e;    position: relative;left: 300px;">Actualizar</button>
+        <button mat-button class="botones" (click)="estado='listaI'; nuevo=false; actualizar=false"
+            style="background: rgb(192, 66, 66); color:white;    position: relative;left: 300px;">Cancelar</button>
+    </mat-card>
+</div>
+<div class="container" *ngIf="estado=='nuevoP'">
+    <mat-card class="n2">
+        <h2>Añadir protocolo</h2>
+        <hr>
+        <p-dropdown [options]="protocolo" [(ngModel)]="proto"
+        optionLabel="nombre" [filter]="true">{{protocolo.nombre}}
+        </p-dropdown>
+        <hr>
+       <button mat-button class="buttonP">
+           Añadir
+       </button>
+    </mat-card>
 </div>

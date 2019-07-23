@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
           console.log(error);
         });
   }
-
+  //listar protocolo por id 
   public getProtocoloById(id) {
     this._AppService.get('protocolos/'+id).subscribe(
       data => {
@@ -81,7 +81,7 @@ export class ListComponent implements OnInit {
     )
     return this.protocoloActual;
   }
-
+//
 public protocoloActual
 
   public nuevaActividad() {
@@ -112,7 +112,7 @@ public protocoloActual
     );
     }
   }
-
+//Agregar nueva actividad
   guardarNuevaActividad() {
     const nueva_actividad = {
       "fkEmpresa": this.usuario.empresa.idEmpresa ,
@@ -135,15 +135,6 @@ public protocoloActual
         this.getActividadesPorProtocolos(this.protocoloActual.idProtocolo);
       }
     );
-    /* FIXME: RESOLVER PROBLEMA CON IDPROTOCOLO x
-    this.getActividadesPorProtocolos(this.protocolo.idProtocolo);
-*/
-
-
-
-/*     this.protocolo = null;
-    this.actividades = null;
-    this.estado = null; */
   } 
 
   

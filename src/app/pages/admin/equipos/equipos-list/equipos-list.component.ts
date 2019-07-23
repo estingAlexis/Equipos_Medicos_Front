@@ -4,6 +4,7 @@ import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import { MatDialog } from '@angular/material';
 import { EquiposFormComponent } from '../equipos-form/equipos-form.component';
+
 @Component({
   selector: 'app-equipos-list',
   templateUrl: './equipos-list.component.html',
@@ -12,11 +13,13 @@ import { EquiposFormComponent } from '../equipos-form/equipos-form.component';
 export class EquiposListComponent implements OnInit {
   public settings: Settings;
   public equipos: any;
+  public estado:boolean;
   constructor(
     public appSettings: AppSettings,
     public dialog: MatDialog,
     private _AppService: AppService
-  ) { this.settings = this.appSettings.settings }
+  ) { this.settings = this.appSettings.settings
+  this.estado=true; }
   ngOnInit() {
     this.getEquipos();
   }
@@ -31,7 +34,7 @@ export class EquiposListComponent implements OnInit {
         console.log(error);
       });
   }
-
+ 
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EquiposFormComponent, {

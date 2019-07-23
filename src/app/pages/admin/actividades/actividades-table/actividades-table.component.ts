@@ -21,6 +21,7 @@ export class ActividadesTableComponent implements OnInit {
   public cols: any;
   public accion = '';
   public estado;
+  public actividad;
   public protocoloSeleccionado: string = ""; 
   public protocoloActual;
   constructor(
@@ -46,8 +47,7 @@ export class ActividadesTableComponent implements OnInit {
     return '../../../../../assets/img/'+imgNombre;
   }
 
-  public actividad;
-
+ 
   // EDITAR ACTIVIDAD
   public editarActividad(id) {
     this._AppService.get('actividad/'+id).subscribe(
@@ -96,8 +96,6 @@ export class ActividadesTableComponent implements OnInit {
               'success'
             )
             this.list.getActividadesPorProtocolos(this.list.protocoloActual);
-          // For more information about handling dismissals please visit
-          // https://sweetalert2.github.io/#handling-dismissals
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire(
               'Cancelled',

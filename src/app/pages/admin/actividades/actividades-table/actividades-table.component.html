@@ -13,11 +13,6 @@
       <hr>    
 <div class="editarActividad" *ngIf="actividad" style="width: 70%;padding-left: 10%;text-align: center;">
 
-<!--   <h3>Empresa</h3>
-  <input type="text" pInputText value="{{actividad.fkEmpresa.nombreEmpresa}}" disabled />
-
-  <br><br> -->
-
   <label for="">Protocolo</label> <br>
   <p-dropdown [options]="protocolos" [(ngModel)]="protocoloActual"
       placeholder="{{actividad.fkProtocolo.nombre}}" optionLabel="nombre" [filter]="true">
@@ -30,11 +25,6 @@
 
   <br><br>
 
-<!--   <div class="p-grid">
-    <div class="p-col">1</div>
-    <div class="p-col">2</div>
-    <div class="p-col">3</div>
-  </div> -->
 
   
   <label for="">Estado</label> <br>

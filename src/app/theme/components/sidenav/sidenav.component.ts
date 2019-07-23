@@ -30,6 +30,9 @@ export class SidenavComponent implements OnInit {
 
 
   }
+  CerrarSesion(){
+    this.authService.logout();
+  }
 
   public closeSubMenus(){
     let menu = document.querySelector(".sidenav-menu-outer");
