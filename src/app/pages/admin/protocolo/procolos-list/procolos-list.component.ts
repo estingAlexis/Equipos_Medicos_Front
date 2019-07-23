@@ -4,6 +4,8 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AppService } from 'src/app/services/app.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-procolos-list',
   templateUrl: './procolos-list.component.html',
@@ -20,7 +22,9 @@ export class ProcoloslistComponent implements OnInit {
   constructor(public appSettings:AppSettings, 
               public snackBar: MatSnackBar,
               private _AppService:AppService,
-              public ngxSmartModalService: NgxSmartModalService, ) { 
+              public ngxSmartModalService: NgxSmartModalService,
+              private auth: AuthService
+               ) { 
     this.settings = this.appSettings.settings; 
   }
   ngOnInit() {    
@@ -43,6 +47,46 @@ export class ProcoloslistComponent implements OnInit {
 
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
+  }
+
+  public usuario = this.auth.obtenerDatosUser();
+  public descripcionProtocolo;
+  public revisionProtocolo;
+  public responsableProtocolo;
+ 
+  // NUEVO PROTOCOLO
+  public nuevoProtocolo(){
+    this.ngxSmartModalService.getModal('modalNuevoProtocolo').open();
+    console.log(this.usuario);
+     let protocolo = [
+      {
+       'fkEmpresa': this.usuario.empresa.idEmpresa,
+       'idProtocolo': this.
+       'codigo': ,
+       'nombre': ,
+       'descripcion': ,
+       'revision': ,
+       'responsable': 
+     }
+   ];
+   /*
+    this._AppService.post('protocolo/new', protocolo).subscribe(
+      data => {
+        Swal.fire(
+          'Exito!',
+          'Protocolo Creado',
+          'success'
+        )
+        console.log(data);
+      },
+      error => {
+        Swal.fire(
+          'Fallo!',
+          'Error Al Crear Protocolo',
+          'warning'
+        )
+      }
+    ) */
   }
 
 

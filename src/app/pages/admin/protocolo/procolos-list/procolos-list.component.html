@@ -6,8 +6,8 @@
                     <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
                         <div fxLayout="row" fxLayoutAlign="start center">
                             <button mat-raised-button style="background-color: #397367; color:white;"
-                                (click)="nuevaActividad();">
-                                <mat-icon>add</mat-icon>&nbsp; NUEVA ACTIVIDAD
+                                (click)="nuevoProtocolo();">
+                                <mat-icon>add</mat-icon>&nbsp; NUEVO PROTOCOLO
                             </button>
 <!--                             <button mat-flat-button color="warn" (click)="ngxSmartModalService.getModal('myModal').open()">
                                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Protocolo
@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<ngx-smart-modal [dismissable]="false" [escapable]="false" #myModal identifier="myModal" style="text-align: center;">
+<ngx-smart-modal [dismissable]="false" [escapable]="false" #modalNuevoProtocolo identifier="modalNuevoProtocolo" style="text-align: center;">
     <h1>Añadir Protocolo</h1>
     <br>
     <form class="example-form">
@@ -49,9 +49,9 @@
     <hr>
     <br> 
 
-    <button mat-raised-button (click)="myModal.close()">Cerrar</button>
+    <button mat-raised-button (click)="modalNuevoProtocolo.close()">Cerrar</button>
     &nbsp;
-    <button mat-raised-button style="background-color: #42BD75;" (click)="myModal.close()">Crear</button>
+    <button mat-raised-button style="background-color: #42BD75;" (click)="modalNuevoProtocolo.close()">Crear</button>
 
 </ngx-smart-modal>
 

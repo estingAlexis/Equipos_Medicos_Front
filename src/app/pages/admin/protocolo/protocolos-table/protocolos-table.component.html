@@ -1,5 +1,5 @@
 <div *ngIf="accion == 'masInfo'">
-        <button mat-flat-button (click)="accion = ''">Atrás</button>
+        <button mat-flat-button color="accent" (click)="accion = ''">Atrás</button>
         <table>
                 <th>ID</th>
                 <th>EQUIPO</th>
@@ -57,11 +57,11 @@
                                 {{rowData.revision}}
                         </td>
                         <td>
-                                <button button mat-icon-button class="btn btnEditar" type="button" (click)="editarActividad(item.idActividades);">
+                                <button button mat-icon-button class="btn btnEditar" type="button" (click)="editarProtocolo(item.idProtocolo);">
                                         <i class="material-icons">mode_edit</i>
                                 </button>
                                 &nbsp;
-                                <button  button mat-icon-button         class="btn" type="button" (click)="eliminarActividad(item.idActividades)">
+                                <button  button mat-icon-button         class="btn" type="button" (click)="eliminarProtocolo(item.idProtocolo)">
                                         <i class="material-icons">delete</i>
                                 </button>
                         </td>
