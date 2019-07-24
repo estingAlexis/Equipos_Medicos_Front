@@ -42,7 +42,8 @@
                       tooltipPosition="top">
                       <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top">
+                    <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                    (click)="SeleTecnico(item);deleteTecnico()">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>

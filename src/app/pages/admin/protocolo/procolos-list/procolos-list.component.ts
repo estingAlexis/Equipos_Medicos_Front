@@ -55,39 +55,5 @@ export class ProcoloslistComponent implements OnInit {
   public responsableProtocolo;
  
   // NUEVO PROTOCOLO
-  public nuevoProtocolo(){
-    this.ngxSmartModalService.getModal('modalNuevoProtocolo').open();
-    console.log(this.usuario);
-     let protocolo = [
-      {
-       'fkEmpresa': this.usuario.empresa.idEmpresa,
-       'idProtocolo': this.
-       'codigo': ,
-       'nombre': ,
-       'descripcion': ,
-       'revision': ,
-       'responsable': 
-     }
-   ];
-   /*
-    this._AppService.post('protocolo/new', protocolo).subscribe(
-      data => {
-        Swal.fire(
-          'Exito!',
-          'Protocolo Creado',
-          'success'
-        )
-        console.log(data);
-      },
-      error => {
-        Swal.fire(
-          'Fallo!',
-          'Error Al Crear Protocolo',
-          'warning'
-        )
-      }
-    ) */
-  }
-
-
+ 
 }
