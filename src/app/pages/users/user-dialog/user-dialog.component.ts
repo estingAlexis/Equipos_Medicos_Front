@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from '../user.model';
 
 @Component({
   selector: 'app-user-dialog',
@@ -12,7 +11,7 @@ export class UserDialogComponent implements OnInit {
   public form:FormGroup;
   public passwordHide:boolean = true;
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public user: User,
+              @Inject(MAT_DIALOG_DATA)
               public fb: FormBuilder) {
     this.form = this.fb.group({
       id: null,
@@ -50,17 +49,7 @@ export class UserDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.user){
-      this.form.setValue(this.user);
-    } 
-    else{
-      this.user = new User();
-      this.user.profile = new UserProfile();
-      this.user.work = new UserWork();
-      this.user.contacts = new UserContacts();
-      this.user.social = new UserSocial();
-      this.user.settings = new UserSettings();
-    } 
+
   }
 
   close(): void {

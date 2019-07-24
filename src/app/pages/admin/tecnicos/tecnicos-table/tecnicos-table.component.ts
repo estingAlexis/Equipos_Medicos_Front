@@ -1,7 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -88,7 +87,6 @@ export class TecnicosTableComponent implements OnInit {
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
-
     }
     this.service.put('tecnicos/'+this.idTecnico,this.actualizar).subscribe(
       result=>{alert('Se actualizado')
@@ -97,6 +95,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+
 
   //GET Tecnicos
   public getTecnicos(){
@@ -110,7 +109,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-  success(string:Title){
+  success(title:string){
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
