@@ -11,16 +11,16 @@
                             </div>
                         </mat-toolbar>
                         <div class="list-content" perfectScrollbar>
+                                <tr>
+                                        <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
+                                            <button style="float: right" mat-flat-button color="accent"
+                                                (click)="lista='instrumento'">
+                                                <mat-icon class="mat-18">keyboard_backspace</mat-icon> 
+                                            </button>
+                                        </div>
+                                    </tr>
                                 <p-table  #dt [value]="equipos" [paginator]="true" [rows]="7">
                                         <ng-template pTemplate="header">
-                                            <tr>
-                                                <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
-                                                    <button style="float: right" mat-flat-button color="accent"
-                                                        (click)="lista='instrumento'">
-                                                        <mat-icon class="mat-18">keyboard_backspace</mat-icon> &nbsp; regresar
-                                                    </button>
-                                                </div>
-                                            </tr>
                                             <tr class="bg">
                                                 <th width="10%">id</th>
                                                 <th width="20%">codigo</th> 

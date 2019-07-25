@@ -15,6 +15,8 @@ export class ProcoloslistComponent implements OnInit {
   public sidenavOpen:boolean = true;
   public actividades: any;
   public protocolos: any;
+  public table: number;
+  public instrumentos:any;
   public searchText:string;
   public nombreProtocolo: string;
   constructor(public appSettings:AppSettings, 
@@ -40,6 +42,29 @@ export class ProcoloslistComponent implements OnInit {
         console.log(error);
       });
   }
+     // @Get actividades por protocolo
+     public getActividadesPorProtocolo(id: string) {
+      this._AppService.get('actividades/protocolo/'.concat(id)).subscribe(
+        result => {
+          this.actividades = result;
+          if (this.actividades.length > 0) {this.table = 1;} else {if (this.actividades.lenght == 0) {  }}
+        },
+        error =>{
+          console.log(error);
+        });
+    }
+    
+    public getInstrumentosPorProtocolos(id: string) {
+      this._AppService.get('ip/1/protocolo/'.concat(id)).subscribe(
+        result => {
+          this.instrumentos = result;
+          if (this.instrumentos.length > 0) {this.table = 2;} else {if (this.instrumentos.lenght == 0) {  }}
+        },
+        error =>{
+          console.log(error);
+        });
+    }
+  
 
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;

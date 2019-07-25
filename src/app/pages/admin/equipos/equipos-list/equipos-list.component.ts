@@ -66,11 +66,12 @@ export class EquiposListComponent implements OnInit {
     this.equipo={
       "fkEmpresa":this.usuario.empresa.idEmpresa,
       "nombre":this.nombre,
-      "idProtocolo":parseInt(this.proto),
-      "fkParametro":parseInt(this.para),
+      "fkProtocolo":parseInt(this.proto),
+      "fkTipo":parseInt(this.para),
       "referencia":this.referencia,
       "codigo":this.codigo,
-      "estado":1
+      "estado":1,
+      "idEquipos":143
     }
     console.log(this.equipo)
     this.service.post('equipos/new', this.equipo).subscribe(
@@ -81,7 +82,7 @@ export class EquiposListComponent implements OnInit {
   }
   //GET PARAMETRO CUANDO GRUPO ES IGUAL A DOS
   public getParametro(){
-    this.service.get('parametro/filtro_empresa_grupo/1/2').subscribe(
+    this.service.get('parametro/filtro_empresa_grupo/'+this.usuario.empresa.idEmpresa+'/2').subscribe(
       result=>{
          this.parametro= result}
     )

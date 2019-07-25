@@ -8,7 +8,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { PipesModule } from '../../theme/pipes/pipes.module';
 import { UsersComponent } from './users.component';
-import { UserDialogComponent } from './user-dialog/user-dialog.component';
 
 export const routes = [
   { path: '', component: UsersComponent, pathMatch: 'full' }
@@ -27,10 +26,7 @@ export const routes = [
   ],
   declarations: [
     UsersComponent,
-    UserDialogComponent
-  ],
-  entryComponents:[
-    UserDialogComponent
+
   ]
 })
 export class UsersModule { }
