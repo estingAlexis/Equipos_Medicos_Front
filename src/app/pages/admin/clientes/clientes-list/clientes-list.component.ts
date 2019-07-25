@@ -17,7 +17,7 @@ export class ClientesListComponent implements OnInit {
   public nuevoC:any;
   public actualizar:any;
 
-  @Input()
+  @Input()  
   public nombre:any;
   @Input()
   public documento:number;
@@ -50,7 +50,8 @@ export class ClientesListComponent implements OnInit {
         { field: 'direccion', header: 'Direccion' },
         { field: 'ciudad', header: 'Ciudad' },
         { field: 'email', header: 'Email' },
-        { field: 'acciones', header: 'Acciones' }
+        { field: 'acciones', header: 'Acciones' },
+        { filed: 'estado', header: 'Estado' }
       ];  
       this.estado=true;
     }
@@ -65,7 +66,8 @@ export class ClientesListComponent implements OnInit {
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
-      "atencion":this.atencion
+      "atencion":this.atencion,
+      "estado": this.estado
       } 
       this._AppService.post('clientes/new', this.nuevoC).subscribe(
         result=>{ alert('El cliente se agregado con exito'), 
@@ -75,7 +77,7 @@ export class ClientesListComponent implements OnInit {
       )
    }
  //TRAER DATOS POR ID
-   public SetCliente(cliente: any){
+   public getCliente(cliente: any){
     console.log(cliente);
     this.idCliente=cliente.idCliente;
     this.nombre=cliente.nombre;
@@ -87,6 +89,7 @@ export class ClientesListComponent implements OnInit {
     this.email=cliente.email;
     this.direccion=cliente.direccion;
     this.documento=cliente.documento;
+    this.estado=cliente.estado;
   }
   //METODO DE ACTUALIZAR
   public editarDatos(){
@@ -100,7 +103,8 @@ export class ClientesListComponent implements OnInit {
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
-      "atencion":this.atencion
+      "atencion":this.atencion,
+      "estado": this.estado
     }
     this._AppService.put('cliente/'+this.idCliente,this.actualizar).subscribe(
       result=>{
@@ -144,4 +148,31 @@ export class ClientesListComponent implements OnInit {
 
 
   }
+
+
+  public deleteCliente(){
+    const clienteJson = {
+      "idCliente":this.idCliente,
+      "documento":this.documento,
+      "nombre":this.nombre,
+      "nombreCorto":this.nombrecorto,
+      "direccion":this.direccion,
+      "email":this.email,
+      "ciudad":this.ciudad,
+      "telefonoFijo":this.telefonoFijo,
+      "telefonoCelular":this.telefonoCelular,
+      "atencion":this.atencion,
+      "estado": 9
+    }
+    this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
+      data => {
+        console.log("Cliente eliminado")
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
+
 }
