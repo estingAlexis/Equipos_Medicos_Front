@@ -61,6 +61,14 @@ export class EquiposListComponent implements OnInit {
         console.log(error);
       });
   }
+  clear(){
+    this.nombre=null;
+    this.para=null,
+    this.proto=null;
+    this.referencia=null;
+    this.codigo=null;
+    
+  }
   //NUEVO EQUIPO 
   public postEquipo(){
     this.equipo={

@@ -63,6 +63,17 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+  clear(){
+    this.nombre=null;
+    this.documento=null;
+    this.direccion=null;
+    this.ciudad=null;
+    this.email=null;
+    this.telefonoCelular=null;
+    this.telefonoFijo=null;
+    this.nombreCorto=null;
+    
+  }
   //TRAER DATOS ID
   public SeleTecnico(tecnico:any){
     this.idTecnico=tecnico.idTecnico;
