@@ -17,7 +17,6 @@ import { AppService } from 'src/app/services/app.service';
 import { ActividadesTableComponent } from './actividades/actividades-table/actividades-table.component';
 import {TableModule} from 'primeng/table';
 import {ListComponent} from './actividades/list/list.component';
-import { ProcoloslistComponent } from './protocolo/procolos-list/procolos-list.component';
 import { ProtocolosTableComponent } from './protocolo/protocolos-table/protocolos-table.component';
 import {TooltipModule} from 'primeng/tooltip';
 import {DialogModule} from 'primeng/dialog';
@@ -89,7 +88,6 @@ export const routes = [
     ClientesComponent,
     ActividadesTableComponent,
     ListComponent,
-    ProcoloslistComponent,
     ProtocolosTableComponent,
     InstrumentosListComponent,
     EquiposListComponent,
