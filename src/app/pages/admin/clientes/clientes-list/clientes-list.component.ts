@@ -50,8 +50,9 @@ export class ClientesListComponent implements OnInit {
         { field: 'direccion', header: 'Direccion' },
         { field: 'ciudad', header: 'Ciudad' },
         { field: 'email', header: 'Email' },
+        { filed: 'estado', header: 'Estado' },  
         { field: 'acciones', header: 'Acciones' },
-        { filed: 'estado', header: 'Estado' }
+       
       ];  
       this.estado=true;
     }
@@ -178,6 +179,7 @@ export class ClientesListComponent implements OnInit {
     this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
       data => {
         console.log("Cliente eliminado")
+        this.getTerceros();
       },
       error => {
         console.log(error)

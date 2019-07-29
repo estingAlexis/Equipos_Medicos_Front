@@ -1,10 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
-<<<<<<< HEAD
-=======
-
->>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -125,11 +121,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-<<<<<<< HEAD
   success(title:string){
-=======
-  success(title: string){
->>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',

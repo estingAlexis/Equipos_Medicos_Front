@@ -50,11 +50,11 @@
                                         {{rowData.email}}
                                     </td>
                                     <td>
-                                        <button   mat-button  (click)="estado=false;actualizar=true; getCliente(rowData)"><i class="material-icons edit">mode_edit</i></button>
-                                        <button  mat-button (click)="getCliente(rowData); deleteCliente()" ><i class="material-icons delete">delete</i></button>
+                                        {{rowData.estado}}
                                     </td>
                                     <td>
-                                        {{rowData.estado}}
+                                        <button   mat-button  (click)="estado=false;actualizar=true; getCliente(rowData)"><i class="material-icons edit">mode_edit</i></button>
+                                        <button  mat-button (click)="getCliente(rowData); deleteCliente()" ><i class="material-icons delete">delete</i></button>
                                     </td>
                             </ng-template>
                         </p-table>

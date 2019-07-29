@@ -78,8 +78,6 @@ export class ProcoloslistComponent implements OnInit {
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
   }
-
-  public usuario = this.auth.obtenerDatosUser();
   public descripcionProtocolo;
   public revisionProtocolo;
   public responsableProtocolo;
