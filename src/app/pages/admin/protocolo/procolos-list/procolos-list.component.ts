@@ -4,15 +4,10 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AppService } from 'src/app/services/app.service';
-<<<<<<< HEAD
 import { Usuario } from 'src/app/services/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 
 Usuario
-=======
-import { AuthService } from 'src/app/services/auth.service';
-
->>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
 @Component({
   selector: 'app-procolos-list',
   templateUrl: './procolos-list.component.html',
