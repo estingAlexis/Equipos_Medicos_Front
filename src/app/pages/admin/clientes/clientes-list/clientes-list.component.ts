@@ -74,6 +74,17 @@ export class ClientesListComponent implements OnInit {
       }
       )
    }
+   clear(){
+     this.nombre=null;
+     this.nombrecorto=null;
+     this.documento=null;
+     this.telefonoCelular=null;
+     this.telefonoFijo=null;
+     this.email=null;
+     this.direccion=null;
+     this.ciudad=null;
+     this.atencion=null;
+   }
  //TRAER DATOS POR ID
    public SetCliente(cliente: any){
     console.log(cliente);

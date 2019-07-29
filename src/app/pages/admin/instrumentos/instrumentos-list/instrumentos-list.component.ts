@@ -84,16 +84,17 @@ export class InstrumentosListComponent implements OnInit {
     }
     //AGREGAR NUEVO INSTRUMENTO
     public postInstrumentos(){
-      this.instrumento=[];
       this.instrumento={
         "nombre":this.nombre,
         "marca":this.marca,
         "modelo":this.modelo,
         "fkEmpresa": 1,
       }
+      console.log(this.instrumento)
       this._AppService.post('instrumentos/new', this.instrumento).subscribe(
-        result=>{ this.success
+        result=>{  this.success
           this.instrumento=result
+          this.getInstrumentos();
           this.estado='listaI';
         }
       )

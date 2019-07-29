@@ -4,6 +4,10 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AppService } from 'src/app/services/app.service';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
+Usuario
 @Component({
   selector: 'app-procolos-list',
   templateUrl: './procolos-list.component.html',
@@ -17,9 +21,11 @@ export class ProcoloslistComponent implements OnInit {
   public protocolos: any;
   public table: number;
   public instrumentos:any;
+  public usuario:Usuario;
   public searchText:string;
   public nombreProtocolo: string;
   constructor(public appSettings:AppSettings, 
+              public service:AuthService,
               public snackBar: MatSnackBar,
               private _AppService:AppService,
               public ngxSmartModalService: NgxSmartModalService, ) { 
@@ -29,6 +35,7 @@ export class ProcoloslistComponent implements OnInit {
     if(window.innerWidth <= 992){
       this.sidenavOpen = false;
     }
+    this.usuario= this.service.obtenerDatosUser();
     this.getProtocolos();
   }
 
@@ -55,7 +62,7 @@ export class ProcoloslistComponent implements OnInit {
     }
     
     public getInstrumentosPorProtocolos(id: string) {
-      this._AppService.get('ip/1/protocolo/'.concat(id)).subscribe(
+      this._AppService.get('ip/'+this.usuario.empresa.idEmpresa+'/protocolo/'.concat(id)).subscribe(
         result => {
           this.instrumentos = result;
           if (this.instrumentos.length > 0) {this.table = 2;} else {if (this.instrumentos.lenght == 0) {  }}
