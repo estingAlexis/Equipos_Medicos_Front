@@ -47,27 +47,14 @@
                           position: relative;
                           left: 6%;">
 
-                <mat-form-field class="w-100" style="margin-bottom: 10px">
-                    <mat-label>Tecnicos</mat-label>
-                    <mat-select formControlName="responsable">
-                        <mat-option *ngFor="let tecnico of tecnicos" [value]="tecnico.value">{{tecnico.nombre}}</mat-option>
-                    </mat-select>
-                    <mat-error>
-                        <show-errors [control]="form.controls.responsable"></show-errors>
-                    </mat-error>
-                </mat-form-field>
-
-
-
-                <mat-form-field class="w-100">
-                    <input matInput [matDatepicker]="start" placeholder="Fecha del mantenimiento" formControlName="fecha">
-                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                    <mat-datepicker #start></mat-datepicker>
-                    <mat-error>
-                        <show-errors [control]="form.controls.fecha"></show-errors>
-                    </mat-error>
-                </mat-form-field>
-
+<br>
+<p-dropdown formControlName="dropdwon" [options]="tecnicos" [(ngModel)]="tecnico"
+placeholder="{{tecnicos.nombre}}" optionLabel="nombre" [filter]="true">
+</p-dropdown>
+<br>
+<div class="ui-g-12 ui-md-4">
+    <p-calendar [(ngModel)]="date"></p-calendar>
+</div>
 
                 <button mat-flat-button color="primary" (click)="agregarMantenimiento()"><mat-icon mat-list-icon >add</mat-icon> Agregar mantenimiento</button>
 

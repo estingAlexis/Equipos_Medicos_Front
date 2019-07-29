@@ -15,6 +15,7 @@ import {PaginatorModule} from 'primeng/paginator';
 import {TableModule} from 'primeng/table';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { CalendarModule } from 'angular-calendar';
+import {CalendarModule as pCalendar} from 'primeng/calendar' ;
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import { CotizacionesTableComponent } from './orden-trabajo/cotizaciones-table/cotizaciones-table.component';
 import { TooltipModule } from '@swimlane/ngx-charts';
@@ -53,13 +54,12 @@ export const routes = [
     TableModule,
     TooltipModule,
     ComponentsModule,
-    CalendarModule,
+    CalendarModule.forRoot(),
     FullCalendarModule,
     MatListModule,
     MatCheckboxModule,
-    NgxSmartModalModule.forRoot()
-    
-    
+    NgxSmartModalModule.forRoot(),
+    pCalendar,    
   ],
   declarations: [
     ProcesosComponent,

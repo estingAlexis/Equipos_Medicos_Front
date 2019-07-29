@@ -1,3 +1,5 @@
+import { id } from '@swimlane/ngx-charts/release/utils';
+import { AppService } from 'src/app/services/app.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
@@ -26,11 +28,6 @@ const colors: any = {
   }
 };
 
-
-
-
-
-
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -48,14 +45,9 @@ export class CalendarioComponent implements OnInit {
   @Input() cotizacionDetalles: any = new Array();
   cotizacionDetallesSeleccionados : any = new Array();
    
-  public tecnicos : any = [
-      {nombre : 'Evan You', value: 1},
-      {nombre : 'Misko Hevery', value: 2},
-      {nombre : 'Rod Johnson', value: 3}
-
-  ];
-
-
+  public tecnico; any;
+  public tecnicos : any = [];
+  public date;
   //MENSAJES
 
   error_instrumento_lengh : any = {type: 'error',title: 'No ha seleccionado ningún instrumento'};
@@ -67,7 +59,6 @@ export class CalendarioComponent implements OnInit {
     showConfirmButton: false,
     timer: 3000
   });
-
 
   events: CalendarEvent[] = new Array();
 
@@ -83,12 +74,12 @@ export class CalendarioComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-
   public settings: Settings;
   constructor(public appSettings:AppSettings, 
               public dialog: MatDialog, 
               public snackBar: MatSnackBar,
-              public formBuilder: FormBuilder){
+              public formBuilder: FormBuilder,
+              private service:AppService){
       this.settings = this.appSettings.settings; 
       this.form = this.formBuilder.group({ 
         'responsable': [ null, Validators.compose([Validators.required,])],            
@@ -98,7 +89,28 @@ export class CalendarioComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getTecnicos();
   }
+
+  public getTecnicos() {
+    this.service.get('tecnicos/list').subscribe(
+        data => {
+          this.tecnicos = data;
+          console.log(data)
+        },
+        error => {
+          console.log(error); 
+        }
+    );
+/*     for (let index = 0; index < this.data.length; index++) {
+      let json = {
+        "nombre": this.data.nombre,
+        "value": this.data.idTecnico  
+      }
+      this.tecnicos.append(json);
+     }
+     console.log(this.tecnicos); */
+    }
 
   agregarMantenimiento(){
     if(this.cotizacionDetallesSeleccionados.length > 0){

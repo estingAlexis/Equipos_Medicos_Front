@@ -20,7 +20,7 @@ export class OrdenesTableComponent implements OnInit {
   }
 
   // @Get protocolos por Instrumentos
- /*  public getProtocolosPorInstrumento(id: string){
+  public getProtocolosPorInstrumento(id: string){
     this._AppService.get('ip/1/instrumento/2').subscribe(
       result => {
         this.protocolos = result;
@@ -29,7 +29,7 @@ export class OrdenesTableComponent implements OnInit {
       error =>{
         console.log(error);
       });
-  } */
+  } 
 
 
 
