@@ -39,6 +39,8 @@ import { SpinnerModule } from 'primeng/spinner';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { TecnicosTableComponent } from './tecnicos/tecnicos-table/tecnicos-table.component';
 import { TecnicosFormComponent } from './tecnicos/tecnicos-form/tecnicos-form.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 export const routes = [
@@ -74,7 +76,9 @@ export const routes = [
     MatIconModule,
     DropdownModule,
     InputTextareaModule,
-    SpinnerModule
+    SpinnerModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   declarations: [
     AdminComponent,

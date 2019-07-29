@@ -1,20 +1,103 @@
-<div fxLayout="row wrap" >
-    <div fxFlex="100" class="flex-p">
-        <mat-card class="p-0 list">
-            <mat-sidenav-container>
-                <div>
-                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                            <button (click)="openDialog()" mat-flat-button color="warn">
-                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Equipo
-                            </button>
+<div fxLayout="row wrap" *ngIf="estado==true" >
+        <div fxFlex="100" class="flex-p">
+            <mat-card class="p-0 list">
+                <mat-sidenav-container>
+                    <div>
+                        <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div fxLayout="row" fxLayoutAlign="start center">
+                                <button (click)="estado=false; crear=true;clear()" mat-flat-button color="warn">
+                                    <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Equipo
+                                </button>
+                            </div>
+                        </mat-toolbar>
+                        <div class="list-content" perfectScrollbar>
+                                <tr>
+                                        <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
+                                            <button style="float: right" mat-flat-button color="accent"
+                                                (click)="lista='instrumento'">
+                                                <mat-icon class="mat-18">keyboard_backspace</mat-icon> 
+                                            </button>
+                                        </div>
+                                    </tr>
+                                <p-table  #dt [value]="equipos" [paginator]="true" [rows]="7">
+                                        <ng-template pTemplate="header">
+                                            <tr class="bg">
+                                                <th width="10%">id</th>
+                                                <th width="20%">codigo</th> 
+                                                <th width="30%">referencia</th>
+                                                <th width="20%">nombre</th>
+                                                <th width="20%">estado</th>
+                                                <th width="20%">Acciones</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body"  let-item>
+                                            <tr class="tbody">
+                                                <td>{{item.idEquipos}}</td>
+                                                <td style="text-align: left">{{item.codigo}}</td>
+                                                <td style="text-align: left">{{item.referencia}}</td>
+                                                <td style="text-align: left">{{item.nombre}}</td>
+                                                <td>{{item.estado}}</td>
+                                                <td></td>
+                                            </tr>     
+                                        </ng-template> 
+                                    </p-table>
                         </div>
-                    </mat-toolbar>
-                    <div class="list-content" perfectScrollbar>
-                      <app-equipos-table [data]="equipos"></app-equipos-table>
                     </div>
+                </mat-sidenav-container>
+            </mat-card>
+        </div>
+      </div>
+<!--FORMULARIO DE NUEVO EQUIPO-->
+<div class="container" *ngIf="estado==false">
+        <mat-card class="formulario">
+                <h2>Nuevo equipo</h2>
+   
+            <hr>
+            <div class="row">  
+                    <div class="col-6">
+                            <mat-form-field appearance="outline">
+                                    <mat-label>Protocolo</mat-label>
+                                    <select matNativeControl required [(ngModel)]="proto" id="proto" name="proto">
+                                      <option *ngFor="let item of protocolos" [value]="item.idProtocolo">{{item.nombre}}</option>
+                                    </select>
+                            </mat-form-field>
+                    </div> 
+                    <div class="col-6">
+                            <mat-form-field appearance="outline">
+                                    <mat-label>Parametro</mat-label>
+                                    <select matNativeControl required [(ngModel)]="para" id="para" name="para">
+                                      <option *ngFor="let item of parametro" [value]="item.idParametro">{{item.nombre}}</option>
+                                    </select>
+                            </mat-form-field>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                        <mat-form-field appearance="outline">
+                                <mat-label>Codigo:</mat-label>
+                            <input matInput placeholder="codigo" name="codigo" id="codigo" [(ngModel)]="codigo">
+                        </mat-form-field>
                 </div>
-            </mat-sidenav-container>
+                <div class="col-6">
+                        <mat-form-field appearance="outline">
+                                <mat-label>Nombre:</mat-label>
+                            <input matInput placeholder="nombre equipo" name="nombre" id="nombre" [(ngModel)]="nombre">
+                        </mat-form-field>
+                </div>
+            </div>
+          
+            <div class="row">
+                    <div class="col-6">
+                            <mat-form-field appearance="outline">
+                                    <mat-label>referencia:</mat-label>
+                                <input matInput placeholder="referencia" name="referencia" id="referencia" [(ngModel)]="referencia">
+                            </mat-form-field>
+                    </div>
+            </div>
+            <hr>
+            <br>
+            <button class="crear" style="background: #4BC07E" (click)="postEquipo()" *ngIf="crear" mat-button>Crear</button>
+            <button class="crear" style="background: #4BC07E" mat-button *ngIf="actualizar" (click)="editarDatos()">Actualizar</button>
+            <button class="cancelar" style="background: #DD5246"  (click)="estado=true; crear=false; actualizar=false" mat-button>Cancelar</button>
         </mat-card>
-    </div>
-  </div>
+</div>

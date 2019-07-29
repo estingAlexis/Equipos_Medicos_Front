@@ -7,12 +7,12 @@ export class Usuario {
     }    
 
 
-    id: number;
-    username: string;
-    password: string;
-    nombre: string;
-    apellido: string;
-    email: string;
-    empresa: any;
-    roles: string[] = [];
+    id?: number;
+    username?: string;
+    password?: string;
+    nombre?: string;
+    apellido?: string;
+    email?: string;
+    empresa?: any;
+    roles?: string[] = [];
   }

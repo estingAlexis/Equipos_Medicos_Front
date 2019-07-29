@@ -2,7 +2,6 @@ import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-tecnicos-table',
   templateUrl: './tecnicos-table.component.html',
@@ -65,6 +64,17 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+  clear(){
+    this.nombre=null;
+    this.documento=null;
+    this.direccion=null;
+    this.ciudad=null;
+    this.email=null;
+    this.telefonoCelular=null;
+    this.telefonoFijo=null;
+    this.nombreCorto=null;
+    
+  }
   //TRAER DATOS ID
   public SeleTecnico(tecnico:any){
     this.idTecnico=tecnico.idTecnico;
@@ -89,7 +99,6 @@ export class TecnicosTableComponent implements OnInit {
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
-
     }
     this.service.put('tecnicos/'+this.idTecnico,this.actualizar).subscribe(
       result=>{alert('Se actualizado')
@@ -98,6 +107,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+
 
   //GET Tecnicos
   public getTecnicos(){

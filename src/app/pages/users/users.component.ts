@@ -1,71 +1,92 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
-import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from './user.model';
-import { UsersService } from './users.service';
-import { UserDialogComponent } from './user-dialog/user-dialog.component';
-
+import { ApiRestService } from 'src/app/services/ApiRestService.service';
+import { Usuario } from 'src/app/models/usuario';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [ UsersService ]  
+  encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit {
-    public users: User[];
-    public searchText: string;
-    public page:any;
-    public settings: Settings;
-    animal: string;
-    name: string;
-    constructor(public appSettings:AppSettings, 
-                public dialog: MatDialog,
-                public usersService:UsersService){
-        this.settings = this.appSettings.settings; 
+    public usuarios;
+    public estado:string;
+    public nUsuario:any;
+    public usuario:Usuario;
+    public idUsuario:number;
+    public vacio:any;
+    //INPUT 
+    @Input()
+    public nombre:any
+    @Input()
+    public apellido:any
+    @Input()
+    public documento:any
+    @Input()
+    public email:any
+    @Input()
+    public username:any
+    @Input()
+    public password:any
+    constructor(public servivio:ApiRestService, public service:AuthService){
+    this.estado='previa';
     }
-
-    ngOnInit() {
-        this.getUsers();         
-    }
-
-    public getUsers(): void {
-        this.users = null; //for show spinner each time
-        this.usersService.getUsers().subscribe(users => this.users = users);    
-    }
-    public addUser(user:User){
-        this.usersService.addUser(user).subscribe(user => this.getUsers());
-    }
-    public updateUser(user:User){
-        this.usersService.updateUser(user).subscribe(user => this.getUsers());
-    }
-    public deleteUser(user:User){
-       this.usersService.deleteUser(user.id).subscribe(user => this.getUsers());
-    }
-
-
-    public onPageChanged(event){
-        this.page = event;
-        this.getUsers();
-        if(this.settings.fixedHeader){      
-            document.getElementById('main-content').scrollTop = 0;
+    // LISTAR LOS USUARIOS
+    public listarUsuario(){
+        this.servivio.get('usuarios/list').subscribe(
+            result=>{this.usuarios=result
+            console.log(this.usuarios)
         }
-        else{
-            document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
-        }
+        )
     }
+    //AGREGAR NUEVOS USUARIOS
+    public postUsuario(){
+        this.nUsuario=[];
+        this.nUsuario={
+            "nombre":this.nombre,
+            "apellido":this.apellido,
+            "documento":this.documento,
+            "email":this.email,
+            "enabled":1,
+            "username":this.username,
+            "fkEmpresa":this.usuario.empresa.idEmpresa, 
+            "password":this. password
+        }
+        console.log(this.nUsuario)
+        this.servivio.post('usuario/new',this.nUsuario).subscribe(
+            result=>{console.log(result)
+            alert('Usuario a sido registrado exitosamente')
+            this.nUsuario=result
+        this.clear()
+    }
+        )
+    }
+    //METODO PARA VACIAR DATOS
+    clear(){
+        this.nombre= null;
+        this.password=null;
+        this.documento=null;
+        this.email=null;
+        this.apellido=null;
+        this.username=null;
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(UserDialogComponent, {
-          width: '250px',
-          data: {name: this.name, animal: this.animal}
-        });
-    
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-          this.animal = result;
-        });
+    }
+    // OBTENER DATOS DEL USUARIO
+    public SetUsuario(Usuario: any){
+        console.log(Usuario);
+        this.idUsuario=Usuario.idUsuario;
+        this.nombre=Usuario.nombre;
+        this.apellido=Usuario.apellido;
+        this.email=Usuario.email;
+        this.documento=Usuario.documento;
+        this.username=Usuario.username; 
       }
 
+    ngOnInit() {
+        this.listarUsuario();
+        this.usuario= this.service.obtenerDatosUser();
+    }
 }

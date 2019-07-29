@@ -8,26 +8,18 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./equipos-table.component.scss']
 })
 export class EquiposTableComponent implements OnInit {
-  @Input() data: any;
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
   public settings: Settings;
-  public protocolos: any;
   public table:number;
-  public cols: any[];
-  constructor(public appSettings:AppSettings, private _AppService:AppService) { 
+  public equipos: any;
+  public estado:boolean;
+  constructor(public appSettings:AppSettings, private service:AppService) { 
     this.settings = this.appSettings.settings; 
     this.table = 0;
-    this.cols = [
-      { field: 'codigo', header: 'Codigo' },
-      { field: 'nombre', header: 'Nombre' },
-      { field: 'referencia', header: 'Referencia' },
-      { field: 'estado', header: 'Estado' }
-    ]; 
   }
-
-  ngOnInit() {
-  }
-  public getImg(imgNombre: string): string{
-    return '../../../../../assets/img/'+imgNombre;
+ OnInit() {
   }
 
 }
