@@ -1,6 +1,10 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -29,6 +33,7 @@ export class TecnicosTableComponent implements OnInit {
   public nombreCorto:any;
   @Input()
   public documento:any;
+  public delete:any;
   private idTecnico:number;
 
   constructor(private service: AppService) {
@@ -38,7 +43,7 @@ export class TecnicosTableComponent implements OnInit {
   ngOnInit() {
     this.getTecnicos();
   }
-  //AGREGAR TECNICOS
+  //AGREGAR TECNICOSF
   public postagregarTecnicos(){
     this.agregarTecnico={
       "idTecnico":6,
@@ -120,7 +125,11 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+<<<<<<< HEAD
   success(title:string){
+=======
+  success(title: string){
+>>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -133,5 +142,31 @@ export class TecnicosTableComponent implements OnInit {
       title: 'El tecnico fue agregado con exito!'
     })
   }
+
+  public deleteTecnico(){
+     const deleteTecnico = {
+      "idTecnico":this.idTecnico,
+      "fkEmpresa": 1,
+      "nombre":this.nombre,
+      "nombreCorto":this.nombreCorto,
+      "documento":this.documento,
+      "direccion":this.direccion,
+      "email":this.email,
+      "ciudad":this.ciudad,
+      "telefonoFijo":this.telefonoFijo,
+      "telefonoCelular":this.telefonoCelular,
+      "estado": 9,
+    } 
+    this.getTecnicos()
+    this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
+      data =>{
+        console.log(data)
+
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  } 
 
 }

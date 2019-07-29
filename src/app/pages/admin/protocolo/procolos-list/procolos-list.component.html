@@ -1,4 +1,5 @@
 <div fxLayout="row wrap">
+<<<<<<< HEAD
         <div fxFlex="100" class="flex-p">
             <mat-card class="p-0 list">
                 <mat-sidenav-container>
@@ -141,12 +142,28 @@
                                         </tr>
                                 </ng-template>+
                         </p-table>
+=======
+    <div fxFlex="100" class="flex-p">
+        <mat-card class="p-0 list">
+            <mat-sidenav-container>
+                <div>
+                    <mat-toolbar style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <button mat-raised-button style="background-color: #397367; color:white;"
+                                (click)="nuevoProtocolo();">
+                                <mat-icon>add</mat-icon>&nbsp; NUEVO PROTOCOLO
+                            </button>
+<!--                             <button mat-flat-button color="warn" (click)="ngxSmartModalService.getModal('myModal').open()">
+                                <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Protocolo
+                            </button> -->
+>>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
                         </div>
                     </div>
                 </mat-sidenav-container>
             </mat-card>
         </div>
     </div>
+<<<<<<< HEAD
     
     <ngx-smart-modal [dismissable]="false" [escapable]="false" #myModal identifier="myModal" style="text-align: center;">
         <h1>Añadir Protocolo</h1>
@@ -187,3 +204,45 @@
     
     
     
+=======
+</div>
+
+<ngx-smart-modal [dismissable]="false" [escapable]="false" #modalNuevoProtocolo identifier="modalNuevoProtocolo" style="text-align: center;">
+    <h1>Añadir Protocolo</h1>
+    <br>
+    <form class="example-form">
+        <mat-form-field class="example-full-width" *ngFor="let item of Usuario">
+          <input matInput placeholder="Empresa" value="{{item.nombre}}">
+          
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Favorite food">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Favorite food">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field class="example-full-width">
+              <input matInput placeholder="Favorite food">
+            </mat-form-field>
+            <br>
+    </form>
+
+    <hr>
+    <br> 
+
+    <button mat-raised-button (click)="modalNuevoProtocolo.close()">Cerrar</button>
+    &nbsp;
+    <button mat-raised-button style="background-color: #42BD75;" (click)="modalNuevoProtocolo.close()">Crear</button>
+
+</ngx-smart-modal>
+
+<!--
+  /////////// form nuevo protocolo
+-->
+
+
+
+>>>>>>> 1a59b2be230daf1e8405157d0334013c7d4e63c6
