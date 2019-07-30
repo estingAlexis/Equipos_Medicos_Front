@@ -13,17 +13,22 @@ import Swal from 'sweetalert2';
 export class ProtocolosTableComponent implements OnInit {
 
   public protocolos:any = [];
-
+  
   public idProtocolo;
+  @Input()
   public codigo;
+  @Input()
   public nombre;
+  @Input()
   public descripcion;
+  @Input()
   public revision;
+  @Input()
   public responsable;
 
   public estado: string = '';
 
-  constructor(private service: AppService) {
+  constructor(private service: AppService, private auth: AuthService) {
 
   }
 
@@ -31,6 +36,8 @@ export class ProtocolosTableComponent implements OnInit {
     this.getProtocolos();
   }
 
+  public usuario = this.auth.obtenerDatosUser();
+  public empresa = this.usuario.empresa.idEmpresa;
 
   public getProtocolos() {
     this.service.get('protocolos/list').subscribe(
@@ -45,6 +52,7 @@ export class ProtocolosTableComponent implements OnInit {
 
   public newProtocolo() {
     const json = {
+      'fkEmpresa': this.empresa,
       'idProtocolo': this.idProtocolo,
       'codigo': this.codigo,
       'nombre': this.nombre,
@@ -60,18 +68,38 @@ export class ProtocolosTableComponent implements OnInit {
         console.log(error);
       }
     )
+    this.getProtocolos()
   }
 
   //  (  `  )
 
   public updateProtocolo() {
     const json = {
+      'fkEmpresa': this.empresa,
       'idProtocolo': this.idProtocolo,
       'codigo': this.codigo,
       'nombre': this.nombre,
       'descripcion': this.descripcion,
       'revision': this.revision,
       'responsable': this.responsable,
+    }
+    this.service.put(`protocolos/${this.idProtocolo}`, json).subscribe(
+      data => {
+
+      }
+    )
+  }
+
+  public deleteProtocolo() {
+    const json = {
+      'fkEmpresa': this.empresa,
+      'idProtocolo': this.idProtocolo,
+      'codigo': this.codigo,
+      'nombre': this.nombre,
+      'descripcion': this.descripcion,
+      'revision': this.revision,
+      'responsable': this.responsable,
+      'estado': 9
     }
     this.service.put(`protocolos/${this.idProtocolo}`, json).subscribe(
       data => {

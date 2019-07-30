@@ -19,18 +19,18 @@
                   <th width="5%">Id</th>
                   <th width="20%">Codigo</th>
                   <th width="30%">Nombre</th>
-                  <th width="20%">Descripcion</th>
-                  <th width="30%">Revision</th>
+<!--                   <th width="20%">Descripcion</th> -->
+                   <th width="30%">Revision</th> 
                   <th width="20%">Responsable</th>
+                  <th width="5%">Acciones</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-item>
                 <tr class="tbody">
-                  <td>{{item.idTecnico}}</td>
                   <td style="text-align: left">{{item.idProtocolo}}</td>
                   <td style="text-align: left">{{item.codigo}}</td>
                   <td style="text-align: left">{{item.nombre}}</td>
-                  <td style="text-align: left">{{item.descripcion}}</td>
+<!--                    <td style="text-align: left">{{item.descripcion}}</td> -->
                   <td  style="text-align: left" >{{item.revision}}</td>
                   <td style="text-align: left">{{item.responsable}}</td>
                   <td>
@@ -83,12 +83,12 @@
     </div>
     <!--end row-->
     <div class="row">
-      <div class="col-6">
+<!--        <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Revision</mat-label>
           <input matInput placeholder="Revision" id="revision" name="revision" [(ngModel)]="revision">
       </mat-form-field>
-      </div>
+      </div>  -->
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Responsable</mat-label>
@@ -96,10 +96,11 @@
       </mat-form-field>
       </div>
     </div>
-    <!--end row-->
 
+    <!--end row-->
+      
     <hr>
-        <button mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
+        <button mat-button class="botones" (click)="newProtocolo()" *ngIf="crear"  style="background: #49978e;    position: relative;"
             >Crear</button>
        <button mat-button class="botones" *ngIf="actualizar "
             style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
