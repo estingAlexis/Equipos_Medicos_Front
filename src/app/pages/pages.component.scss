@@ -1,8 +1,7 @@
 @import "../theme/styles/variables";
 
 .sidenav{
-    min-width: 180px;
-    //width: $sidenav-width;
+    width: $sidenav-width;
     overflow: hidden; 
     border: none !important;  
 }

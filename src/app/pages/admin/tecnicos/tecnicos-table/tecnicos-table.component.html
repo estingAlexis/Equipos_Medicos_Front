@@ -7,7 +7,7 @@
             style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
             fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-flat-button color="warn"(click)="estado=false; crear=true;clear()">
+              <button mat-flat-button color="warn"(click)="estado=false;">
                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Tecnico
               </button>
             </div>
@@ -122,7 +122,7 @@
     </div>
     <!--end row-->
     <hr>
-        <button mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
+        <button mat-button class="botones" (click)="postagregarTecnicos();estado='';" *ngIf="crear"  style="background: #49978e;    position: relative;"
             >Crear</button>
        <button mat-button class="botones" *ngIf="actualizar "
             style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>

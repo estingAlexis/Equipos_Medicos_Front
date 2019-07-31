@@ -149,11 +149,11 @@ export class TecnicosTableComponent implements OnInit {
       "telefonoCelular":this.telefonoCelular,
       "estado": 9,
     } 
-    this.getTecnicos()
+
     this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
       data =>{
         console.log(data)
-
+        this.getTecnicos();
       },
       error => {
         console.log(error)

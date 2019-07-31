@@ -41,8 +41,10 @@ import { ComponentsModule } from './components/components.module';
 import { SpinnerModule } from 'primeng/spinner';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatDatepickerModule, MatInputModule } from '@angular/material';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {CalendarModule as pCalendar} from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -64,7 +66,10 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     DropdownModule,
     InputTextareaModule,
     SpinnerModule,
-    ComponentsModule
+    ComponentsModule,
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule,
+    pCalendar,
   ],
   declarations: [
     AppComponent,

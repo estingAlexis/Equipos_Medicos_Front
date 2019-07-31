@@ -7,7 +7,7 @@
             style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
             fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-flat-button color="warn"(click)="estado='new'; crear=true;clear()">
+              <button mat-flat-button color="warn"(click)="getTecnicos();estado='new';crear=true;clear();">
                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Protocolo
               </button>
             </div>
@@ -19,29 +19,33 @@
                   <th width="5%">Id</th>
                   <th width="20%">Codigo</th>
                   <th width="30%">Nombre</th>
-                  <th width="20%">Descripcion</th>
-                  <th width="30%">Revision</th>
+<!--                   <th width="20%">Descripcion</th>
+ -->                  <th width="30%">Revision</th>
                   <th width="20%">Responsable</th>
+                  <th width="10%">Acciones</th>
+                  <th width="10%">estado</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-item>
                 <tr class="tbody">
-                  <td>{{item.idTecnico}}</td>
                   <td style="text-align: left">{{item.idProtocolo}}</td>
                   <td style="text-align: left">{{item.codigo}}</td>
                   <td style="text-align: left">{{item.nombre}}</td>
-                  <td style="text-align: left">{{item.descripcion}}</td>
-                  <td  style="text-align: left" >{{item.revision}}</td>
+<!--                   <td style="text-align: left">{{item.descripcion}}</td>
+ -->                  <td  style="text-align: left" >{{item.revision}}</td>
                   <td style="text-align: left">{{item.responsable}}</td>
                   <td>
-                    <button mat-icon-button pTooltip="Ver Protocolos" (click)="estado='edit'; actualizar=true; SeleTecnico(item)"
+                    <button mat-icon-button pTooltip="Ver Protocolos" (click)="seleccionarProtocolo(item);getTecnicos();estado='edit'"
                       tooltipPosition="top">
                       <mat-icon>mode_edit</mat-icon>
                     </button>
                     <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
-                    (click)="SeleTecnico(item);deleteTecnico()">
+                    (click)="seleccionarProtocolo(item);deleteProtocolo();">
                       <mat-icon>delete</mat-icon>
                     </button>
+                  </td>
+                  <td>
+                    {{item.estado}}
                   </td>
                 </tr>
               </ng-template>
@@ -53,58 +57,129 @@
   </div>
 </div>
 <!-- NUEVO PROTOCOLO -->
-<div class="container px-5" *ngIf="estado=='new'">
-  <mat-card class="formulario">
-    <h2>Nuevo Protocolo</h2>
-    <hr>
+<div class="container px-5" *ngIf="estado=='edit'">
+  <mat-card class="formulario" style="padding:10% 8%;">
+    <h2>Editar Protocolo</h2>
+    <hr>    <br><br><br>
     <div class="row">
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Codigo</mat-label>
           <input matInput placeholder="Codigo" id="codigo" name="codigo" [(ngModel)]="codigo">
       </mat-form-field>
-      </div>
-      <div class="col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input matInput placeholder="Nombre" id="nombre" name="nombre" [(ngModel)]="nombre">
-      </mat-form-field>
-      </div>
-    </div>
-    <!--end row-->
-    <div class="row">
-      <div class="col-12">
-        <mat-form-field appearance="outline" width="80%%">
-          <mat-label>Descripcion</mat-label>
-          <textarea matInput placeholder="Descripcion" id="descripcion" name="descripcion" [(ngModel)]="descripcion"></textarea>
-      </mat-form-field>
-      </div>
-
-    </div>
-    <!--end row-->
-    <div class="row">
-      <div class="col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Revision</mat-label>
-          <input matInput placeholder="Revision" id="revision" name="revision" [(ngModel)]="revision">
-      </mat-form-field>
-      </div>
-      <div class="col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Responsable</mat-label>
-          <input matInput placeholder="Responsable" id="responsable" name="responsable" [(ngModel)]="responsable">
-      </mat-form-field>
-      </div>
+      
+      <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" id="nombre" name="nombre" [(ngModel)]="nombre">
+          </mat-form-field>
+          </div>
+          <div class="col-6">
+              
+                    <mat-form-field appearance="outline">
+                      <mat-label>Descripcion</mat-label>
+                      <textarea matInput placeholder="Descripcion" id="descripcion" name="descripcion" [(ngModel)]="descripcion"></textarea>
+                  </mat-form-field>
+         
+          </div>
     </div>
     <!--end row-->
 
-    <hr>
-        <button mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
-            >Crear</button>
-       <button mat-button class="botones" *ngIf="actualizar "
-            style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
-        <button mat-button class="botones" (click)="estado=''; crear=false; actualizar=false"
-            style="background: rgb(192, 66, 66); color:white;    position: relative;">Cancelar</button>
+    <!--end row-->
+    <div class="row justify-content-center text-center">
+        <br> <br>     
+              
+      <div class="col-3">
+          <p-dropdown [options]="tecnicos" [(ngModel)]="protocoloActual"
+        placeholder="" optionLabel="nombre" [filter]="true">
+    </p-dropdown>
+      </div>
+
+<div class="col-3">
+    <p-calendar placeholder="Fecha de revisión" [(ngModel)]="revision" dateFormat="yy-mm-dd"></p-calendar>
+    
+</div>
+
+<div class="col-6">
+    <div class="row justify-content-center">
+        <button mat-button class="botones" (click)="getTiempoRevision();estado=''" *ngIf="crear"  style="background: #49978e;    position: relative;"
+        >Crear</button>
+        &nbsp;
+   <button mat-button class="botones" *ngIf="actualizar "
+        style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
+    <button mat-button class="botones" (click)="estado=''; crear=false; actualizar=false"
+        style="background: rgb(192, 66, 66); color:white;    position: relative;">Cancelar</button>
+    </div>
+</div>
+    </div>
+    <!--end row-->
+    
+        
+    <br><br> <hr>
+
+  </mat-card>
+
+</div>
+
+<!-- EDITAR PROTOCOLO -->
+<div class="container px-5" *ngIf="estado=='new'">
+  <mat-card class="formulario" style="padding:10% 8%;">
+    <h2>Nuevo Protocolo</h2>
+    <hr>    <br><br><br>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Codigo</mat-label>
+          <input matInput placeholder="Codigo" id="codigo" name="codigo" [(ngModel)]="codigo">
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput placeholder="Nombre" id="nombre" name="nombre" [(ngModel)]="nombre">
+          </mat-form-field>
+          </div>
+          <div class="col-6">
+              
+                    <mat-form-field appearance="outline">
+                      <mat-label>Descripcion</mat-label>
+                      <textarea matInput placeholder="Descripcion" id="descripcion" name="descripcion" [(ngModel)]="descripcion"></textarea>
+                  </mat-form-field>
+         
+          </div>
+    </div>
+    <!--end row-->
+
+    <!--end row-->
+    <div class="row justify-content-center text-center">
+        <br> <br>     
+              
+      <div class="col-3">
+          <p-dropdown [options]="tecnicos" [(ngModel)]="protocoloActual"
+        placeholder="" optionLabel="nombre" [filter]="true">
+    </p-dropdown>
+      </div>
+
+<div class="col-3">
+    <p-calendar placeholder="Fecha de revisión" [(ngModel)]="revision" dateFormat="yy-mm-dd"></p-calendar>
+    
+</div>
+
+<div class="col-6">
+    <div class="row justify-content-center">
+        <button mat-button class="botones" (click)="getTiempoRevision();estado=''" *ngIf="crear"  style="background: #49978e;    position: relative;"
+        >Crear</button>
+        &nbsp;
+   <button mat-button class="botones" *ngIf="actualizar "
+        style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
+    <button mat-button class="botones" (click)="estado=''; crear=false; actualizar=false"
+        style="background: rgb(192, 66, 66); color:white;    position: relative;">Cancelar</button>
+    </div>
+</div>
+    </div>
+    <!--end row-->
+    
+        
+    <br><br> <hr>
+
   </mat-card>
 
 </div>
