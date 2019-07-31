@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
@@ -58,11 +59,10 @@ export class EquiposListComponent implements OnInit {
     console.log(equiposs)
   this.idEquipos=equiposs.idEquipos;
    this.nombre=equiposs.nombre;
-   this.proto=equiposs.proto;
-   this.para=equiposs.para;
+   this.proto=equiposs.fkProtocolo;
+   this.para=equiposs.fkTipo;
    this.codigo=equiposs.codigo;
    this.referencia=equiposs.referencia;
-
  }
  //ACTUALIAZAR
  public putEquipo(){
@@ -126,6 +126,55 @@ export class EquiposListComponent implements OnInit {
       result=>{
          this.parametro= result}
     )
+  }
+
+  public deleteEquipo() {
+    const json = {
+      "idEquipos": this.idEquipos,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
+      "codigo": this.codigo,
+      "referencia": this.referencia,
+      "nombre": this.nombre,
+      "estado": 9,
+      "fkTipo": this.para,
+      "fkProtocolo": this.proto
+    }
+    console.log(json);
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'No, salir'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Actividad Borrada con exito',
+          'success'
+        )
+        this.service.put(`equipos/${this.idEquipos}`, json).subscribe(
+          data => {
+            console.log("Equipos eliminado")
+            this.getEquipos();
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'No se ha realizado ningun cambio',
+          'error'
+        )
+      }
+    }),
+    error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error al conectar con la base de datos',
+        type:'error'
+      });
+    }
   }
 
 

@@ -54,15 +54,16 @@
                                             <mat-icon>ballot</mat-icon>
                                         </button>
                                         <button mat-icon-button pTooltip="Ver Protocolos"
-                                            (click)="estado=false; actualizar=true; estado='nuevoI'; SeleInstrumento(item)" tooltipPosition="top">
+                                            (click)="actualizar=true; estado='nuevoI'; SeleInstrumento(item)" tooltipPosition="top">
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
-                                        <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top">
+                                        <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
+                                        (click)="SelectIntrumento(item);deleteInstrumento()">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </td>
                                     <td>
-                                        {{rowData.estado}}
+                                        {{item.estado}}
                                     </td>
                             </ng-template>
                         </p-table>

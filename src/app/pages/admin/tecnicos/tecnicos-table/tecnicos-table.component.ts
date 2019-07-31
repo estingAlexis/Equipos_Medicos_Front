@@ -121,11 +121,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-<<<<<<< HEAD
-  success(title: string){
-=======
-  success(title:string){
->>>>>>> 4ba798e97bfc2f104afd758d002a04d696505454
+  public success(title: string){
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -153,16 +149,43 @@ export class TecnicosTableComponent implements OnInit {
       "telefonoCelular":this.telefonoCelular,
       "estado": 9,
     } 
-
-    this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
-      data =>{
-        console.log(data)
-        this.getTecnicos();
-      },
-      error => {
-        console.log(error)
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'No, salir'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Actividad Borrada con exito',
+          'success'
+        )
+        this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
+          data =>{
+            console.log(data)
+            this.getTecnicos();
+          }
+            )
+        
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'No se ha realizado ningun cambio',
+          'error'
+        )
       }
-    )
+    }),
+    error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error al conectar con la base de datos',
+        type:'error'
+      });
+    }
+    
   } 
 
 }

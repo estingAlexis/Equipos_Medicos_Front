@@ -77,7 +77,7 @@ export class ClientesListComponent implements OnInit {
       }
       )
    }
-   clear(){
+   public clear(){
      this.nombre=null;
      this.nombrecorto=null;
      this.documento=null;
@@ -167,14 +167,41 @@ export class ClientesListComponent implements OnInit {
       "atencion":this.atencion,
       "estado": 9
     }
-    this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
-      data => {
-        console.log("Cliente eliminado")
-        this.getTerceros();
-      },
-      error => {
-        console.log(error)
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'No, salir'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Actividad Borrada con exito',
+          'success'
+        )
+        this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
+          data => {
+            console.log("Cliente eliminado")
+            this.getTerceros();
+          }
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'No se ha realizado ningun cambio',
+          'error'
+        )
       }
-    )
+    }),
+    error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error al conectar con la base de datos',
+        type:'error'
+      });
+    }
+    
   }
 }

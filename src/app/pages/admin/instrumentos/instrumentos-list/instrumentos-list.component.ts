@@ -23,7 +23,6 @@ export class InstrumentosListComponent implements OnInit {
   public table:number;
   public instrumento:any;
   public selectinstrumento:any;
-  public empresa: 1;
   public vacion:boolean;
   public actualizar:any;
   public usuario:Usuario;
@@ -88,7 +87,7 @@ export class InstrumentosListComponent implements OnInit {
     }
     //OBTENER ID
     public SeleInstrumento(instrumento:any){
-      this.idInstrumentos.instrumento.idInstrumento;
+      this.idInstrumentos=instrumento.idInstrumentos;
       this.nombre=instrumento.nombre;
       this.modelo=instrumento.modelo;
       this.marca=instrumento.marca;
@@ -153,7 +152,12 @@ export class InstrumentosListComponent implements OnInit {
 
   public deleteInstrumento() {
     const json = {
-
+      "idInstrumentos": this.selectinstrumento.idInstrumentos,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
+      "nombre": this.selectinstrumento.nombre,
+      "marca": this.selectinstrumento.marca,
+      "modelo": this.selectinstrumento.modelo,
+      "estado": 9,
     }
     console.log(json);
    
@@ -171,7 +175,7 @@ export class InstrumentosListComponent implements OnInit {
               'Actividad Borrada con exito',
               'success'
             )
-            this._AppService.put(`protocolos/${this.selectinstrumento.idInstrumentos}`, json).subscribe(
+            this._AppService.put(`instrumentos/${this.selectinstrumento.idInstrumentos}`, json).subscribe(
               data => {
                 this.getInstrumentos();
                 this.estado = 'listaI';
