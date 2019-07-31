@@ -96,6 +96,8 @@ export class ApiRestService {
   cerrarModal() {
     this.modal = false;
   }
+  //ESTADOS
+  
 
 
 }

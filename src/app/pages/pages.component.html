@@ -1,5 +1,9 @@
 <mat-sidenav-container>
+<<<<<<< HEAD
     <mat-sidenav *ngIf="settings.menu == 'vertical'" [opened]="settings.sidenavIsOpened" [mode]="(settings.sidenavIsPinned) ? 'side' : 'over'" #sidenav class="sidenav mat-elevation-z6">
+=======
+    <mat-sidenav style="width: 13%" *ngIf="settings.menu == 'vertical'" [opened]="settings.sidenavIsOpened" [mode]="(settings.sidenavIsPinned) ? 'side' : 'over'" #sidenav class="sidenav mat-elevation-z6">
+>>>>>>> 4ba798e97bfc2f104afd758d002a04d696505454
         <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content id="main" perfectScrollbar [disabled]="settings.fixedHeader" (psScrollY)="onPsScrollY($event)">

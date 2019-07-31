@@ -19,6 +19,8 @@ export class EquiposListComponent implements OnInit {
   public estado:boolean;
   public usuario:Usuario;
   public equipo:any;
+  public putEquip:any
+  public idEquipos:any;
   @Input()
   public nombre:any;
   @Input()
@@ -51,6 +53,37 @@ export class EquiposListComponent implements OnInit {
     this.getProtocolos();
     this.getParametro();
   }
+  //OBTENER DATOS DE EQUIPO 
+  public setEquipo(equiposs: any){
+    console.log(equiposs)
+  this.idEquipos=equiposs.idEquipos;
+   this.nombre=equiposs.nombre;
+   this.proto=equiposs.proto;
+   this.para=equiposs.para;
+   this.codigo=equiposs.codigo;
+   this.referencia=equiposs.referencia;
+
+ }
+ //ACTUALIAZAR
+ public putEquipo(){
+   this.putEquip={
+     "idEquipos":this.idEquipos,
+    "fkEmpresa":this.usuario.empresa.idEmpresa,
+    "nombre":this.nombre,
+    "fkProtocolo":parseInt(this.proto),
+    "fkTipo":parseInt(this.para),
+    "referencia":this.referencia,
+    "codigo":this.codigo,
+    "estado":1,
+   }
+   this.service.put('equipos/'+this.idEquipos,this.putEquip).subscribe(
+     result=>{  alert('Ah sido actualizado con exito')
+       this.estado=true
+      this.getEquipos();
+      console.log(result)
+  }, error => { console.log(error)}
+   );
+ }
   //GET PROTOCOLO
   public getProtocolos(){
     this.service.get('protocolos/list').subscribe(
@@ -79,12 +112,11 @@ export class EquiposListComponent implements OnInit {
       "referencia":this.referencia,
       "codigo":this.codigo,
       "estado":1,
-      "idEquipos":143
     }
-    console.log(this.equipo)
     this.service.post('equipos/new', this.equipo).subscribe(
       resutl=>{ alert('el equipo fue creado con exito') 
-      console.log(resutl)
+      this.estado=true
+      this.getEquipos()
       this.equipo=resutl}
     )
   }

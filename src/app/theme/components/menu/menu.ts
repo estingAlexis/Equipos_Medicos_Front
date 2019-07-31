@@ -19,7 +19,7 @@ export const verticalMenuItems = [
     new Menu (131, 'Cotizaciones', '/procesos/cotizaciones', null, 'attach_money', null, false, 130),
     new Menu (132, 'Ordenes de Trabajo', '/procesos/order-trabajo', null, 'gavel', null, false, 130),
     new Menu (140, 'Estadisticas', '/estadisticas', null, 'show_chart', null, false, 0),
-    new Menu (2, 'Users', '/users', null, 'supervisor_account', null, false, 0), 
+    new Menu (2, 'Usuarios', '/usuarios', null, 'supervisor_account', null, false, 0), 
     new Menu (16, 'Mailbox', '/mailbox', null, 'email', null, false, 0),
     new Menu (17, 'Chat', '/chat', null, 'chat', null, false, 0),
     new Menu (46, 'Page Not Found', '/pagenotfound', null, 'error_outline', null, false, 40),

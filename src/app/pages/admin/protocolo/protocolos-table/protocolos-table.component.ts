@@ -44,6 +44,7 @@ export class ProtocolosTableComponent implements OnInit {
     
   }
 
+<<<<<<< HEAD
   seleccionarProtocolo(protocolo) {
     this.idProtocolo = protocolo.idProtocolo;
     this.codigo = protocolo.codigo;
@@ -96,6 +97,17 @@ export class ProtocolosTableComponent implements OnInit {
     )
     this.getProtocolos();
   }
+=======
+
+  public nombreProtocolo;
+  public descripcionProtocolo;
+  public revisionProtocolo;
+  public responsableProtocolo;
+  public fkEmpresa = this.auth.obtenerDatosUser();
+ 
+
+  
+>>>>>>> 4ba798e97bfc2f104afd758d002a04d696505454
 
   //  (  `  )
 

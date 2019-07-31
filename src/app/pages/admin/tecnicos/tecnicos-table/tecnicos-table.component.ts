@@ -121,7 +121,11 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+<<<<<<< HEAD
   success(title: string){
+=======
+  success(title:string){
+>>>>>>> 4ba798e97bfc2f104afd758d002a04d696505454
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -134,7 +138,7 @@ export class TecnicosTableComponent implements OnInit {
       title: 'El tecnico fue agregado con exito!'
     })
   }
-
+// CAMBIAR ESTADO DE TECNICOS
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,
