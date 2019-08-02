@@ -3,6 +3,9 @@ import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/services/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
   selector: 'app-instrumentos-list',
   templateUrl: './instrumentos-list.component.html',
@@ -22,6 +25,7 @@ export class InstrumentosListComponent implements OnInit {
   public vacion:boolean;
   public idInstrumentos:any;
   public actualizar:any;
+  public usuario:Usuario;
   public 
   //INPUT 
   @Input()
@@ -41,7 +45,7 @@ export class InstrumentosListComponent implements OnInit {
   });
   limls: { field: string; header: string; }[];
   constructor(public appSettings:AppSettings,
-    private _AppService:AppService) { this.settings = this.appSettings.settings
+    private _AppService:AppService, public servicio:AuthService) { this.settings = this.appSettings.settings
     this.estado='listaI';
     this.vacion=false;
     this.lista='instrumento';
