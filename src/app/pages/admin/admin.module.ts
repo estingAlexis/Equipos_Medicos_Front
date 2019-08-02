@@ -41,8 +41,6 @@ import { TecnicosFormComponent } from './tecnicos/tecnicos-form/tecnicos-form.co
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule, MatInputModule } from '@angular/material';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { NgxDaterangepickerMd } from 'ngx-datepicker-material';
 import {CalendarModule as pCalendar} from 'primeng/calendar';
 
 
@@ -83,8 +81,7 @@ export const routes = [
     MatSelectModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    NgxMaterialTimepickerModule,
-    NgxDaterangepickerMd,
+
     pCalendar,
   ],
   declarations: [
