@@ -20,6 +20,8 @@ export class InstrumentosListComponent implements OnInit {
   public instrumento:any;
   public selectinstrumento:any;
   public vacion:boolean;
+  public idInstrumentos:any;
+  public actualizar:any;
   //INPUT 
   @Input()
   public nombre:any;
@@ -82,7 +84,6 @@ export class InstrumentosListComponent implements OnInit {
           console.log(error);
         });
     }
-<<<<<<< HEAD
     //OBTENER ID
     public SeleInstrumento(instrumento:any){
       this.idInstrumentos=instrumento.idInstrumentos;
@@ -104,8 +105,6 @@ export class InstrumentosListComponent implements OnInit {
           console.log(result)}
       )
     }
-=======
->>>>>>> parent of 4ba798e... actualizar de usuarios
     //AGREGAR NUEVO INSTRUMENTO
     public postInstrumentos(){
       this.instrumento={
