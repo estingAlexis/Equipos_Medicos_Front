@@ -134,7 +134,7 @@ export class TecnicosTableComponent implements OnInit {
       title: 'El tecnico fue agregado con exito!'
     })
   }
-// CAMBIAR ESTADO DE TECNICOS
+
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,

@@ -15,8 +15,8 @@ export class ClientesListComponent implements OnInit {
   public cols: any[];
   public estado:boolean;
   public nuevoC:any;
-  public estadoCliente:any;
   public actualizar:any;
+
   @Input()  
   public nombre:any;
   @Input()
@@ -68,7 +68,7 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
       "atencion":this.atencion,
-      "estado": this.estadoCliente
+      "estado": this.estado
       } 
       this._AppService.post('clientes/new', this.nuevoC).subscribe(
         result=>{ alert('El cliente se agregado con exito'), 
@@ -89,8 +89,8 @@ export class ClientesListComponent implements OnInit {
      this.atencion=null;
    }
  //TRAER DATOS POR ID
-   public setCliente(cliente: any){
-     console.log(cliente)
+   public getCliente(cliente: any){
+    console.log(cliente);
     this.idCliente=cliente.idCliente;
     this.nombre=cliente.nombre;
     this.nombrecorto=cliente.nombrecorto;
@@ -101,7 +101,7 @@ export class ClientesListComponent implements OnInit {
     this.email=cliente.email;
     this.direccion=cliente.direccion;
     this.documento=cliente.documento;
-    this.estadoCliente=cliente.estado;
+    this.estado=cliente.estado;
   }
   //METODO DE ACTUALIZAR
   public editarDatos(){
@@ -116,7 +116,7 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
       "atencion":this.atencion,
-      "estado": this.estadoCliente
+      "estado": this.estado
     }
     this._AppService.put('cliente/'+this.idCliente,this.actualizar).subscribe(
       result=>{
@@ -127,9 +127,13 @@ export class ClientesListComponent implements OnInit {
       } 
     )
   }
+  //CAMBIAR EL ESTADO
+
   ngOnInit() {
     this.getTerceros();
   }
+ 
+
   //GET TERCEROS
   public getTerceros(){
     this._AppService.get(`clientes/list`).subscribe(
@@ -152,7 +156,12 @@ export class ClientesListComponent implements OnInit {
       type: 'success',
       title: 'El registro a sido exitoso!'
     })
+
+
+
   }
+
+
   public deleteCliente(){
     const clienteJson = {
       "idCliente":this.idCliente,
@@ -204,4 +213,6 @@ export class ClientesListComponent implements OnInit {
     }
     
   }
+
+
 }

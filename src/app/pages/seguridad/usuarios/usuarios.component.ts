@@ -13,10 +13,8 @@ export class UsuariosComponent implements OnInit {
     public estado:string;
     public nUsuario:any;
     public usuario:Usuario;
-    public id:number;
+    public idUsuario:number;
     public vacio:any;
-    public actualizar:any;
-    public estadoUsuario:any;
     //INPUT 
     @Input()
     public nombre:any
@@ -52,17 +50,14 @@ export class UsuariosComponent implements OnInit {
             "enabled":1,
             "username":this.username,
             "fkEmpresa":this.usuario.empresa.idEmpresa, 
-            "password":this. password,
-            "expirado":1
+            "password":this. password
         }
         console.log(this.nUsuario)
-        this.servivio.post('usuarios/new',this.nUsuario).subscribe(
+        this.servivio.post('usuario/new',this.nUsuario).subscribe(
             result=>{console.log(result)
             alert('Usuario a sido registrado exitosamente')
             this.nUsuario=result
-            this.clear()
-            this.estado='previa'
-            this.listarUsuario();
+        this.clear()
     }
         )
     }
@@ -79,35 +74,12 @@ export class UsuariosComponent implements OnInit {
     // OBTENER DATOS DEL USUARIO
     public SetUsuario(Usuario: any){
         console.log(Usuario);
-        this.id=Usuario.id;
+        this.idUsuario=Usuario.idUsuario;
         this.nombre=Usuario.nombre;
         this.apellido=Usuario.apellido;
         this.email=Usuario.email;
         this.documento=Usuario.documento;
         this.username=Usuario.username; 
-      }
-      //ACTUALIZAR USUARIO
-      public putUsuario(){
-          this.actualizar={
-            "id":this.id,
-            "nombre":this.nombre,
-            "apellido":this.apellido,
-            "documento":this.documento,
-            "email":this.email,
-            "enabled":1,
-            "username":this.username,
-            "fkEmpresa":this.usuario.empresa.idEmpresa, 
-            "expirado":1,
-            "estado":this.estadoUsuario
-          }
-          this.servivio.post('usuarios/'+this.id,this.actualizar).subscribe(
-              result=>{alert('ah sido actualizado exitosamente')
-              this.estado='previa'
-              this.listarUsuario();
-            }, error =>{
-                console.log(error)
-;            }
-          )
       }
 
     ngOnInit() {

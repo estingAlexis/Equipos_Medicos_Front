@@ -132,21 +132,12 @@
                               [(ngModel)]="password">
                       </mat-form-field>
                   </div>
-                  <div class="col-md-6">
-                    <mat-form-field  appearance="outline" *ngIf="actualizar">
-                        <mat-label>Estado</mat-label>
-                        <select matNativeControl required [(ngModel)]="estadoUsuario" name="estadoUsuario" id="estadoUsuario">
-                          <option value="1">Activo</option>
-                          <option value="9">Inactivo</option>
-                        </select>
-                      </mat-form-field>
-                  </div>
 
               </div>
           </mat-card-content>
           <mat-card-actions align="start">
               <button mat-button (click)="postUsuario()" style="background:#1FBF87 " *ngIf="crear">Crear</button>
-              <button mat-button  style="background:#1FBF87 " (click)="putUsuario()"
+              <button mat-button (click)="postUsuario()" style="background:#1FBF87 "
                   *ngIf="actualizar">actualizar</button>
 
           </mat-card-actions>
@@ -179,11 +170,10 @@
                           </mat-form-field>
                       </div>
                   </div>
-
               </div>
           </mat-card-content>
           <mat-card-actions align="start">
-              <button mat-button style="background:#1FBF87; text-align: center; position: relative; left:150px; " >Actualizar contraseña</button>
+              <button mat-button style="background:#1FBF87; text-align: center; position: relative; left:150px; ">Actualizar contraseña</button>
 
           </mat-card-actions>
           <mat-card-footer>

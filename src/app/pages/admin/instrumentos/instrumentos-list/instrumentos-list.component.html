@@ -34,27 +34,31 @@
                                     </th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-item let-columns="columns">
-                                <tr [pSelectableRow]="item">
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr [pSelectableRow]="rowData">
                                     <td>
-                                        {{item.idInstrumentos}}
+                                        {{rowData.idInstrumentos}}
                                     </td>
                                     <td>
-                                        {{item.nombre}}
+                                        {{rowData.nombre}}
                                     </td>
                                     <td>
-                                        {{item.marca}}
+                                        {{rowData.marca}}
                                     </td>
                                     <td>
-                                        {{item.modelo}}
+                                        {{rowData.modelo}}
                                     </td>
                                     <td>
                                         <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"
-                                            (click)="getProtocolosPorInstrumento(item.idInstrumentos); SelectIntrumento(id) ;lista='protocolo';">
+                                            (click)="getProtocolosPorInstrumento(rowData.idInstrumentos); SelectIntrumento(id) ;lista='protocolo';">
                                             <mat-icon>ballot</mat-icon>
                                         </button>
                                         <button mat-icon-button pTooltip="Ver Protocolos"
+<<<<<<< HEAD
                                             (click)="actualizar=true; estado='nuevoI'; SeleInstrumento(item)" tooltipPosition="top">
+=======
+                                            (click)="estado=false; actualizar=true" tooltipPosition="top">
+>>>>>>> parent of 4ba798e... actualizar de usuarios
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
                                         <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top"

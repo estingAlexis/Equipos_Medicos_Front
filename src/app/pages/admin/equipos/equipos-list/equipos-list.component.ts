@@ -20,8 +20,6 @@ export class EquiposListComponent implements OnInit {
   public estado:boolean;
   public usuario:Usuario;
   public equipo:any;
-  public putEquip:any
-  public idEquipos:any;
   @Input()
   public nombre:any;
   @Input()
@@ -54,6 +52,7 @@ export class EquiposListComponent implements OnInit {
     this.getProtocolos();
     this.getParametro();
   }
+<<<<<<< HEAD
   //OBTENER DATOS DE EQUIPO 
   public setEquipo(equiposs: any){
     console.log(equiposs)
@@ -84,6 +83,8 @@ export class EquiposListComponent implements OnInit {
   }, error => { console.log(error)}
    );
  }
+=======
+>>>>>>> parent of 4ba798e... actualizar de usuarios
   //GET PROTOCOLO
   public getProtocolos(){
     this.service.get('protocolos/list').subscribe(
@@ -112,11 +113,12 @@ export class EquiposListComponent implements OnInit {
       "referencia":this.referencia,
       "codigo":this.codigo,
       "estado":1,
+      "idEquipos":143
     }
+    console.log(this.equipo)
     this.service.post('equipos/new', this.equipo).subscribe(
       resutl=>{ alert('el equipo fue creado con exito') 
-      this.estado=true
-      this.getEquipos()
+      console.log(resutl)
       this.equipo=resutl}
     )
   }
