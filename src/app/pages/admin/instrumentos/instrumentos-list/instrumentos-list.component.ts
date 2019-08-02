@@ -22,6 +22,7 @@ export class InstrumentosListComponent implements OnInit {
   public vacion:boolean;
   public idInstrumentos:any;
   public actualizar:any;
+  public 
   //INPUT 
   @Input()
   public nombre:any;
