@@ -70,11 +70,12 @@
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Nombre corto:</mat-label>
-          <input matInput placeholder="nombre corto" id="nombreCorto" name="nombreCorto" [(ngModel)]="nombreCorto">
+          <mat-label>Apellido:</mat-label>
+          <input matInput placeholder="Apelldio" id="apellido" name="apellido" [(ngModel)]="apellido">
       </mat-form-field>
       </div>
     </div>
+
     <!--end row-->
     <div class="row">
       <div class="col-6">
@@ -85,8 +86,8 @@
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Direccion:</mat-label>
-          <input matInput placeholder="cra..." id="direccion" name="direccion" [(ngModel)]="direccion">
+          <mat-label>Username:</mat-label>
+          <input matInput placeholder="Username" id="username" name="username" [(ngModel)]="username">
       </mat-form-field>
       </div>
     </div>
@@ -109,8 +110,8 @@
     <div class="row">
       <div class="col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Email:</mat-label>
-          <input matInput placeholder="@" id="email" name="email" [(ngModel)]="email">
+          <mat-label>Direccion:</mat-label>
+          <input matInput placeholder="@" id="direccion" name="direccion" [(ngModel)]="direccion">
       </mat-form-field>
       </div>
       <div class="col-6">
@@ -121,6 +122,14 @@
       </div>
     </div>
     <!--end row-->
+    <div class="row">
+      <div class="col-12 w-75">
+        <mat-form-field appearance="outline">
+          <mat-label>Email:</mat-label>
+          <input matInput placeholder="correo@mail.com" id="email" name="email" [(ngModel)]="email">
+      </mat-form-field>
+      </div>
+    </div>
     <hr>
         <button mat-button class="botones" (click)="postagregarTecnicos();estado='';" *ngIf="crear"  style="background: #49978e;    position: relative;"
             >Crear</button>

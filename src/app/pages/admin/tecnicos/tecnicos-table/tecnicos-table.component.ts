@@ -16,6 +16,10 @@ export class TecnicosTableComponent implements OnInit {
   @Input()
   public nombre:any;
   @Input()
+  public apellido:any;
+  @Input()
+  public nombreCorto:any;
+  @Input()
   public direccion:any;
   @Input()
   public telefonoFijo:any;
@@ -25,8 +29,6 @@ export class TecnicosTableComponent implements OnInit {
   public email:any;
   @Input()
   public ciudad:any;
-  @Input()
-  public nombreCorto:any;
   @Input()
   public documento:any;
   public delete:any;
@@ -41,6 +43,10 @@ export class TecnicosTableComponent implements OnInit {
   }
   //AGREGAR TECNICOSF
   public postagregarTecnicos(){
+    const newUser = {
+      "nombre": this.nombre,
+      "apellido": this.apellido,
+    }
     this.agregarTecnico={
       "idTecnico":6,
       "nombre":this.nombre,

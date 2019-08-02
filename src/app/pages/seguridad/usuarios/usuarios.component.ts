@@ -100,13 +100,13 @@ export class UsuariosComponent implements OnInit {
             "expirado":1,
             "estado":this.estadoUsuario
           }
-          this.servivio.post('usuarios/'+this.id,this.actualizar).subscribe(
+          this.servivio.put('usuarios/'+this.id,this.actualizar).subscribe(
               result=>{alert('ah sido actualizado exitosamente')
               this.estado='previa'
               this.listarUsuario();
             }, error =>{
-                console.log(error)
-;            }
+                console.log(error);
+            }
           )
       }
 

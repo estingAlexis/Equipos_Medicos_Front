@@ -199,4 +199,18 @@ export class InstrumentosListComponent implements OnInit {
         }
   }
 
+  public addProtocolo() {
+    const json = {
+      "fkEmpresa": parseInt(this.usuario.empresa.idEmpresa),
+      "fkInstrumento": parseInt(this.selectinstrumento.idInstrumentos),
+      "fkProtocolo": parseInt(this.proto.idProtocolo),
+    }
+    console.log('json: ', json)
+    this._AppService.post('instrumentos_protocolo/new', json).subscribe(
+      data => {
+        console.log(data);
+      }
+    )
+  }
+
 }
