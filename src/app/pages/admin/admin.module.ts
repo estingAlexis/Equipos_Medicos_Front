@@ -17,6 +17,7 @@ import { AppService } from 'src/app/services/app.service';
 import { ActividadesTableComponent } from './actividades/actividades-table/actividades-table.component';
 import {TableModule} from 'primeng/table';
 import {ListComponent} from './actividades/list/list.component';
+import { ProcoloslistComponent } from './protocolo/procolos-list/procolos-list.component';
 import { ProtocolosTableComponent } from './protocolo/protocolos-table/protocolos-table.component';
 import {TooltipModule} from 'primeng/tooltip';
 import {DialogModule} from 'primeng/dialog';
@@ -40,8 +41,6 @@ import { TecnicosTableComponent } from './tecnicos/tecnicos-table/tecnicos-table
 import { TecnicosFormComponent } from './tecnicos/tecnicos-form/tecnicos-form.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatDatepickerModule, MatInputModule } from '@angular/material';
-import {CalendarModule as pCalendar} from 'primeng/calendar';
 
 
 export const routes = [
@@ -79,10 +78,7 @@ export const routes = [
     InputTextareaModule,
     SpinnerModule,
     MatSelectModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-
-    pCalendar,
+    MatFormFieldModule
   ],
   declarations: [
     AdminComponent,
@@ -93,6 +89,7 @@ export const routes = [
     ClientesComponent,
     ActividadesTableComponent,
     ListComponent,
+    ProcoloslistComponent,
     ProtocolosTableComponent,
     InstrumentosListComponent,
     EquiposListComponent,

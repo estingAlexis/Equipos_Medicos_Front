@@ -121,7 +121,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-  public success(title: string){
+  success(title:string){
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -134,7 +134,7 @@ export class TecnicosTableComponent implements OnInit {
       title: 'El tecnico fue agregado con exito!'
     })
   }
-
+// CAMBIAR ESTADO DE TECNICOS
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,
@@ -149,43 +149,16 @@ export class TecnicosTableComponent implements OnInit {
       "telefonoCelular":this.telefonoCelular,
       "estado": 9,
     } 
-    Swal.fire({
-      title: 'Advertencia',
-      text: 'Estas seguro?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Deleted!',
-          'Actividad Borrada con exito',
-          'success'
-        )
-        this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
-          data =>{
-            console.log(data)
-            this.getTecnicos();
-          }
-            )
-        
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'No se ha realizado ningun cambio',
-          'error'
-        )
+    this.getTecnicos()
+    this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
+      data =>{
+        console.log(data)
+
+      },
+      error => {
+        console.log(error)
       }
-    }),
-    error => {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Error al conectar con la base de datos',
-        type:'error'
-      });
-    }
-    
+    )
   } 
 
 }

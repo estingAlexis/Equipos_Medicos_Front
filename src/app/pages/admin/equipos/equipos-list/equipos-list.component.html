@@ -17,7 +17,7 @@
                                                         <div style="margin: 7px" fxLayout="row" fxLayoutAlign="start center">
                                                             <button style="float: right" mat-flat-button color="accent"
                                                                 (click)="lista='instrumento'">
-                                                                <mat-icon class="mat-18">keyboard_backspace</mat-icon> 
+                                                               
                                                             </button>
                                                         </div>
                                                     </tr>
@@ -37,11 +37,11 @@
                                                 <td style="text-align: left">{{item.referencia}}</td>
                                                 <td style="text-align: left">{{item.nombre}}</td>
                                                 <td>{{item.estado}}</td>
-                                                <td> <button mat-icon-button pTooltip="Ver Protocolos" (click)="estado=false; actualizar=true; SeleTecnico(item)"
+                                                <td> <button mat-icon-button pTooltip="Ver Protocolos" (click)="estado=false; actualizar=true; setEquipo(item)"
                                                     tooltipPosition="top">
                                                     <mat-icon>mode_edit</mat-icon>
                                                   </button>
-                                                  <button mat-icon-button pTooltip="Ver Protocolos" (click)="setEquipo(item);deleteEquipo()" tooltipPosition="top">
+                                                  <button mat-icon-button pTooltip="Ver Protocolos" (click)="SeleTecnico(item)" tooltipPosition="top">
                                                     <mat-icon>delete</mat-icon>
                                                   </button></td>
                                             </tr>     
@@ -103,7 +103,7 @@
             <hr>
             <br>
             <button class="crear" style="background: #4BC07E" (click)="postEquipo()" *ngIf="crear" mat-button>Crear</button>
-            <button class="crear" style="background: #4BC07E" mat-button *ngIf="actualizar" (click)="editarDatos()">Actualizar</button>
+            <button class="crear" style="background: #4BC07E" mat-button *ngIf="actualizar" (click)="putEquipo();">Actualizar</button>
             <button class="cancelar" style="background: #DD5246"  (click)="estado=true; crear=false; actualizar=false" mat-button>Cancelar</button>
         </mat-card>
 </div>

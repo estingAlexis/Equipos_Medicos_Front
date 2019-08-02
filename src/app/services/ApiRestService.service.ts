@@ -13,10 +13,10 @@ import { id } from '@swimlane/ngx-charts/release/utils';
 }) 
 export class ApiRestService {
 
- public url = 'http://localhost:5000/rest/v1/';
-/*   public url = 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/rest/v1/';
- */  /* public publicUrl = 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/'; */
- public publicUrl = 'http://localhost:5000/';
+ //public url = 'http://impuestos.local/api/v1/';
+  public url = 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/rest/v1/';
+  public publicUrl = 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/';
+ //public url = 'http://backend.tributo.co/rest/v1/';
  private token = '';
  private httpOptions;
  

@@ -15,8 +15,8 @@ export class ClientesListComponent implements OnInit {
   public cols: any[];
   public estado:boolean;
   public nuevoC:any;
+  public estadoCliente:any;
   public actualizar:any;
-
   @Input()  
   public nombre:any;
   @Input()
@@ -68,7 +68,7 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
       "atencion":this.atencion,
-      "estado": this.estado
+      "estado": this.estadoCliente
       } 
       this._AppService.post('clientes/new', this.nuevoC).subscribe(
         result=>{ alert('El cliente se agregado con exito'), 
@@ -77,7 +77,7 @@ export class ClientesListComponent implements OnInit {
       }
       )
    }
-   public clear(){
+   clear(){
      this.nombre=null;
      this.nombrecorto=null;
      this.documento=null;
@@ -89,8 +89,8 @@ export class ClientesListComponent implements OnInit {
      this.atencion=null;
    }
  //TRAER DATOS POR ID
-   public getCliente(cliente: any){
-    console.log(cliente);
+   public setCliente(cliente: any){
+     console.log(cliente)
     this.idCliente=cliente.idCliente;
     this.nombre=cliente.nombre;
     this.nombrecorto=cliente.nombrecorto;
@@ -101,7 +101,7 @@ export class ClientesListComponent implements OnInit {
     this.email=cliente.email;
     this.direccion=cliente.direccion;
     this.documento=cliente.documento;
-    this.estado=cliente.estado;
+    this.estadoCliente=cliente.estado;
   }
   //METODO DE ACTUALIZAR
   public editarDatos(){
@@ -116,7 +116,7 @@ export class ClientesListComponent implements OnInit {
       "telefonoFijo":this.telefonoFijo,
       "telefonoCelular":this.telefonoCelular,
       "atencion":this.atencion,
-      "estado": this.estado
+      "estado": this.estadoCliente
     }
     this._AppService.put('cliente/'+this.idCliente,this.actualizar).subscribe(
       result=>{
@@ -127,13 +127,9 @@ export class ClientesListComponent implements OnInit {
       } 
     )
   }
-  //CAMBIAR EL ESTADO
-
   ngOnInit() {
     this.getTerceros();
   }
- 
-
   //GET TERCEROS
   public getTerceros(){
     this._AppService.get(`clientes/list`).subscribe(
@@ -156,12 +152,7 @@ export class ClientesListComponent implements OnInit {
       type: 'success',
       title: 'El registro a sido exitoso!'
     })
-
-
-
   }
-
-
   public deleteCliente(){
     const clienteJson = {
       "idCliente":this.idCliente,
@@ -176,43 +167,14 @@ export class ClientesListComponent implements OnInit {
       "atencion":this.atencion,
       "estado": 9
     }
-    Swal.fire({
-      title: 'Advertencia',
-      text: 'Estas seguro?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, borrar',
-      cancelButtonText: 'No, salir'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Deleted!',
-          'Actividad Borrada con exito',
-          'success'
-        )
-        this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
-          data => {
-            console.log("Cliente eliminado")
-            this.getTerceros();
-          }
-        )
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'No se ha realizado ningun cambio',
-          'error'
-        )
+    this._AppService.put(`cliente/${this.idCliente}`, clienteJson).subscribe(
+      data => {
+        console.log("Cliente eliminado")
+        this.getTerceros();
+      },
+      error => {
+        console.log(error)
       }
-    }),
-    error => {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Error al conectar con la base de datos',
-        type:'error'
-      });
-    }
-    
+    )
   }
-
-
 }

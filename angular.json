@@ -51,7 +51,7 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/fullcalendar/dist/fullcalendar.js",
+              "node_modules/fullcalendar/dist/fullcalendar.js" 
             ]
           },
           "configurations": {
