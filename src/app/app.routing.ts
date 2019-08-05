@@ -8,13 +8,9 @@ import { RegisterComponent } from './Auth/register/register.component';
 import { AdminGuard } from './Guards/admin.guard';
 import { LoginGuard } from './Guards/login.guard';
 
-
 export const routes: Routes = [
 
-    {path : 'login', component: LoginComponent, canActivate: [LoginGuard]},
-    {path : 'registro', component: RegisterComponent, canActivate: [LoginGuard]},
     {path : '', redirectTo: 'login', pathMatch: 'full'},
-
     { 
         path: '',
         component: PagesComponent, children: [
@@ -27,11 +23,12 @@ export const routes: Routes = [
             { path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
             { path: 'mailbox', loadChildren: './pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
+            { path: 'tecnicos', loadChildren: './pages/tecnicos/tecnicos.module#TecnicosModule', data: { breadcrumb: 'Tecnicos' } }        
         ],
         canActivate: [AdminGuard]
     },  
-
-
+    { path : 'login', component: LoginComponent, canActivate: [LoginGuard]},
+    { path : 'registro', component: RegisterComponent, canActivate: [LoginGuard]},
     { path: 'error', component: ErrorComponent, data: { breadcrumb: 'Error' } },
     { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

@@ -6,17 +6,7 @@
     <mat-card-content>
         <form [formGroup]="datos" (ngSubmit)="submit()" class="form-sample">
             <div class="row">
-              <div class="col-md-6">
-                <div class="content">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Empresa</mat-label>
-                      <mat-select  formControlName="idEmpresa" name="idEmpresa" (selectionChange)="getParametros()">
-                        <mat-option *ngFor="let item of empresas" [value]="item.idEmpresa">{{item.nombreEmpresa}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                </div>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                   <div class="content">
                       <mat-form-field appearance="outline">
                         <mat-label>Cliente</mat-label>
@@ -58,6 +48,7 @@
                 <div class="col-md-4">
                         <div class="content">
                             <mat-form-field appearance="outline">
+                                <mat-label>Fecha Entrega</mat-label>
                                 <input matInput [matDatepicker]="picker"  formControlName="fecha" name="fecha" (dateChange)="getDate()" placeholder="Fecha de Entrega">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker touchUi #picker></mat-datepicker>
@@ -87,7 +78,7 @@
                                   <div class="col-md-3">
                                     <div class="content">
                                         <mat-form-field appearance="outline">
-                                          <mat-label>Valor Unidad</mat-label>
+                                          <mat-label [ngClass]="item.valoru > 0 ? 'text-success' : 'text-danger'">Valor Unidad</mat-label>
                                           <input type="number" matInput name="vu" (change)="agregarValorUnidad(i, $event.target.value)" placeholder="$000">
                                           <mat-icon matSuffix>attach_money</mat-icon>
                                         </mat-form-field>
@@ -96,7 +87,7 @@
                                   <div class="col-md-3">
                                     <div class="content">
                                         <mat-form-field appearance="outline">
-                                          <mat-label>Cantidad</mat-label>
+                                          <mat-label [ngClass]="item.cant > 0 ? 'text-success' : 'text-danger'">Cantidad</mat-label>
                                           <input type="number" matInput name="cant" (change)="agregarCantidad(i, $event.target.value)" placeholder="000">
                                           <mat-icon matSuffix>attach_money</mat-icon>
                                         </mat-form-field>
@@ -117,8 +108,8 @@
                     </div>
                 </div>
                 <div class="col-md-12"><br>
-                  <button type="button" mat-raised-button color="warn"><mat-icon class="mat-18">cancel</mat-icon>Cancelar</button>
-                  <button  [disabled]="!datos.valid || equiposSelected.length > 0" style="float: right" type="submit" mat-raised-button color="primary"><mat-icon class="mat-18">save</mat-icon>Guardar</button>
+                  <button type="button" (click)="goBack()" mat-raised-button color="warn"><mat-icon class="mat-18">cancel</mat-icon>Cancelar</button>
+                  <button  [disabled]="!datos.valid || equiposSelected.length == 0" style="float: right" type="submit" mat-raised-button color="primary"><mat-icon class="mat-18">save</mat-icon>Guardar</button>
                 </div>
         </div>
         </form>
@@ -146,7 +137,7 @@
                   </th>
                 </tr>
               </ng-template>
-              <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
                   <tr [pSelectableRow]="rowData">
                       <td>
                         {{rowData.codigo}}
@@ -155,10 +146,10 @@
                         {{rowData.nombre}}	
                       </td>
                       <td>
-                        <button (click)="addEquipo(rowData)" mat-mini-fab class="bg-white">
+                        <button (click)="addEquipo(rowData, rowIndex)"  mat-icon-button class="bg-white">
                             <mat-icon class="mat-18 text-success">add</mat-icon>
                         </button>
-                      </td>
+                      </td> 
                     </tr>
               </ng-template>
             </p-table>

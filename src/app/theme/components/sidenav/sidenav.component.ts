@@ -6,7 +6,6 @@ import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
 
-
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -17,7 +16,7 @@ import { Usuario } from 'src/app/models/usuario';
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenavPS') sidenavPS: PerfectScrollbarComponent;
   public userImage= '../assets/img/ana.jpg';
-  public usuario : Usuario;
+  public usuario : any;
   public menuItems:Array<any>;
   public settings: Settings;
   constructor(public appSettings:AppSettings, public menuService:MenuService, private authService: AuthService){
@@ -26,9 +25,7 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = this.menuService.getVerticalMenuItems();
-    this.usuario = this.authService.obtenerDatosUser();
-
-
+    this. usuario = JSON.parse(sessionStorage.getItem('usuario'));
   }
 
   public closeSubMenus(){

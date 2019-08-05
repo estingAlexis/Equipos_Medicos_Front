@@ -13,7 +13,7 @@ import { CotizacionesListComponent } from './cotizaciones/cotizaciones-list/coti
 import { OrdenTrabajoComponent } from './orden-trabajo/orden-trabajo.component';
 import {TableModule} from 'primeng/table';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
-
+import { CurrencyMaskModule } from "ng2-currency-mask";
 export const routes = [
   { path: '', component: ProcesosComponent, pathMatch: 'full' },
   { path: 'cotizaciones', component: CotizacionesComponent },
@@ -31,8 +31,8 @@ export const routes = [
     SharedModule,
     PipesModule,
     TableModule,
-    NgxSmartModalModule.forRoot()
-    
+    NgxSmartModalModule.forRoot(),
+    CurrencyMaskModule
   ],
   declarations: [
     ProcesosComponent,

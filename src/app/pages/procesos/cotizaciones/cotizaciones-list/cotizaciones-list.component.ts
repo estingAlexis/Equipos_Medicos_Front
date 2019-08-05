@@ -8,6 +8,7 @@ import { AppSettings } from '../../../../app.settings';
   selector: 'app-cotizaciones-list',
   templateUrl: './cotizaciones-list.component.html',
   styleUrls: ['./cotizaciones-list.component.scss'],
+
   providers: [DatePipe]
 })
 export class CotizacionesListComponent implements OnInit {

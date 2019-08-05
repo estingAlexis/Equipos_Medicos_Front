@@ -13,10 +13,17 @@
 @import "app/theme/styles/theme";
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
-
+$color-overlay: rgba(0, 0, 0, .8);
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
 
+.form-text{
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.text-25{
+  font-size: 25px;
+}
 .bg-theme{
   background-color: #49be7c;
 }
