@@ -1,3 +1,4 @@
+import { Usuario } from './../../../../models/usuario';
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
@@ -31,6 +32,9 @@ export class TecnicosTableComponent implements OnInit {
   public ciudad:any;
   @Input()
   public documento:any;
+  @Input()
+  public username:any;
+  public usuario: Usuario;
   public delete:any;
   private idTecnico:number;
 
@@ -44,11 +48,16 @@ export class TecnicosTableComponent implements OnInit {
   //AGREGAR TECNICOSF
   public postagregarTecnicos(){
     const newUser = {
-      "nombre": this.nombre,
       "apellido": this.apellido,
+      "email": this.email,
+      "nombre": this.nombre,
+      "password": this.documento,
+      "username": this.username,
+      "documento": this.documento,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
+      "expirado": 0
     }
     this.agregarTecnico={
-      "idTecnico":6,
       "nombre":this.nombre,
       "nombreCorto":this.nombreCorto,
       "documento":this.documento,
