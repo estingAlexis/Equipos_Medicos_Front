@@ -2,7 +2,7 @@ import { Component, OnInit, Input} from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-clientes-list',
@@ -17,6 +17,8 @@ export class ClientesListComponent implements OnInit {
   public nuevoC:any;
   public estadoCliente:any;
   public actualizar:any;
+  public datos: FormGroup;
+  public datoschanged: boolean = true;
   @Input()  
   public nombre:any;
   @Input()
@@ -37,10 +39,9 @@ export class ClientesListComponent implements OnInit {
   public atencion:any;
   private idCliente:number;
 
-  constructor(
+  constructor(    private _formBuilder: FormBuilder,
     public appSettings:AppSettings,
     private _AppService:AppService,
-  public ngxSmartModalService: NgxSmartModalService
     ) {
       this.settings = this.appSettings.settings;
       this.cols = [
@@ -58,25 +59,29 @@ export class ClientesListComponent implements OnInit {
     }
     //AGREGAR NUEVO CLIENTE
     public nuevoCliente(){
+      this.estadoCliente = 1;
+      let datos = this.datos.value;
        this.nuevoC={
-      "documento":this.documento,
-      "nombre":this.nombre,
-      "nombreCorto":this.nombrecorto,
-      "direccion":this.direccion,
-      "email":this.email,
-      "ciudad":this.ciudad,
-      "telefonoFijo":this.telefonoFijo,
-      "telefonoCelular":this.telefonoCelular,
-      "atencion":this.atencion,
+      "documento": datos.documento,
+      "nombre":datos.nombre,
+      "nombreCorto":datos.nombrecorto,
+      "direccion":datos.direccion,
+      "email":datos.email,
+      "ciudad":datos.ciudad,
+      "telefonoFijo":datos.telefonoFijo,
+      "telefonoCelular":datos.telefonoCelular,
+      "atencion":datos.atencion,
       "estado": this.estadoCliente
       } 
       this._AppService.post('clientes/new', this.nuevoC).subscribe(
         result=>{ alert('El cliente se agregado con exito'), 
         this.estado=true
         this.getTerceros();
+        this.datos.reset();
       }
       )
    }
+   //vaciar campos
    clear(){
      this.nombre=null;
      this.nombrecorto=null;
@@ -90,17 +95,18 @@ export class ClientesListComponent implements OnInit {
    }
  //TRAER DATOS POR ID
    public setCliente(cliente: any){
-     console.log(cliente)
+    this.datos.patchValue({
+      documento: cliente.documento,
+      nombre: cliente.nombre,
+      nombreCorto: cliente.nombrecorto,
+      direccion: cliente.direccion,
+      email: cliente.email,
+      ciudad: cliente.ciudad,
+      telefonoCelular: cliente.telefonoCelular,
+      telefonoFijo: cliente.telefonoFijo,
+      atencion: cliente.atencion
+    });
     this.idCliente=cliente.idCliente;
-    this.nombre=cliente.nombre;
-    this.nombrecorto=cliente.nombrecorto;
-    this.telefonoFijo=cliente.telefonoFijo;
-    this.telefonoCelular=cliente.telefonoCelular;
-    this.atencion=cliente.atencion;
-    this.ciudad=cliente.ciudad;
-    this.email=cliente.email;
-    this.direccion=cliente.direccion;
-    this.documento=cliente.documento;
     this.estadoCliente=cliente.estado;
   }
   //METODO DE ACTUALIZAR
@@ -127,11 +133,8 @@ export class ClientesListComponent implements OnInit {
       } 
     )
   }
-  ngOnInit() {
-    this.getTerceros();
-  }
-  //GET TERCEROS
-  public getTerceros(){
+   //GET TERCEROS
+   public getTerceros(){
     this._AppService.get(`clientes/list`).subscribe(
       result =>{
         this.clientes = result;
@@ -140,6 +143,51 @@ export class ClientesListComponent implements OnInit {
         console.log(error);
       });
   }
+  ngOnInit() {
+    this.getTerceros();
+    this.datos = this._formBuilder.group({
+      documento: ['', Validators.compose([Validators.required])],
+      nombre: ['', Validators.compose([Validators.required])],
+      nombreCorto: ['', Validators.compose([Validators.required])],
+      direccion: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required])],
+      ciudad: ['', Validators.compose([Validators.required])],
+      telefonoCelular: ['', Validators.compose([Validators.required])],
+      telefonoFijo: ['', Validators.compose([Validators.required])],
+      atencion: ['', Validators.compose([Validators.required])],  
+    });
+    this.datos.valueChanges.subscribe(() => {
+      this.datoschanged = true;
+      let times: number = 0;
+      let veces: number = 0;
+      (<any>Object).values(this.datos.controls).forEach(control => {
+        (<any>Object).values(this.datos).forEach(data => {
+          if (veces == times) {
+            if (control.value != data) {
+              this.datoschanged = false;
+            }
+          }
+          veces++;
+        });
+        veces = 0;
+        times++;
+      });
+    });
+  }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+  public fieldValidation(datos: FormGroup, name: any) {
+    if (datos.get([name]).invalid && datos.get([name]).touched) {
+      return true;
+    }
+  }
+ 
   alerta(titulo: string){
     const Toast = Swal.mixin({
       toast: true,

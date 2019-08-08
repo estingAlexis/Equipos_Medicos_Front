@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         this.auth.guardarUsuario(response.access_token);
         this.auth.guardarToken(response.access_token);
         const usuario = this.auth.usuario;
-        this.router.navigate(['/']);
+        this.router.navigate(['dashboard']);
         swal.fire('Login', `Hola ${usuario.username}, has iniciado con éxtio`, 'success');
       },
       err => {

@@ -70,17 +70,18 @@
         <h2 *ngIf="crear">Nuevo Cliente</h2>
         <h2 *ngIf="actualizar">Actualizar Datos</h2>
         <hr>
+        <form [formGroup]="datos" class="form-sample">
         <div class="row">
             <div class="col-6">
                 <mat-form-field appearance="outline">
                         <mat-label>Nombre completo:</mat-label>
-                    <input matInput placeholder="Nombre Completo" name="nombre" id="nombre" [(ngModel)]="nombre">
+                    <input matInput placeholder="Nombre Completo" name="nombre" id="nombre" formControlName="nombre">
                 </mat-form-field>
             </div>
             <div class="col-6">
                     <mat-form-field appearance="outline">
                         <mat-label>Correo:</mat-label>
-                        <input matInput placeholder="@" id="email" [(ngModel)]="email">
+                        <input matInput placeholder="@" id="email" name="email" formControlName="email">
                     </mat-form-field>
                 </div>
         </div>
@@ -88,13 +89,13 @@
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Nombre corto:</mat-label>
-                    <input matInput placeholder="nombre corto" id="nombrecorto" [(ngModel)]="nombrecorto">
+                    <input matInput placeholder="nombre corto" id="nombrecorto" name="nombreCorto" formControlName="nombreCorto">
                 </mat-form-field>
             </div>
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Documento:</mat-label>
-                    <input matInput type="number" placeholder="Documento" id="documento" [(ngModel)]="documento">
+                    <input matInput type="number" placeholder="Documento" id="documento" name="documento" formControlName="documento">
                 </mat-form-field>
             </div>
         </div>
@@ -102,13 +103,13 @@
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Telefono Fijo:</mat-label>
-                    <input matInput placeholder="Telefono" type="number" id="telefonoFijo" [(ngModel)]="telefonoFijo">
+                    <input matInput placeholder="Telefono" type="number" id="telefonoFijo" name="telefonoFijo" formControlName="telefonoFijo">
                 </mat-form-field>
             </div>
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Telefono Celular:</mat-label>
-                    <input matInput placeholder="+57" type="number" id="telefonoCelular" [(ngModel)]="telefonoCelular">
+                    <input matInput placeholder="+57" type="number" id="telefonoCelular" name="telefonoCelular" formControlName="telefonoCelular">
                 </mat-form-field>
             </div>
 
@@ -117,13 +118,13 @@
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Cidudad:</mat-label>
-                    <input matInput placeholder="Ciudad" id="ciudad" [(ngModel)]="ciudad">
+                    <input matInput placeholder="Ciudad" id="ciudad" name="ciudad" formControlName="ciudad">
                 </mat-form-field>
             </div>
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Direccion:</mat-label>
-                    <input matInput placeholder="Direccion" id="direccion" [(ngModel)]="direccion">
+                    <input matInput placeholder="Direccion" id="direccion" name="direccion" formControlName="direccion">
                 </mat-form-field>
             </div>
           
@@ -133,15 +134,15 @@
                 <div class="col-12">
                         <mat-form-field appearance="outline">
                             <mat-label>Atencion:</mat-label>
-                            <input matInput placeholder="atencion" id="atencion" [(ngModel)]="atencion">
+                            <input matInput placeholder="atencion" id="atencion" name="atencion" formControlName="atencion">
                         </mat-form-field>
                     </div>
         </div>
         <hr>
-        <button class="crear" (click)="nuevoCliente()" *ngIf="crear" mat-button>Crear</button>
-        <button class="crear"  mat-button *ngIf="actualizar" (click)="editarDatos()">Actualizar</button>
+        <button [disabled]="!datos.valid" class="crear" (click)="nuevoCliente()"  type="submit" *ngIf="crear" mat-button>Crear</button>
+        <button [disabled]="!datos.valid" class="crear"  mat-button *ngIf="actualizar" type="submit" (click)="editarDatos()">Actualizar</button>
         <button class="cancelar" (click)="estado=true; crear=false; actualizar=false" mat-button>Cancelar</button>
-
+    </form>
     </mat-card>
 
 </div>

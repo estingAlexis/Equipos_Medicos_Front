@@ -58,19 +58,21 @@
 <!--FORMULARIO NUEVO TECNICO-->
 <div class="container" *ngIf="estado==false">
   <mat-card class="formulario">
-    <h2>Nuevo Tecnico</h2>
+    <h2 *ngIf="crear">Nuevo Tecnico</h2>
+    <h2 *ngIf="actualizar">Actualizar tecnico</h2>
     <hr>
+    <form  [formGroup]="datos" class="form-sample" >
     <div class="row">
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Nombre:</mat-label>
-          <input matInput placeholder="nombre" id="nombre" name="nombre" [(ngModel)]="nombre">
+          <input matInput placeholder="nombre" id="nombre" name="nombre" formControlName="nombre">
       </mat-form-field>
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Nombre corto:</mat-label>
-          <input matInput placeholder="nombre corto" id="nombreCorto" name="nombreCorto" [(ngModel)]="nombreCorto">
+          <input matInput placeholder="nombre corto" id="nombreCorto" name="nombreCorto" formControlName="nombreCorto">
       </mat-form-field>
       </div>
     </div>
@@ -79,13 +81,13 @@
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Documento:</mat-label>
-          <input matInput placeholder="123456789" id="documento" name="documento" [(ngModel)]="documento">
+          <input matInput placeholder="123456789" id="documento" name="documento" formControlName="documento">
       </mat-form-field>
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Direccion:</mat-label>
-          <input matInput placeholder="cra..." id="direccion" name="direccion" [(ngModel)]="direccion">
+          <input matInput placeholder="cra..." id="direccion" name="direccion" formControlName="direccion">
       </mat-form-field>
       </div>
     </div>
@@ -94,13 +96,13 @@
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Telefono Fijo:</mat-label>
-          <input matInput placeholder="3012356" id="telefonoFijo" name="telefonoFijo" [(ngModel)]="telefonoFijo">
+          <input matInput placeholder="3012356" id="telefonoFijo" name="telefonoFijo" formControlName="telefonoFijo">
       </mat-form-field>
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Telefono Celular:</mat-label>
-          <input matInput placeholder="+57" id="telefonoCelular" name="telefonoCelular" [(ngModel)]="telefonoCelular">
+          <input matInput placeholder="+57" id="telefonoCelular" name="telefonoCelular" formControlName="telefonoCelular">
       </mat-form-field>
       </div>
     </div>
@@ -109,24 +111,25 @@
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Email:</mat-label>
-          <input matInput placeholder="@" id="email" name="email" [(ngModel)]="email">
+          <input matInput placeholder="@" id="email" name="email" formControlName="email">
       </mat-form-field>
       </div>
       <div class="col-6">
         <mat-form-field appearance="outline">
           <mat-label>Ciudad:</mat-label>
-          <input matInput placeholder="Barranquilla" id="ciudad" name="ciudad" [(ngModel)]="ciudad">
+          <input matInput placeholder="Barranquilla" id="ciudad" name="ciudad" formControlName="ciudad">
       </mat-form-field>
       </div>
     </div>
     <!--end row-->
     <hr>
-        <button mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
+        <button  [disabled]="!datos.valid" mat-button class="botones" (click)="postagregarTecnicos()" *ngIf="crear"  style="background: #49978e;    position: relative;"
             >Crear</button>
-       <button mat-button class="botones" *ngIf="actualizar "
+       <button  [disabled]="!datos.valid" mat-button class="botones" *ngIf="actualizar "
             style="background: #49978e;    position: relative;" (click)="editarTecnicos()">Actualizar</button>
         <button mat-button class="botones" (click)="estado=true; crear=false; actualizar=false"
             style="background: rgb(192, 66, 66); color:white;    position: relative;">Cancelar</button>
+          </form>
   </mat-card>
 
 </div>

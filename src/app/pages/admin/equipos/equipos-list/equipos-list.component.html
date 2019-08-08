@@ -56,14 +56,15 @@
 <!--FORMULARIO DE NUEVO EQUIPO-->
 <div class="container" *ngIf="estado==false">
         <mat-card class="formulario">
-                <h2>Nuevo equipo</h2>
-   
+                <h2 *ngIf="crear">Nuevo equipo</h2>
+                <h2 *ngIf="actualizar">Actualizar equipo</h2>
             <hr>
+            <form [formGroup]="datos" class="form-sample">
             <div class="row">  
                     <div class="col-6">
                             <mat-form-field appearance="outline">
                                     <mat-label>Protocolo</mat-label>
-                                    <select matNativeControl required [(ngModel)]="proto" id="proto" name="proto">
+                                    <select matNativeControl required formControlName="fkProtocolo" id="fkProtocolo" name="fkProtocolo">
                                       <option *ngFor="let item of protocolos" [value]="item.idProtocolo">{{item.nombre}}</option>
                                     </select>
                             </mat-form-field>
@@ -71,7 +72,7 @@
                     <div class="col-6">
                             <mat-form-field appearance="outline">
                                     <mat-label>Parametro</mat-label>
-                                    <select matNativeControl required [(ngModel)]="para" id="para" name="para">
+                                    <select matNativeControl required formControlName="fkTipo" id="fkTipo" name="fkTipo">
                                       <option *ngFor="let item of parametro" [value]="item.idParametro">{{item.nombre}}</option>
                                     </select>
                             </mat-form-field>
@@ -81,13 +82,13 @@
                 <div class="col-6">
                         <mat-form-field appearance="outline">
                                 <mat-label>Codigo:</mat-label>
-                            <input matInput placeholder="codigo" name="codigo" id="codigo" [(ngModel)]="codigo">
+                            <input matInput placeholder="codigo" name="codigo" id="codigo" formControlName="codigo">
                         </mat-form-field>
                 </div>
                 <div class="col-6">
                         <mat-form-field appearance="outline">
                                 <mat-label>Nombre:</mat-label>
-                            <input matInput placeholder="nombre equipo" name="nombre" id="nombre" [(ngModel)]="nombre">
+                            <input matInput placeholder="nombre equipo" name="nombre" id="nombre" formControlName="nombre" >
                         </mat-form-field>
                 </div>
             </div>
@@ -96,14 +97,15 @@
                     <div class="col-6">
                             <mat-form-field appearance="outline">
                                     <mat-label>referencia:</mat-label>
-                                <input matInput placeholder="referencia" name="referencia" id="referencia" [(ngModel)]="referencia">
+                                <input matInput placeholder="referencia" name="referencia" id="referencia" formControlName="referencia">
                             </mat-form-field>
                     </div>
             </div>
             <hr>
             <br>
-            <button class="crear" style="background: #4BC07E" (click)="postEquipo()" *ngIf="crear" mat-button>Crear</button>
-            <button class="crear" style="background: #4BC07E" mat-button *ngIf="actualizar" (click)="putEquipo();">Actualizar</button>
-            <button class="cancelar" style="background: #DD5246"  (click)="estado=true; crear=false; actualizar=false" mat-button>Cancelar</button>
+            <button [disabled]="!datos.valid" class="crear" style="background: #4BC07E" type="submit" (click)="postEquipo()" *ngIf="crear" mat-button>Crear</button>
+            <button [disabled]="!datos.valid" class="crear" style="background: #4BC07E" type="submit" mat-button *ngIf="actualizar" (click)="putEquipo();">Actualizar</button>
+            <button class="cancelar" style="background: #DD5246"  (click)="estado=true; crear=false; actualizar=false" mat-button>Cancelar</button>                
+        </form>
         </mat-card>
 </div>

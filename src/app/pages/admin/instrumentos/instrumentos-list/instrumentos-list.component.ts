@@ -2,9 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { AppService } from 'src/app/services/app.service';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 @Component({
@@ -28,6 +30,8 @@ export class InstrumentosListComponent implements OnInit {
   public actualizar:any;
   public usuario:Usuario;
   public idInstrumentos:any;
+  public datos: FormGroup;
+  public datoschanged: boolean = true;
   //INPUT 
   @Input()
   public nombre:any;
@@ -45,7 +49,7 @@ export class InstrumentosListComponent implements OnInit {
     timer: 3000
   });
   limls: { field: string; header: string; }[];
-  constructor(public appSettings:AppSettings,
+  constructor(private _formBuilder: FormBuilder, public appSettings:AppSettings,
     private _AppService:AppService, public servicio:AuthService) { this.settings = this.appSettings.settings
     this.estado='listaI';
     this.vacion=false;
@@ -87,10 +91,12 @@ export class InstrumentosListComponent implements OnInit {
     }
     //OBTENER ID
     public SeleInstrumento(instrumento:any){
-      this.idInstrumentos.instrumento.idInstrumento;
-      this.nombre=instrumento.nombre;
-      this.modelo=instrumento.modelo;
-      this.marca=instrumento.marca;
+      this.datos.patchValue({
+      nombre:instrumento.nombre,
+      modelo:instrumento.modelo,
+      marca:instrumento.marca
+    });
+    this.idInstrumentos.instrumento.idInstrumento;
     }
     // ACTUALIZAR INSTRUMENTOS
     public putInstrumento(){
@@ -100,7 +106,6 @@ export class InstrumentosListComponent implements OnInit {
         "marca":this.marca,
         "modelo":this.modelo,
       }
-      console.log(this.actualizar)
       this._AppService.put('instrumentos/'+this.idInstrumentos,this.actualizar).subscribe(
         result=>{
           console.log(result)}
@@ -108,18 +113,19 @@ export class InstrumentosListComponent implements OnInit {
     }
     //AGREGAR NUEVO INSTRUMENTO
     public postInstrumentos(){
+      let datos = this.datos.value;
       this.instrumento={
-        "nombre":this.nombre,
-        "marca":this.marca,
-        "modelo":this.modelo,
-        "fkEmpresa": 1,
+        "nombre":datos.nombre,
+        "marca":datos.marca,
+        "modelo":datos.modelo,
+        "fkEmpresa": this.usuario.empresa.idEmpresa,
       }
-      console.log(this.instrumento)
       this._AppService.post('instrumentos/new', this.instrumento).subscribe(
         result=>{ Swal.fire('login','El instrumento se agregado con exito')
           this.instrumento=result
           this.estado='listaI';
           this.getInstrumentos();
+          this.datos.reset();
           
         }
       )
@@ -148,6 +154,28 @@ export class InstrumentosListComponent implements OnInit {
     this.getInstrumentos();
     this.getProtocolos();
     this.usuario=this.servicio.obtenerDatosUser();
+    this.datos = this._formBuilder.group({
+      nombre: ['', Validators.compose([Validators.required])],
+      modelo: ['', Validators.compose([Validators.required])],
+      marca: ['', Validators.compose([Validators.required])],
+    });
+    this.datos.valueChanges.subscribe(() => {
+      this.datoschanged = true;
+      let times: number = 0;
+      let veces: number = 0;
+      (<any>Object).values(this.datos.controls).forEach(control => {
+        (<any>Object).values(this.datos).forEach(data => {
+          if (veces == times) {
+            if (control.value != data) {
+              this.datoschanged = false;
+            }
+          }
+          veces++;
+        });
+        veces = 0;
+        times++;
+      });
+    });
   }
 
 }

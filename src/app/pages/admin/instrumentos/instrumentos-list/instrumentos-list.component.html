@@ -54,7 +54,7 @@
                                             <mat-icon>ballot</mat-icon>
                                         </button>
                                         <button mat-icon-button pTooltip="Ver Protocolos"
-                                            (click)="estado=false; actualizar=true; estado='nuevoI'; SeleInstrumento(item)" tooltipPosition="top">
+                                            (click)="estado=false; actualizar=true; estado='nuevoI'; SeleInstrumento(item.id)" tooltipPosition="top">
                                             <mat-icon>mode_edit</mat-icon>
                                         </button>
                                         <button mat-icon-button pTooltip="Ver Protocolos" tooltipPosition="top">
@@ -104,17 +104,18 @@
         <h2 *ngIf="nuevo">Nuevo instrumeto</h2>
         <h2 *ngIf="actualizar">Actualizar instrumento</h2>
         <hr>
+        <form  [formGroup]="datos" class="form-sample">
         <div class="row">
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Nombre de instrumento:</mat-label>
-                    <input matInput placeholder="nombre" id="nombre" [(ngModel)]="nombre">
+                    <input matInput placeholder="nombre" id="nombre" name="nombre" formControlName="nombre">
                 </mat-form-field>
             </div>
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Modelo:</mat-label>
-                    <input matInput placeholder="modelo" id="modelo" [(ngModel)]="modelo">
+                    <input matInput placeholder="modelo" id="modelo" name="modelo" formControlName="modelo">
                 </mat-form-field>
             </div>
         </div>
@@ -122,19 +123,21 @@
             <div class="col-6">
                 <mat-form-field appearance="outline">
                     <mat-label>Marca:</mat-label>
-                    <input matInput placeholder="marca" id="marca" [(ngModel)]="marca">
+                    <input matInput placeholder="marca" id="marca" name="marca" formControlName="marca" >
                 </mat-form-field>
             </div>
         </div>
         <hr>
-        <button mat-button class="botones" *ngIf="nuevo" style="background: #49978e;    position: relative;left: 300px;"
+        <button [disabled]="!datos.valid" mat-button class="botones" *ngIf="nuevo" style="background: #49978e;    position: relative;left: 300px;"
             (click)="postInstrumentos()">Crear</button>
-        <button mat-button class="botones" *ngIf="actualizar "
-            style="background: #49978e;    position: relative;left: 300px;">Actualizar</button>
+        <button [disabled]="!datos.valid" mat-button class="botones" (click)="putInstrumento()" *ngIf="actualizar "
+            style="background: #49978e;     position: relative;left: 300px;">Actualizar</button>
         <button mat-button class="botones" (click)="estado='listaI'; nuevo=false; actualizar=false"
             style="background: rgb(192, 66, 66); color:white;    position: relative;left: 300px;">Cancelar</button>
+        </form>
     </mat-card>
 </div>
+<!--Formulario para poder añadir protocolo a instrumentos-->
 <div class="container" *ngIf="estado=='nuevoP'">
     <mat-card class="n2">
         <h2>Añadir protocolo</h2>

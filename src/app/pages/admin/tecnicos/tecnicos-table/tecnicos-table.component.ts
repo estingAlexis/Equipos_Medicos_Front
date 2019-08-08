@@ -1,6 +1,11 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/models/usuario';
+import { AuthService } from 'src/app/services/auth.service';
+
+
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -13,6 +18,9 @@ export class TecnicosTableComponent implements OnInit {
   public estado:boolean;
   public agregarTecnico:any;
   public actualizar:any;
+  public datos: FormGroup;
+  public datoschanged: boolean = true;
+  public usuario:Usuario;
   @Input()
   public nombre:any;
   @Input()
@@ -32,26 +40,24 @@ export class TecnicosTableComponent implements OnInit {
   public delete:any;
   private idTecnico:number;
 
-  constructor(private service: AppService) {
+  constructor(private service: AppService, private _formBuilder: FormBuilder,private servicio:AuthService) {
     this.estado=true;
    }
 
-  ngOnInit() {
-    this.getTecnicos();
-  }
+  
   //AGREGAR TECNICOSF
   public postagregarTecnicos(){
+    let datos = this.datos.value;
     this.agregarTecnico={
-      "idTecnico":6,
-      "nombre":this.nombre,
-      "nombreCorto":this.nombreCorto,
-      "documento":this.documento,
-      "direccion":this.direccion,
-      "email":this.email,
-      "ciudad":this.ciudad,
-      "telefonoFijo":this.telefonoFijo,
-      "telefonoCelular":this.telefonoCelular,
-      "fkEmpresa":1,
+      "nombre":datos.nombre,
+      "nombreCorto":datos.nombreCorto,
+      "documento":datos.documento,
+      "direccion":datos.direccion,
+      "email":datos.email,
+      "ciudad":datos.ciudad,
+      "telefonoFijo":datos.telefonoFijo,
+      "telefonoCelular":datos.telefonoCelular,
+      "fkEmpresa":this.usuario.empresa.idEmpresa,
       "estado":1
     }
     this.service.post('tecnicos/new',this.agregarTecnico).subscribe(
@@ -64,6 +70,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
+  //dejar campos vacios
   clear(){
     this.nombre=null;
     this.documento=null;
@@ -77,15 +84,18 @@ export class TecnicosTableComponent implements OnInit {
   }
   //TRAER DATOS ID
   public SeleTecnico(tecnico:any){
-    this.idTecnico=tecnico.idTecnico;
-    this.nombre=tecnico.nombre;
-    this.nombreCorto=tecnico.nombreCorto;
-    this.direccion=tecnico.direccion;
-    this.telefonoFijo=tecnico.telefonoFijo;
-    this.telefonoCelular=tecnico.telefonoCelular;
-    this.email=tecnico.email;
-    this.ciudad=tecnico.ciudad;
-    this.documento=tecnico.documento;
+    this.datos.patchValue({
+   
+    nombre:tecnico.nombre,
+    nombreCorto:tecnico.nombreCorto,
+    direccion:tecnico.direccion,
+    telefonoFijo:tecnico.telefonoFijo,
+    telefonoCelular:tecnico.telefonoCelular,
+    email:tecnico.email,
+    ciudad:tecnico.ciudad,
+    documento:tecnico.documento,
+  });
+  this.idTecnico=tecnico.idTecnico;
   }
   //METODO ACTUALIZAR
   public editarTecnicos(){
@@ -107,8 +117,6 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-
-
   //GET Tecnicos
   public getTecnicos(){
     this.service.get('tecnicos/list').subscribe(
@@ -138,7 +146,7 @@ export class TecnicosTableComponent implements OnInit {
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,
-      "fkEmpresa": 1,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
       "nombre":this.nombre,
       "nombreCorto":this.nombreCorto,
       "documento":this.documento,
@@ -160,5 +168,35 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   } 
+  ngOnInit() {
+    this.getTecnicos();
+    this.usuario = this.servicio.obtenerDatosUser();
+    this.datos = this._formBuilder.group({
+      nombre: ['', Validators.compose([Validators.required])],
+      nombreCorto: ['', Validators.compose([Validators.required])],
+      direccion: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required])],
+      ciudad: ['', Validators.compose([Validators.required])],
+      telefonoCelular: ['', Validators.compose([Validators.required])],
+      telefonoFijo: ['', Validators.compose([Validators.required])],
+    });
+    this.datos.valueChanges.subscribe(() => {
+      this.datoschanged = true;
+      let times: number = 0;
+      let veces: number = 0;
+      (<any>Object).values(this.datos.controls).forEach(control => {
+        (<any>Object).values(this.datos).forEach(data => {
+          if (veces == times) {
+            if (control.value != data) {
+              this.datoschanged = false;
+            }
+          }
+          veces++;
+        });
+        veces = 0;
+        times++;
+      });
+    });
+  }
 
 }
