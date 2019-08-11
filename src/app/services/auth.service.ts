@@ -63,6 +63,7 @@ export class AuthService {
     this._usuario.empresa = payload.empresa; 
     this._usuario.username = payload.user_name;
     this._usuario.roles  = payload.authorities;
+    this._usuario.foto = payload.foto;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
     sessionStorage.setItem('empresa', payload.empresa);
     this.router.navigate(['/']);

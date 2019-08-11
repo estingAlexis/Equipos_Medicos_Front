@@ -2,6 +2,7 @@ import { Usuario } from './../../../../models/usuario';
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -34,12 +35,13 @@ export class TecnicosTableComponent implements OnInit {
   public documento:any;
   @Input()
   public username:any;
-  public usuario: Usuario;
+  public usuario: Usuario;  
   public delete:any;
   private idTecnico:number;
 
-  constructor(private service: AppService) {
+  constructor(private service: AppService, private auth: AuthService) {
     this.estado=true;
+    this.usuario = this.auth.obtenerDatosUser();
    }
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class TecnicosTableComponent implements OnInit {
       "username": this.username,
       "documento": this.documento,
       "fkEmpresa": this.usuario.empresa.idEmpresa,
+      "enabled": 0,
       "expirado": 0
     }
     this.agregarTecnico={
@@ -65,8 +68,8 @@ export class TecnicosTableComponent implements OnInit {
       "email":this.email,
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
-      "telefonoCelular":this.telefonoCelular,
-      "fkEmpresa":1,
+      "telefonoCelular":this.telefonoCelular, 
+      "fkEmpresa":this.usuario.empresa.idEmpresa,
       "estado":1
     }
     this.service.post('tecnicos/new',this.agregarTecnico).subscribe(
@@ -74,8 +77,11 @@ export class TecnicosTableComponent implements OnInit {
         this.agregarTecnico=result;
         this.estado=true;
         this.getTecnicos();
-
-
+      }
+    )
+    this.service.post('usuarios/new',newUser).subscribe(
+      result=>{ 
+        console.log(result);
       }
     )
   }
@@ -153,7 +159,7 @@ export class TecnicosTableComponent implements OnInit {
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,
-      "fkEmpresa": 1,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
       "nombre":this.nombre,
       "nombreCorto":this.nombreCorto,
       "documento":this.documento,

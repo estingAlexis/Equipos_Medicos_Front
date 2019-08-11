@@ -15,4 +15,5 @@ export class Usuario {
     email?: string;
     empresa?: any;
     roles?: string[] = [];
+    foto?: string;
   }
