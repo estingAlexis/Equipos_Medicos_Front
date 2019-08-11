@@ -118,23 +118,6 @@ export class ProtocolosTableComponent implements OnInit {
     )
   }
 
-  public deleteProtocolo() {
-    const json = {
-      'fkEmpresa': this.empresa,
-      'idProtocolo': this.idProtocolo,
-      'codigo': this.codigo,
-      'nombre': this.nombre,
-      'descripcion': this.descripcion,
-      'revision': this.revision,
-      'responsable': this.responsable,
-      'estado': 9
-    }
-    this.service.put(`protocolos/${this.idProtocolo}`, json).subscribe(
-      data => {
-
-      }
-    )
-  }
 
 
   public deleteProtocolo() {

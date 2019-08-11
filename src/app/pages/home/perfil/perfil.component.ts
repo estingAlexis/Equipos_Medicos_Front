@@ -92,8 +92,13 @@ export class PerfilComponent implements OnInit {
           //this.entidad = result;
           Swal.fire({type: 'success', title: 'Exito!', text: `${result.mensaje}`, timer: 3000});
 /*           this.regresar.emit(); */
+          this.ngxSmartModalService.getModal('myModal').close();
+          // this.getDataUser(this.usuario.id);
+          
         }
       );
+      window.location.reload();
+
     }
   }
 

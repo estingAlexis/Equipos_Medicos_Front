@@ -39,29 +39,15 @@
   </div>
   <div class="col-4 card my-auto">
     <form action="" class="m-3 text-center">
-      <img *ngIf="userImg"
-        [src]="UrlImages + userImg"
-        alt=""
-        width="160px"
-        class="rounded-circle m-3"
-      />
+      <img *ngIf="userImg" [src]="UrlImages + userImg" alt="" width="160px" class="rounded-circle m-3" />
       <br />
       <div class="row d-flex justify-content-around">
         <ngx-smart-modal #myModal identifier="myModal">
           <h1>Actualizar Imagen?</h1>
           <br />
-          <img
-            width="45%"
-            [src]="imgURL"
-            alt="user-profile-image"
-            id="image-field"
-          />
+          <img width="45%" [src]="imgURL" alt="user-profile-image" id="image-field" />
 
-          <button
-            class="btn btn-success"
-            (click)="subirLogo()"
-            [disabled]="!logoSeleccionado"
-          >
+          <button class="btn btn-success" (click)="subirLogo()" [disabled]="!logoSeleccionado">
             Actualizar
           </button>
 
@@ -71,18 +57,9 @@
         </ngx-smart-modal>
 
         <div class="upload-btn-wrapper">
-          <input
-            #file
-            type="file"
-            id="file"
-            style="display:none;"
-            (change)="verLogo(file.files); seleccionarLogo($event)"
-          />
-          <button
-            class="btn btn-success"
-            accept="image/*"
-            (click)="clearImage(); thisFileUpload()"
-          >
+          <input #file type="file" id="file" style="display:none;"
+            (change)="verLogo(file.files); seleccionarLogo($event)" />
+          <button class="btn btn-success" accept="image/*" (click)="clearImage(); thisFileUpload()">
             <mat-icon>camera_alt</mat-icon>Subir Imagen
           </button>
         </div>

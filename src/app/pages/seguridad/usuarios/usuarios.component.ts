@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiRestService } from 'src/app/services/ApiRestService.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/services/usuario';
+import { APP } from 'src/app/constants';
 
 @Component({
   selector: 'app-usuarios',
@@ -30,16 +31,40 @@ export class UsuariosComponent implements OnInit {
     public username:any
     @Input()
     public password:any
+    imgUrl = APP.UrlImages;
+    imgName;
     constructor(public servivio:ApiRestService, public service:AuthService){
     this.estado='previa';
     }
+    
+
+    ngOnInit() {
+        this.usuario= this.service.obtenerDatosUser();
+        this.listarUsuario();
+        this.getDataUser(this.usuario.id);
+        
+    }
+
+    getDataUser(id:any){
+        this.servivio.get(`usuarios/${id}`).subscribe(
+          result=>{
+            this.imgName = result['foto'];
+          }
+        );
+    
+      }
+    
+
+
     // LISTAR LOS USUARIOS
     public listarUsuario(){
         this.servivio.get('usuarios/list').subscribe(
-            result=>{this.usuarios=result
-            console.log(this.usuarios)
+            result=>{
+                this.usuarios=result;
+                console.log(this.usuarios);
         }
         )
+        
     }
     //AGREGAR NUEVOS USUARIOS
     public postUsuario(){
@@ -110,9 +135,6 @@ export class UsuariosComponent implements OnInit {
           )
       }
 
-    ngOnInit() {
-        this.listarUsuario();
-        this.usuario= this.service.obtenerDatosUser();
-    }
+
 
 }

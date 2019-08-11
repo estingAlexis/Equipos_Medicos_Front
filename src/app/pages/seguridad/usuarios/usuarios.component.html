@@ -50,7 +50,7 @@
                   </div>
                   <div class="col-4">
                       <div class="circulo">
-                          <img src="../../../assets/img/avatars/220px-User_icon_2.svg.png" style="width: 80PX" alt="">
+                          <img *ngIf="item.foto" [src]="imgUrl+item.foto" style="width: 80PX" alt="">
                       </div>
                       <mat-button-toggle style="background: white; border: none; position: relative;
                        bottom: 180px; left: 200px; background: #1FBF87; color: white" checked="true"

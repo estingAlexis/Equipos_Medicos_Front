@@ -68,6 +68,16 @@ export class AppService {
   }
 
 
+  // getUserPicture(id:any){
+  //   this.get(`usuarios/${id}`).subscribe(
+  //     result=>{
+  //       let nombreFoto = result['foto'];
+  //       return nombreFoto;
+  //     }
+  //   );
+  // }
+
+
   obtenerFotoPerfil(id) {
     this.get(`usuarios/${id}`).subscribe(
       result => {
