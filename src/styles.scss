@@ -6,19 +6,21 @@
 // indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
 @import '~@angular/material/prebuilt-themes/deeppurple-amber';
 
-//snotify theme
-@import "~ng-snotify/styles/dark";
-@import "~ngx-smart-modal/ngx-smart-modal";
-@import "app/app.component";
-
 @import "app/theme/styles/base";
 @import "app/theme/styles/theme";
 @import "app/theme/styles/libs-override";
 @import "app/theme/styles/rtl";
-
+$color-overlay: rgba(0, 0, 0, .8);
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
 
+.form-text{
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.text-25{
+  font-size: 25px;
+}
 .bg-theme{
   background-color: #49be7c;
 }
@@ -114,3 +116,4 @@
       transform: translate(19px, 0);
     }
   }
+

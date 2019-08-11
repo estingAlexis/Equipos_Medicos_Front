@@ -16,5 +16,5 @@ export const Slide = [
 
 export const APP: any = {
     ApiEndpoint: 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/rest/v1/',
-    AppBaseUrl: 'http://localhost:4200'
+    UrlImages: 'http://localhost:5000/rest/v1/usuario/img/'
 }

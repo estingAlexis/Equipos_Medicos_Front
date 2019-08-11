@@ -37,7 +37,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ng-snotify/styles/dark.css",
               "node_modules/dragula/dist/dragula.min.css",
               "node_modules/@swimlane/ngx-datatable/release/themes/material.css",
               "node_modules/@swimlane/ngx-datatable/release/assets/icons.css",
@@ -45,13 +44,17 @@
               "node_modules/primeng/resources/themes/nova-light/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeflex/primeflex.css",
-              "src/styles.scss",
               "node_modules/angular-calendar/css/angular-calendar.css",
-              "node_modules/fullcalendar/dist/fullcalendar.min.css"
+              "node_modules/fullcalendar/dist/fullcalendar.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome/styles.css",
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/fullcalendar/dist/fullcalendar.js" 
+              "node_modules/popper.js/dist/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/fullcalendar/dist/fullcalendar.js"
             ]
           },
           "configurations": {

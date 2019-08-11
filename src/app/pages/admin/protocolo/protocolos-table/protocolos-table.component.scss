@@ -34,3 +34,16 @@
 .tbody-color::ng-deep td {
     //background-color: #ccc !important;
 }
+
+.mat-form-field {
+    width:100% !important;
+}
+
+.mat-form-field textarea {
+    height: 70px;
+}
+
+hr {
+    margin-top: 0;
+    border: 1px solid #8080802b;
+}

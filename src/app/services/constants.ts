@@ -17,5 +17,7 @@ export const Slide = [
 export const APP: any = {
     ApiEndpoint: 'http://ec2-18-223-126-248.us-east-2.compute.amazonaws.com:5000/rest/v1/',
 /*     ApiEndpoint: 'http://backequipos.us-east-2.elasticbeanstalk.com/rest/v1/', */
-    AppBaseUrl: 'http://localhost:4200'
+    AppBaseUrl: 'http://localhost:4200',
+
+    UserImg: 'http://localhost:5000/usuarios/img'
 }

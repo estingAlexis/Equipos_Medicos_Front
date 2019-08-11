@@ -23,12 +23,11 @@ export class ProtocolosTableComponent implements OnInit {
   public descripcion;
   @Input()
   public revision;
-  @Input()
-  public responsable;
+  public responsable; 
 
   public estado: string = '';
 
-  constructor(private service: AppService, private auth: AuthService) {
+  constructor(private service: AppService, private auth:AuthService) {
 
   }
 
@@ -38,6 +37,34 @@ export class ProtocolosTableComponent implements OnInit {
 
   public usuario = this.auth.obtenerDatosUser();
   public empresa = this.usuario.empresa.idEmpresa;
+
+  
+
+  public getTiempoRevision(){
+
+    console.log(this.revision)
+    
+  }
+
+  public seleccionarProtocolo(protocolo) {
+    this.idProtocolo = protocolo.idProtocolo;
+    this.codigo = protocolo.codigo;
+    this.nombre = protocolo.nombre;
+    this.descripcion = protocolo.descripcion;
+    this.responsable = protocolo.responsable;
+    this.estado = protocolo.estado;
+  }
+
+  public tecnicos;
+
+  public getTecnicos() {
+    this.service.get('tecnicos/list').subscribe(
+      data => {
+        this.tecnicos = data;
+        console.log(this.tecnicos);
+      }
+    )
+  }
 
   public getProtocolos() {
     this.service.get('protocolos/list').subscribe(
@@ -52,13 +79,14 @@ export class ProtocolosTableComponent implements OnInit {
 
   public newProtocolo() {
     const json = {
-      'fkEmpresa': this.empresa,
+      "fkEmpresa": this.empresa,
       'idProtocolo': this.idProtocolo,
       'codigo': this.codigo,
       'nombre': this.nombre,
       'descripcion': this.descripcion,
       'revision': this.revision,
       'responsable': this.responsable,
+      "estado": 0
     }
     this.service.post('protocolos/new', json).subscribe(
       data => {
@@ -68,7 +96,7 @@ export class ProtocolosTableComponent implements OnInit {
         console.log(error);
       }
     )
-    this.getProtocolos()
+    this.getProtocolos();
   }
 
   //  (  `  )
@@ -107,5 +135,58 @@ export class ProtocolosTableComponent implements OnInit {
       }
     )
   }
+
+
+  public deleteProtocolo() {
+    const json = {
+      "fkEmpresa": this.empresa,
+      "idProtocolo": this.idProtocolo,
+      "codigo": this.codigo,
+      "nombre": this.nombre,
+      "descripcion": this.descripcion,
+      "revision": "2019-08-30",
+      "responsable": this.responsable,
+      "estado": 9
+    }
+    console.log(json);
+   
+        Swal.fire({
+          title: 'Advertencia',
+          text: 'Estas seguro?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Si, borrar',
+          cancelButtonText: 'No, salir'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Actividad Borrada con exito',
+              'success'
+            )
+            this.service.put(`protocolos/${this.idProtocolo}`, json).subscribe(
+              data => {
+                this.getProtocolos();
+                this.estado = '';
+              }
+            )
+            
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+              'Cancelled',
+              'No se ha realizado ningun cambio',
+              'error'
+            )
+          }
+        }),
+        error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Error al conectar con la base de datos',
+            type:'error'
+          });
+        }
+      }
+
 
 }

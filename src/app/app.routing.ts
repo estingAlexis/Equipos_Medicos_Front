@@ -24,9 +24,10 @@ export const routes: Routes = [
             { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', data: { breadcrumb: 'Administracion' } },
             { path: 'procesos', loadChildren: './pages/procesos/procesos.module#ProcesosModule', data: { breadcrumb: 'Procesos' } },
             { path: 'estadisticas', loadChildren: './pages/estadisticas/estadisticas.module#EstadisticasModule', data: { breadcrumb: 'Estadisticas' } },
-            { path: 'users', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
+            { path: 'usuarios', loadChildren: './pages/users/users.module#UsersModule', data: { breadcrumb: 'Users' } },
             { path: 'mailbox', loadChildren: './pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
+            { path: 'tecnicos', loadChildren: './pages/tecnicos/tecnicos.module#TecnicosModule', data: { breadcrumb: 'Tecnicos' } }
         ],
         canActivate: [AdminGuard]
     },  

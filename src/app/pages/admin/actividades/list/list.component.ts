@@ -43,7 +43,6 @@ export class ListComponent implements OnInit {
               public auth: AuthService) { 
     this.settings = this.appSettings.settings; 
 
-
   }
   ngOnInit(): void {    
     if(window.innerWidth <= 992){

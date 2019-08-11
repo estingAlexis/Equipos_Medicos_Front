@@ -8,7 +8,7 @@
                         style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
                         fxLayout="row" fxLayoutAlign="space-between center">    
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <button mat-flat-button color="warn" (click)="estado=false; crear=true">
+                            <button mat-flat-button color="warn" (click)="estado=false; crear=true;clear()">
                                 <mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cliente
                             </button>
                         </div>
@@ -29,32 +29,32 @@
                                     </th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                <tr [pSelectableRow]="rowData">
+                            <ng-template pTemplate="body" let-item let-columns="columns">
+                                <tr [pSelectableRow]="item">
                                     <td>
-                                        {{rowData.documento}}
+                                        {{item.documento}}
                                     </td>
                                     <td>
-                                        {{rowData.nombre}}
+                                        {{item.nombre}}
                                     </td>
                                     <td>
-                                        {{rowData.telefonoCelular}}
+                                        {{item.telefonoCelular}}
                                     </td>
                                     <td>
-                                        {{rowData.direccion}}
+                                        {{item.direccion}}
                                     </td>
                                     <td>
-                                        {{rowData.ciudad}}
+                                        {{item.ciudad}}
                                     </td>
                                     <td>
-                                        {{rowData.email}}
+                                        {{item.email}}
                                     </td>
                                     <td>
-                                        <button   mat-button  (click)="estado=false;actualizar=true; getCliente(rowData)"><i class="material-icons edit">mode_edit</i></button>
-                                        <button  mat-button (click)="getCliente(rowData); deleteCliente()" ><i class="material-icons delete">delete</i></button>
+                                        {{item.estado}}
                                     </td>
                                     <td>
-                                        {{rowData.estado}}
+                                        <button   mat-button  (click)="estado=false;actualizar=true;setCliente(item)"><i class="material-icons edit">mode_edit</i></button>
+                                        <button  mat-button (click)="setCliente(item); deleteCliente()" ><i class="material-icons delete">delete</i></button>
                                     </td>
                             </ng-template>
                         </p-table>

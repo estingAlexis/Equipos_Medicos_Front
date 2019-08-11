@@ -1,6 +1,8 @@
+import { Usuario } from './../../../../models/usuario';
 import { Component, OnInit, Input} from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tecnicos-table',
@@ -16,6 +18,10 @@ export class TecnicosTableComponent implements OnInit {
   @Input()
   public nombre:any;
   @Input()
+  public apellido:any;
+  @Input()
+  public nombreCorto:any;
+  @Input()
   public direccion:any;
   @Input()
   public telefonoFijo:any;
@@ -26,14 +32,16 @@ export class TecnicosTableComponent implements OnInit {
   @Input()
   public ciudad:any;
   @Input()
-  public nombreCorto:any;
-  @Input()
   public documento:any;
+  @Input()
+  public username:any;
+  public usuario: Usuario;  
   public delete:any;
   private idTecnico:number;
 
-  constructor(private service: AppService) {
+  constructor(private service: AppService, private auth: AuthService) {
     this.estado=true;
+    this.usuario = this.auth.obtenerDatosUser();
    }
 
   ngOnInit() {
@@ -41,8 +49,18 @@ export class TecnicosTableComponent implements OnInit {
   }
   //AGREGAR TECNICOSF
   public postagregarTecnicos(){
+    const newUser = {
+      "apellido": this.apellido,
+      "email": this.email,
+      "nombre": this.nombre,
+      "password": this.documento,
+      "username": this.username,
+      "documento": this.documento,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
+      "enabled": 0,
+      "expirado": 0
+    }
     this.agregarTecnico={
-      "idTecnico":6,
       "nombre":this.nombre,
       "nombreCorto":this.nombreCorto,
       "documento":this.documento,
@@ -50,8 +68,8 @@ export class TecnicosTableComponent implements OnInit {
       "email":this.email,
       "ciudad":this.ciudad,
       "telefonoFijo":this.telefonoFijo,
-      "telefonoCelular":this.telefonoCelular,
-      "fkEmpresa":1,
+      "telefonoCelular":this.telefonoCelular, 
+      "fkEmpresa":this.usuario.empresa.idEmpresa,
       "estado":1
     }
     this.service.post('tecnicos/new',this.agregarTecnico).subscribe(
@@ -59,8 +77,11 @@ export class TecnicosTableComponent implements OnInit {
         this.agregarTecnico=result;
         this.estado=true;
         this.getTecnicos();
-
-
+      }
+    )
+    this.service.post('usuarios/new',newUser).subscribe(
+      result=>{ 
+        console.log(result);
       }
     )
   }
@@ -121,7 +142,7 @@ export class TecnicosTableComponent implements OnInit {
       }
     )
   }
-  success(title: string){
+  public success(title: string){
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -134,11 +155,11 @@ export class TecnicosTableComponent implements OnInit {
       title: 'El tecnico fue agregado con exito!'
     })
   }
-
+// CAMBIAR ESTADO DE TECNICOS
   public deleteTecnico(){
      const deleteTecnico = {
       "idTecnico":this.idTecnico,
-      "fkEmpresa": 1,
+      "fkEmpresa": this.usuario.empresa.idEmpresa,
       "nombre":this.nombre,
       "nombreCorto":this.nombreCorto,
       "documento":this.documento,
@@ -149,16 +170,43 @@ export class TecnicosTableComponent implements OnInit {
       "telefonoCelular":this.telefonoCelular,
       "estado": 9,
     } 
-    this.getTecnicos()
-    this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
-      data =>{
-        console.log(data)
-
-      },
-      error => {
-        console.log(error)
+    Swal.fire({
+      title: 'Advertencia',
+      text: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'No, salir'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Actividad Borrada con exito',
+          'success'
+        )
+        this.service.put('tecnicos/'+this.idTecnico, deleteTecnico).subscribe(
+          data =>{
+            console.log(data)
+            this.getTecnicos();
+          }
+            )
+        
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'No se ha realizado ningun cambio',
+          'error'
+        )
       }
-    )
+    }),
+    error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error al conectar con la base de datos',
+        type:'error'
+      });
+    }
+    
   } 
 
 }

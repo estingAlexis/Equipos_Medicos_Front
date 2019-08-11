@@ -41,9 +41,19 @@ import { ComponentsModule } from './components/components.module';
 import { SpinnerModule } from 'primeng/spinner';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatDatepickerModule, MatInputModule } from '@angular/material';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {CalendarModule as pCalendar} from 'primeng/calendar';
+import { registerLocaleData } from '@angular/common';
+import localePy from '@angular/common/locales/es-PY';
+import localePt from '@angular/common/locales/pt';
+import localeEn from '@angular/common/locales/en';
+import localeEsAr from '@angular/common/locales/es-AR';
 
+registerLocaleData(localePy, 'es');
+registerLocaleData(localePt, 'pt');
+registerLocaleData(localeEn, 'en');
 @NgModule({
   imports: [
     BrowserModule,
@@ -64,7 +74,10 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     DropdownModule,
     InputTextareaModule,
     SpinnerModule,
-    ComponentsModule
+    ComponentsModule,
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule,
+    pCalendar,
   ],
   declarations: [
     AppComponent,
@@ -87,7 +100,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     VerticalMenuComponent
   ],
   providers: [ 
-    { provide: LOCALE_ID, useValue: "es-ES" },
+    { provide: LOCALE_ID, useValue: "es-Ar" },
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
