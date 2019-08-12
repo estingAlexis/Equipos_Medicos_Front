@@ -1,3 +1,4 @@
+import { id } from '@swimlane/ngx-charts/release/utils';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { AppSettings } from '../../../../app.settings';
@@ -42,20 +43,42 @@ export class ActividadesTableComponent implements OnInit {
   ngOnInit() {
     
     this.getProtocolos();
+    getActividadesPorProtocolos(this.protocoloActual.id);
   }
   public getImg(imgNombre: string): string{
     return '../../../../../assets/img/'+imgNombre;
   }
+
+
+  public getActividadesPorProtocolos(id: string){
+    this.protocoloActual = id;
+    console.log(this.protocoloActual);
+    if(typeof this.protocoloActual === 'number' || typeof this.protocoloActual === 'string') {
+    this._AppService.get(`actividades/protocolo/${id}`).subscribe(
+      result=>{
+        this.actividades = result;
+        console.log(result);
+      },
+      error =>{
+        console.log ( error);
+      }
+    );
+    }
+  }
+
+
   updateActividades(id) {
+    
     const json = {
       "fkEmpresa":this.usuario.empresa.idEmpresa,
       "items": 1,
-      "actividades": String(this.actividad) ,
+      "actividades": String(this.actividad.actividades),
       "orden": Object.keys(this.actividades).length+1,
       "tipo": 0,
       "estado": 0,
       "fkProtocolo": this.protocoloActual ,
     }
+    console.log(json);
     return this._AppService.put('actividad/'+id, json).subscribe(
       result => {
         console.log(result);

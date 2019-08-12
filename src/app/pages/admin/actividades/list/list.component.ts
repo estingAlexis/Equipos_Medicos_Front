@@ -52,9 +52,11 @@ export class ListComponent implements OnInit {
     this.usuario = this.auth.obtenerDatosUser();
     this.getProtocolos();
   }
+
   public setNombreProtocolo(nombre: string){
     this.nombreProtocolo = nombre;
   }
+  
   @HostListener('window:resize')
   public onWindowResize():void {
     (window.innerWidth <= 992) ? this.sidenavOpen = false : this.sidenavOpen = true;
@@ -121,6 +123,7 @@ public protocoloActual
       "orden": Object.keys(this.actividades).length+1 , 
       "estado": this.estado
     }
+    console.log(nueva_actividad);
     console.log(this.usuario.empresa.idEmpresa);
     console.log(this.protocolos.idProtocolo);
     console.log(String(this.actividad));
