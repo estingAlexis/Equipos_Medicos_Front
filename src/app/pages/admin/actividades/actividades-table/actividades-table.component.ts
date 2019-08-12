@@ -46,7 +46,23 @@ export class ActividadesTableComponent implements OnInit {
   public getImg(imgNombre: string): string{
     return '../../../../../assets/img/'+imgNombre;
   }
-
+  updateActividades(id) {
+    const json = {
+      "fkEmpresa":this.usuario.empresa.idEmpresa,
+      "items": 1,
+      "actividades": String(this.actividad) ,
+      "orden": Object.keys(this.actividades).length+1,
+      "tipo": 0,
+      "estado": 0,
+      "fkProtocolo": this.protocoloActual ,
+    }
+    return this._AppService.put('actividad/'+id, json).subscribe(
+      result => {
+        console.log(result);
+      }
+    );
+  } 
+ 
  
   // EDITAR ACTIVIDAD
   public editarActividad(id) {
@@ -57,6 +73,8 @@ export class ActividadesTableComponent implements OnInit {
           this.actividad.estadoStr == 'Pendiente';
         }else if(this.actividad.estado == 1){
           this.actividad.estadoStr == 'Completado';
+        } else {
+          this.actividad.estadoStr == 'En Proceso';
         }
         console.log(this.actividad.estado);
       }
