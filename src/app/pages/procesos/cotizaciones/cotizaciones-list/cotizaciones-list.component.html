@@ -1,93 +1,61 @@
-<!--
-
-        <ngx-smart-modal #myModal identifier="myModal" [closable]="false" [escapable]="false"
-[dismissable]="false" customClass="modal-smart-95 modal-smart-top-25">
-        <div class="row">
-                <div class="col-md-4">
-                     <div class="content">
-                        <mat-form-field appearance="outline">
-                                <mat-label>Outline form field</mat-label>
-                                <input matInput placeholder="Placeholder">
-                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                        </mat-form-field>
-                     </div>   
-                </div>
-                <div class="col-md-4">
-                     <div class="content">
-                        <mat-form-field appearance="outline">
-                                <mat-label>Outline form field</mat-label>
-                                <input matInput placeholder="Placeholder">
-                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                        </mat-form-field>
-                     </div>   
-                </div>
-                <div class="col-md-4">
-                        <div class="content">
-                                <mat-form-field appearance="outline">
-                                        <mat-label>Outline form field</mat-label>
-                                        <input matInput placeholder="Placeholder">
-                                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                                </mat-form-field>
-                        </div>   
-                </div>
-        </div>
-        <button mat-raised-button color="warn" (click)="myModal.close()">Close</button>
-</ngx-smart-modal>
-(click)="ngxSmartModalService.getModal('myModal').open()"
--->
-
-
 <div *ngIf="data" fxLayout="row wrap">
 	<div fxFlex="100" class="flex-p">
 		<mat-card class="p-0 list">
 			<mat-sidenav-container>
 				<div>
-					<mat-toolbar
-						style="background-image: url('../../../../../assets/img/circles3.png');background-size: cover;background-repeat: no-repeat; color: white"
-						fxLayout="row" fxLayoutAlign="space-between center">
+					<div style="padding: 5px;" class="back-gradient-dark-blue text-white" fxLayout="row"
+						fxLayoutAlign="space-between center">
 						<div fxLayout="row" fxLayoutAlign="start center">
-							<button (click)="openForm()" mat-flat-button style="background-color: #49be7c; color: #fff">
-								<mat-icon>add_circle</mat-icon>&nbsp; Nuevo Cotizacion
+							<button class="btn btn-sm btn-light text-success" (click)="openForm()">
+								<i class="fa fa-plus"></i>&nbsp; Nuevo Cotizacion
 							</button>
 						</div>
-					</mat-toolbar>
+					</div>
+
 					<div class="list-content" perfectScrollbar>
-						<p-table #dt  [columns]="cols" [value]="data" [paginator]="true" [rows]="9">
+						<p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="9">
 							<ng-template pTemplate="caption">
-								<div style="text-align: right">        
+								<div style="text-align: right">
 									<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-									<input class="input-filter" type="text" pInputText size="50" placeholder="Buscar por..." (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+									<input class="input-filter" type="text" pInputText size="50"
+										placeholder="Buscar por..."
+										(input)="dt.filterGlobal($event.target.value, 'contains')"
+										style="width:auto">
 								</div>
 							</ng-template>
 							<ng-template pTemplate="header" let-columns>
-								<tr class="bg">
-									<th *ngFor="let col of columns">
-										{{col.header}}
-									</th>
-								</tr>
-							</ng-template>
-							<ng-template pTemplate="body" let-rowData let-columns="columns">
-								<tr [pSelectableRow]="rowData">
-									<td>
-										{{rowData.codigo}}
+									<tr>
+									  <th class="text-center" *ngFor="let col of columns" [ngStyle]="{'width': getStyle(col.width)}">
+									    {{col.header}}
+									  </th>
+									</tr>
+								   </ng-template>
+							<ng-template pTemplate="body" let-item let-columns="columns">
+								<tr [pSelectableRow]="item">
+									<td class="text-center">
+										{{item.codigo}}
 									</td>
 									<td>
-										{{rowData.fkEmpresa.nombreEmpresa}}	
+										{{item.fkEmpresa.nombreEmpresa}}
 									</td>
 									<td>
-										{{rowData.fkCliente.nombre}}	
+										{{item.fkCliente.nombre}}
 									</td>
 									<td>
-										{{rowData.vigencia}}	
+										{{item.vigencia}}
 									</td>
 									<td>
-										{{rowData.entrega}}	
+										{{item.entrega}}
 									</td>
 									<td>
-										{{rowData.condicionPago}}	
+										{{item.condicionPago}}
 									</td>
 									<td>
-										{{rowData.responsable}}	
+										{{item.responsable}}
+									</td>
+									<td class="text-center">
+										<div *ngIf="item.estado == 0" class="badge badge-success">activo</div>
+										<div *ngIf="item.estado == 1" class="badge badge-warning">ordenada</div>
 									</td>
 								</tr>
 							</ng-template>

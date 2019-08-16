@@ -3,7 +3,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
 import { MenuService } from '../menu.service';
-
 @Component({
   selector: 'app-vertical-menu',
   templateUrl: './vertical-menu.component.html',
@@ -17,12 +16,16 @@ export class VerticalMenuComponent implements OnInit {
   @Output() onClickMenuItem:EventEmitter<any> = new EventEmitter<any>();
   parentMenu:Array<any>;
   public settings: Settings;
+  public usuario : any;
+  public roles: Array<any> = [];
   constructor(public appSettings:AppSettings, public menuService:MenuService, public router:Router) { 
     this.settings = this.appSettings.settings;
   }
 
   ngOnInit() {     
     this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);  
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.roles = this.usuario.roles
   }
 
   ngAfterViewInit(){

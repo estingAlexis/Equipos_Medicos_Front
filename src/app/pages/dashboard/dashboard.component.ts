@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.settings.tipoColor = 0;
   }
 
 }

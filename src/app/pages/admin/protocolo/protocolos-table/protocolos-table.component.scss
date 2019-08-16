@@ -12,11 +12,12 @@
     border-bottom: 0.5px solid #ccc;
     background-color: #fff !important;
     text-align: center;
-}
-
-.tbody:hover{
+    padding: 2px;
+  }
+  
+  .tbody:hover{
     color: #690000;
-}
+  }
 
 .bg th{
     color:  #49be7c;
@@ -33,4 +34,17 @@
 
 .tbody-color::ng-deep td {
     //background-color: #ccc !important;
+}
+
+.mat-form-field {
+    width:100% !important;
+}
+
+.mat-form-field textarea {
+    height: 70px;
+}
+
+hr {
+    margin-top: 0;
+    border: 1px solid #8080802b;
 }

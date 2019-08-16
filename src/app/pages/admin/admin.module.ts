@@ -17,7 +17,6 @@ import { AppService } from 'src/app/services/app.service';
 import { ActividadesTableComponent } from './actividades/actividades-table/actividades-table.component';
 import {TableModule} from 'primeng/table';
 import {ListComponent} from './actividades/list/list.component';
-import { ProcoloslistComponent } from './protocolo/procolos-list/procolos-list.component';
 import { ProtocolosTableComponent } from './protocolo/protocolos-table/protocolos-table.component';
 import {TooltipModule} from 'primeng/tooltip';
 import {DialogModule} from 'primeng/dialog';
@@ -25,13 +24,24 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import { InstrumentosListComponent } from './instrumentos/instrumentos-list/instrumentos-list.component';
-import { InstrumentosTableComponent } from './instrumentos/instrumentos-table/instrumentos-table.component';
 import { EquiposListComponent } from './equipos/equipos-list/equipos-list.component';
-import { EquiposTableComponent } from './equipos/equipos-table/equipos-table.component';
 import { ClientesListComponent } from './clientes/clientes-list/clientes-list.component';
 import { ActividadesFormComponent } from './actividades/actividades-form/actividades-form.component';
-import { EquiposFormComponent } from './equipos/equipos-form/equipos-form.component';
 import {PaginatorModule} from 'primeng/paginator';
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
+import {MatIconModule} from '@angular/material/icon';
+import { DropdownModule } from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { SpinnerModule } from 'primeng/spinner';
+import { TecnicosComponent } from './tecnicos/tecnicos.component';
+import { TecnicosTableComponent } from './tecnicos/tecnicos-table/tecnicos-table.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatDatepickerModule, MatInputModule } from '@angular/material';
+/*import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxDaterangepickerMd } from 'ngx-datepicker-material';*/
+import {CalendarModule as pCalendar} from 'primeng/calendar';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 export const routes = [
   { path: '', component: AdminComponent, pathMatch: 'full' },
   { path: 'actividades', component: ActividadesComponent, data: { breadcrumb: 'Actividades' }},
@@ -39,7 +49,8 @@ export const routes = [
   { path: 'instrumentos', component: InstrumentosComponent, data: { breadcrumb: 'Instrumentos' }},
   { path: 'equipos', component: EquiposComponent, data: { breadcrumb: 'Equipos' }},
   { path: 'clientes', component: ClientesComponent, data: { breadcrumb: 'Clientes' }},
-  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' }}
+  { path: 'form', component: ActividadesFormComponent, data: { breadcrumb: 'Clientes' }},
+  { path: 'tecnicos', component: TecnicosComponent, data: { breadcrumb: 'Tecnicos' }}
 ];
 
 @NgModule({
@@ -59,7 +70,19 @@ export const routes = [
     CardModule,
     ButtonModule,
     InputTextModule,
-    PaginatorModule
+    PaginatorModule,
+    NgxSmartModalModule,
+    MatIconModule,
+    DropdownModule,
+    InputTextareaModule,
+    SpinnerModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    ToastrModule.forRoot(),
+    /*NgxMaterialTimepickerModule,
+    NgxDaterangepickerMd,*/
+    pCalendar,
   ],
   declarations: [
     AdminComponent,
@@ -70,18 +93,18 @@ export const routes = [
     ClientesComponent,
     ActividadesTableComponent,
     ListComponent,
-    ProcoloslistComponent,
     ProtocolosTableComponent,
     InstrumentosListComponent,
-    InstrumentosTableComponent,
     EquiposListComponent,
-    EquiposTableComponent,
     ClientesListComponent,
     ActividadesFormComponent,
-    EquiposFormComponent
+    TecnicosComponent,
+    TecnicosTableComponent
   ],
   providers: [
-    AppService
+    AppService,
+    NgxSmartModalService,
+    ToastrService
   ]
 })
 export class AdminModule { }

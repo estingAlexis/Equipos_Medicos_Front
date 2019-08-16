@@ -4,25 +4,23 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { Usuario } from '../models/usuario';
+import { Usuario, UsuarioLogin } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-
-  //public url = 'http://impuestos.local/api/v1/';
   public url = 'http://localhost:5000/rest/v1/';
   public publicUrl = 'http://localhost:5000/';
-  //public url = 'http://backend.tributo.co/rest/v1/';
   private token = '';
   private httpOptions;
-
+  private httpMultipartOption;
   constructor(private http: HttpClient, private auth: AuthService, private router: Router) { this.getHeaders(); }
 
   getHeaders() {
     this.token = sessionStorage.getItem('token');
     this.httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.token }) };
+    this.httpMultipartOption = { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + this.token }) }
   }
 
   clearSession() {
@@ -59,7 +57,7 @@ export class AppService {
     this.clearSession();
   }
 
-  login(usuario: Usuario): Observable<any> {
+  login(usuario: UsuarioLogin): Observable<any> {
     const credenciales = btoa('angularapp' + ':' + '12345');
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -72,281 +70,51 @@ export class AppService {
     return this.http.post<any>(this.publicUrl.concat('oauth/token'), params.toString(), { headers: httpHeaders });
   }
 
-  getFormIoData() {
+  subirImagen(Archivo: File, id): Observable<any> {
+    if (this.auth.isAuthenticated()) {
+      if (!this.auth.isTokenExpired()) {
+        this.getHeaders();
+        let formData = new FormData();
+        formData.append('file', Archivo);
+        formData.append('id', id);
+        return this.http.post<any>(`${this.url}upload`, formData, this.httpMultipartOption);
+      }
+    }
+    this.clearSession();
+  }
+
+  inpustCalendarLenguaje() {
     return {
-      "components": [
-        {
-          "input": false,
-          "columns": [
-            {
-              "components": [
-                {
-                  "tabindex": "1",
-                  "tags": [],
-                  "clearOnHide": true,
-                  "hidden": false,
-                  "input": true,
-                  "tableView": true,
-                  "inputType": "text",
-                  "inputMask": "",
-                  "label": "Cliente",
-                  "key": "cliente",
-                  "placeholder": "Nombre del Cliente",
-                  "prefix": "",
-                  "suffix": "",
-                  "multiple": false,
-                  "defaultValue": "",
-                  "protected": false,
-                  "unique": false,
-                  "persistent": true,
-                  "validate": {
-                    "required": true,
-                    "minLength": "",
-                    "maxLength": "",
-                    "pattern": "",
-                    "custom": "",
-                    "customPrivate": false
-                  },
-                  "conditional": {
-                    "show": "",
-                    "when": null,
-                    "eq": ""
-                  },
-                  "type": "textfield"
-                },
-                {
-                  "tabindex": "3",
-                  "tags": [],
-                  "clearOnHide": true,
-                  "hidden": false,
-                  "input": true,
-                  "tableView": true,
-                  "inputType": "email",
-                  "label": "Email",
-                  "key": "email",
-                  "placeholder": "Enter your email address",
-                  "prefix": "",
-                  "suffix": "",
-                  "defaultValue": "",
-                  "protected": false,
-                  "unique": false,
-                  "persistent": true,
-                  "type": "email",
-                  "conditional": {
-                    "show": "",
-                    "when": null,
-                    "eq": ""
-                  },
-                  "kickbox": {
-                    "enabled": false
-                  }
-                }
-              ]
-            },
-            {
-              "components": [
-                {
-                  "tabindex": "2",
-                  "tags": [],
-                  "clearOnHide": true,
-                  "hidden": false,
-                  "input": true,
-                  "tableView": true,
-                  "inputType": "text",
-                  "inputMask": "",
-                  "label": "Last Name",
-                  "key": "lastName",
-                  "placeholder": "Enter your last name",
-                  "prefix": "",
-                  "suffix": "",
-                  "multiple": false,
-                  "defaultValue": "",
-                  "protected": false,
-                  "unique": false,
-                  "persistent": true,
-                  "validate": {
-                    "required": true,
-                    "minLength": "",
-                    "maxLength": "",
-                    "pattern": "",
-                    "custom": "",
-                    "customPrivate": false
-                  },
-                  "conditional": {
-                    "show": "",
-                    "when": null,
-                    "eq": ""
-                  },
-                  "type": "textfield"
-                },
-                {
-                  "tabindex": "4",
-                  "tags": [],
-                  "clearOnHide": true,
-                  "hidden": false,
-                  "input": true,
-                  "tableView": true,
-                  "inputMask": "(999) 999-9999",
-                  "label": "Phone Number",
-                  "key": "phoneNumber",
-                  "placeholder": "Enter your phone number",
-                  "prefix": "",
-                  "suffix": "",
-                  "multiple": false,
-                  "protected": false,
-                  "unique": false,
-                  "persistent": true,
-                  "defaultValue": "",
-                  "validate": {
-                    "required": true
-                  },
-                  "type": "phoneNumber",
-                  "conditional": {
-                    "show": "",
-                    "when": null,
-                    "eq": ""
-                  }
-                }
-              ]
-            }
-          ],
-          "type": "columns",
-          "conditional": {
-            "show": "",
-            "when": null,
-            "eq": ""
-          }
-        },
-        {
-          "tabindex": "5",
-          "tags": [],
-          "clearOnHide": true,
-          "hidden": false,
-          "input": true,
-          "tableView": true,
-          "label": "Survey",
-          "key": "survey",
-          "questions": [
-            {
-              "value": "howWouldYouRateTheFormIoPlatform",
-              "label": "How would you rate the Form.io platform?"
-            },
-            {
-              "value": "howWasCustomerSupport",
-              "label": "How was Customer Support?"
-            },
-            {
-              "value": "overallExperience",
-              "label": "Overall Experience?"
-            }
-          ],
-          "values": [
-            {
-              "value": "excellent",
-              "label": "Excellent"
-            },
-            {
-              "value": "great",
-              "label": "Great"
-            },
-            {
-              "value": "good",
-              "label": "Good"
-            },
-            {
-              "value": "average",
-              "label": "Average"
-            },
-            {
-              "value": "poor",
-              "label": "Poor"
-            }
-          ],
-          "defaultValue": "",
-          "protected": false,
-          "persistent": true,
-          "validate": {
-            "required": false,
-            "custom": "",
-            "customPrivate": false
-          },
-          "type": "survey",
-          "conditional": {
-            "show": "",
-            "when": null,
-            "eq": ""
-          }
-        },
-        {
-          "tabindex": "6",
-          "conditional": {
-            "eq": "",
-            "when": null,
-            "show": ""
-          },
-          "tags": [],
-          "input": true,
-          "label": "Submit",
-          "tableView": false,
-          "key": "submit",
-          "size": "sm",
-          "leftIcon": "",
-          "rightIcon": "",
-          "block": false,
-          "action": "submit",
-          "disableOnInvalid": true,
-          "theme": "primary",
-          "type": "button"
-        }
-      ],
-      "owner": "554806425867f4ee203ea861",
-      "submissionAccess": [
-        {
-          "type": "create_all",
-          "roles": []
-        },
-        {
-          "type": "read_all",
-          "roles": []
-        },
-        {
-          "type": "update_all",
-          "roles": []
-        },
-        {
-          "type": "delete_all",
-          "roles": []
-        },
-        {
-          "type": "create_own",
-          "roles": [
-            "5692b920d1028f01000407e6"
-          ]
-        },
-        {
-          "type": "read_own",
-          "roles": []
-        },
-        {
-          "type": "update_own",
-          "roles": []
-        },
-        {
-          "type": "delete_own",
-          "roles": []
-        }
-      ],
-      "access": [
-        {
-          "type": "read_all",
-          "roles": [
-            "5692b920d1028f01000407e4",
-            "5692b920d1028f01000407e5",
-            "5692b920d1028f01000407e6"
-          ]
-        }
-      ],
-      "tags": []
+      //date
+      closeText: "Cerrar",
+      prevText: "<Ant",
+      nextText: "Sig>",
+      currentText: "Hoy",
+      monthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun",
+        "jul", "ago", "sep", "oct", "nov", "dic"],
+      dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+      dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+      weekHeader: "Sm",
+      dateFormat: "dd/mm/yy",
+      firstDay: 1,
+      isRTL: false,
+      showMonthAfterYear: false,
+      yearSuffix: "",
+      timeOnlyTitle: 'Elegir una hora',
+      timeText: 'Hora',
+      hourText: 'Horas',
+      minuteText: 'Minutos',
+      secondText: 'Segundos',
+      millisecText: 'Milisegundos',
+      microsecText: 'Microsegundos',
+      timezoneText: 'Uso horario',
+      timeFormat: 'HH:mm',
+      timeSuffix: '',
+      amNames: ['a.m.', 'AM', 'A'],
+      pmNames: ['p.m.', 'PM', 'P'],
     }
   }
 

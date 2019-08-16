@@ -31,28 +31,32 @@ export class CotizacionesListComponent implements OnInit {
     public ngxSmartModalService: NgxSmartModalService) { 
       this.settings = this.appSettings.settings;
       this.cols = [
-        { field: 'codigo', header: 'Codigo' },
-        { field: 'fkEmpresa', header: 'Empresa' },
-        { field: 'fkCliente', header: 'Cliente' },
-        { field: 'vigencia', header: 'Vigencia' },
-        { field: 'entrega', header: 'Entrega' },
-        { field: 'condicionPago', header: 'Condicion de Pago' },
-        { field: 'responsable', header: 'Responsable' }
+        { field: 'codigo', header: 'Codigo', width: '10%' },
+        { field: 'fkEmpresa', header: 'Empresa',width: '20%' },
+        { field: 'fkCliente', header: 'Cliente',width: '20%' },
+        { field: 'vigencia', header: 'Vigencia',width: '10%' },
+        { field: 'entrega', header: 'Entrega',width: '10%' },
+        { field: 'condicionPago', header: 'Condicion de Pago',width: '10%' },
+        { field: 'responsable', header: 'Responsable',width: '10%' },
+        { field: 'estado', header: 'Estado',width: '10%' }
     ];
     }
   ngOnInit() {
     this.getCotizaciones();
   }
   public getCotizaciones(){
+    this.settings.loadingSpinner = true;
     this._AppService.get('cotizaciones/list').subscribe(
-      (data:any) => {console.log(data); this.data = data}
+      (data:any) => {console.log(data); this.data = data; this.settings.loadingSpinner = false;}
     );
   }
-  openForm() {
+  public openForm() {
     this.setidcot.emit(this.data.length);
   }
-
   public getImg(imgNombre: string): string{
     return '../../../../../assets/img/'+imgNombre;
+  }
+  public getStyle(style: string) {
+    return style.toString();
   }
 }

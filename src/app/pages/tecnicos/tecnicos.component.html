@@ -3,7 +3,7 @@
         <div class="content">
             <mat-form-field appearance="outline">
                 <mat-label>Cliente</mat-label>
-                <mat-select placeholder="Select" [(ngModel)]="idCliente" (selectionChange)="getCotizacionesDetalles()">
+                <mat-select placeholder="Select" [(ngModel)]="idCliente" (selectionChange)="getDetalles()">
                     <mat-option *ngFor="let item of clientes" [value]="item.idCliente">{{item.nombre}}</mat-option>
                 </mat-select>
                 <mat-icon matSuffix>account_box</mat-icon>
@@ -13,7 +13,7 @@
 
     <div *ngIf="detalles.length > 0 && idCliente != null" fxFlex="50" class="flex-p">
         <div class="content">
-            <div class="alert alert-success"><i class="fa fa-info-circle text-25"></i> # de Ordenes:
+            <div class="alert alert-success"><i class="fa fa-info-circle text-25"></i> # de Mantenimientos:
                 {{detalles.length}}, revise el Calendario</div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                             <mat-icon *ngIf="!settings.rtl">chevron_right</mat-icon>
                         </button>
                     </div>
-                    <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
+                    <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h4>
                     <div class="">
                         <button mat-icon-button (click)="view = 'month'">
                             <mat-icon>view_comfy</mat-icon>
@@ -63,21 +63,18 @@
                         <button mat-icon-button (click)="view = 'day'">
                             <mat-icon>view_day</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="openScheduleDialog(null)">
-                            <mat-icon>add</mat-icon>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <div [ngSwitch]="view">
-                <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+                <mwl-calendar-month-view locale="es" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
                     [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)">
                 </mwl-calendar-month-view>
-                <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
+                <mwl-calendar-week-view locale="es" *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
                     [refresh]="refresh">
                 </mwl-calendar-week-view>
-                <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
+                <mwl-calendar-day-view locale="es" *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
                     [refresh]="refresh">
                 </mwl-calendar-day-view>
             </div>
@@ -94,9 +91,7 @@
                     <div class="row">
                         <div class="col-md-3"><h5 class="text-primary">Reporte Tecnico #: {{codigoReporte}}</h5></div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-3"><img style="width: 150px; height: 50px; float: right" [src]="imgLogo" alt="logo"></div>
-                        
-                        
+                        <div class="col-md-3"><img style="width: 150px; height: 50px; float: right" [src]="imgLogo" alt="logo"></div>                
                     </div>
                     <hr class="my-2">
                     <form class="form-text">

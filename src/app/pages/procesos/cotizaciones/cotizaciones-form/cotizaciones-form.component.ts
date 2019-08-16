@@ -55,6 +55,7 @@ export class CotizacionesFormComponent implements OnInit {
   public panelOpenState = false;
   public alowed: boolean;
   public cols: any[];
+  public usuario: any;
   constructor(
     public appSettings: AppSettings,
     private _AppService: AppService,
@@ -72,6 +73,7 @@ export class CotizacionesFormComponent implements OnInit {
     ];
   }
   ngOnInit() {
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
     this._AppService.get('cotizacionDetalle/list').subscribe(data => { console.log(data) });
     this.getClientes();
     this.getEquipos();
@@ -80,10 +82,10 @@ export class CotizacionesFormComponent implements OnInit {
 
     this.datos = this._formBuilder.group({
       idCliente: ['', Validators.compose([Validators.required])],
-      resp: ['', Validators.compose([Validators.required])],
       cp: ['', Validators.compose([Validators.required])],
       viatico: ['', Validators.compose([Validators.required])],
       fecha: ['', Validators.compose([Validators.required])],
+      iva: ['', Validators.compose([Validators.required])],
     });
     this.datos.valueChanges.subscribe(() => {
       this.datoschanged = true;
@@ -124,15 +126,13 @@ export class CotizacionesFormComponent implements OnInit {
   public getClientes() {
     this._AppService.get('clientes/list').subscribe(
       (data: any) => {
-        console.log(data);
         this.clientes = data;
       }
     );
   }
   public getEquipos() {
-    this._AppService.get('equipos/list').subscribe(
+    this._AppService.get('equipos/list/activos').subscribe(
       (data: any) => {
-        console.log(data);
         this.equipos = data;
       }
     );
@@ -140,42 +140,34 @@ export class CotizacionesFormComponent implements OnInit {
   public getParametros() {
     this._AppService.get('parametro/filtro_empresa_grupo/' + this.idEmpresa + '/13').subscribe(
       (data: any) => {
-        console.log(data);
         this.parametros = data;
       }
     );
     this._AppService.get('parametro/filtro_empresa_parametro/' + this.idEmpresa + '/153').subscribe(
       (data: any) => {
-        console.log(data);
         this.consecutivo = data;
       }
     );
     this._AppService.get('parametro/filtro_empresa_parametro/' + this.idEmpresa + '/162').subscribe(
       (data: any) => {
-        console.log(data);
         this.iva = data;
       }
     );
   }
   public getDate() {
     this.fechaentrega = this.datePipe.transform(this.datos.value.fecha, 'yyyy-MM-dd');
-    console.log(this.fechaentrega);
   }
   public addEquipo(data: any, index: number) {
     this.equiposSelected.push(new Equipo(data.idEquipos, data.nombre, 0, 0, 0));
-    console.log(this.equiposSelected, index);
     this.equipos.splice(index, 1);
   }
   public agregarValorUnidad(index: number, event: any) {
-    console.log(index, event);
     this.equiposSelected[index].valoru = event;
   }
   public agregarCantidad(index: number, event: any) {
-    console.log(index, event);
     this.equiposSelected[index].cant = event
   }
   public agregarCalibracion(index: number, event: any) {
-    console.log(index, event);
     this.equiposSelected[index].calibracion = event;
   }
   public goBack() {
@@ -200,7 +192,6 @@ export class CotizacionesFormComponent implements OnInit {
       "tipoServicio": 0,
       "valorUnitario": valoru
     }
-    console.log(detalles);
     this._AppService.post('cotizacionDetalle/new', detalles).subscribe(
       data => { console.log(data) }
     );
@@ -227,27 +218,25 @@ export class CotizacionesFormComponent implements OnInit {
         if (result.value) {
             this.settings.loadingSpinner = true;
             let datos = this.datos.value;
-            console.log(datos);
             let consecutivo = parseInt(this.consecutivo[0].codigo);
             consecutivo = consecutivo + this.idCot + 1;
             let contizacion = {
               "idCotizEncab": this.idCot + 1,
               "fechaSistema": "2019-01-01T00:00:00.000+0000",
-              "codigo": String(this.consecutivo[0].nombreCorto + consecutivo),
+              "codigo": String(this.consecutivo[0].nombreCorto + this.consecutivo[0].valor+ this.idCot),
               "fecha": this.datePipe.transform(datos.fecha, 'yyyy-MM-dd'),
               "viaticoValor": datos.viatico,
-              "viaticoIva": this.iva[0].valor,
+              "viaticoIva": datos.iva,
               "vigencia": "30",
               "entrega": this.fechaentrega,
               "garantiaDf": "0",
               "garantiaMo": "0",
               "condicionPago": datos.cp,
-              "responsable": datos.resp,
+              "responsable": this.usuario.nombre,
               "estado": 0,
               "fkCliente": datos.idCliente,
               "fkEmpresa": this.idEmpresa
             }
-            console.log(contizacion);
             this._AppService.post('cotizaciones/new', contizacion).subscribe(
               (data: any) => {
                 for (let index = 0; index < this.equiposSelected.length; index++) {
@@ -259,7 +248,6 @@ export class CotizacionesFormComponent implements OnInit {
                     this.idCot + 1, this.equiposSelected[index].valoru);
                 }
                 this.settings.loadingSpinner = false;
-                console.log(data);
                 Swal.fire({
                   type: 'success',
                   title: 'Grandioso',
@@ -278,5 +266,11 @@ export class CotizacionesFormComponent implements OnInit {
     }else{
       Swal.fire({type: 'error', text: 'debe ingresar los valores', timer: 2000}) 
     }
+  }
+  public openModal(){
+    this.ngxSmartModalService.getModal('myModal').open();
+  }
+  public closeModal(){
+    this.ngxSmartModalService.getModal('myModal').close();
   }
 }

@@ -5,7 +5,9 @@ import { MenuService } from '../menu/menu.service';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario';
-
+import { Router } from '@angular/router';
+import { APP } from 'src/app/services/constants';
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -15,17 +17,33 @@ import { Usuario } from 'src/app/models/usuario';
 })
 export class SidenavComponent implements OnInit {
   @ViewChild('sidenavPS') sidenavPS: PerfectScrollbarComponent;
-  public userImage= '../assets/img/ana.jpg';
   public usuario : any;
+  public roles: any;
   public menuItems:Array<any>;
-  public settings: Settings;
-  constructor(public appSettings:AppSettings, public menuService:MenuService, private authService: AuthService){
+  public settings: any;
+  public idUser: any;
+  public urlImages = APP.UrlImages;
+  public nombreFoto;
+  constructor(
+    private router: Router, 
+    public appSettings:AppSettings, 
+    public menuService:MenuService, 
+    private authService: AuthService, 
+    private appService:AppService){
       this.settings = this.appSettings.settings; 
   }
 
   ngOnInit() {
     this.menuItems = this.menuService.getVerticalMenuItems();
-    this. usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.roles = this.usuario.roles[0];
+    this.idUser = this.usuario.id;
+    this.getDataUser(this.idUser);
+  }
+
+  public cerrarSession(){
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   public closeSubMenus(){
@@ -41,6 +59,16 @@ export class SidenavComponent implements OnInit {
         }
       }
     }
+  }
+
+  getDataUser(id:any){
+    this.appService.get(`usuarios/${id}`).subscribe(
+      result=>{
+        this.nombreFoto = result['foto'];
+        this.settings.img = result['foto'];
+      }
+    );
+
   }
 
   public updatePS(e){

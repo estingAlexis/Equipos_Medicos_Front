@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
-import {Slide} from '../../../constants';
+import {Slide} from '../../../services/constants';
 @Component({
   selector: 'app-actividades',
   templateUrl: './actividades.component.html',

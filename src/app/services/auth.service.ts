@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Usuario } from '../models/usuario';
+import { Usuario } from './usuario';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -55,12 +55,13 @@ export class AuthService {
     this._token = access_token;
     sessionStorage.setItem('token', access_token);
     let payload = this.obtenerDatosToken(access_token);
+    console.log(payload);
     this._usuario = new Usuario();
     this._usuario.id = payload.id;
     this._usuario.nombre = payload.nombre;
     this._usuario.apellido = payload.apellido;
     this._usuario.email = payload.email;
-    this._usuario.entidad = payload.entidad;
+    this._usuario.empresa = payload.empresa;
     this._usuario.username = payload.user_name;
     this._usuario.roles  = payload.authorities;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));

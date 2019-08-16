@@ -10,7 +10,7 @@ import { SeguridadComponent } from './seguridad.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { PerfilesComponent } from './perfiles/perfiles.component';
 import { MenuComponent } from './menu/menu.component';
-
+import {TableModule} from 'primeng/table';
 export const routes = [
   { path: '', component: SeguridadComponent, pathMatch: 'full' },
   { path: 'usuarios', component: UsuariosComponent },
@@ -27,7 +27,8 @@ export const routes = [
     PerfectScrollbarModule,
     QuillModule,
     SharedModule,
-    PipesModule
+    PipesModule,
+    TableModule
   ],
   declarations: [
     SeguridadComponent,

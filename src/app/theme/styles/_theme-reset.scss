@@ -57,7 +57,9 @@
     .active-link{
         border-radius: 0;
         //background-color: mat-color($primary);
-        background-color: #49be7c;
+        //background-color: #49be7c;
+        background: linear-gradient(to right, #141e30, #243b55);
+        background: -webkit-linear-gradient(to right, #141e30, #243b55);
         color: #fff;
     }
     .warn-color{

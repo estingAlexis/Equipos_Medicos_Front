@@ -17,6 +17,36 @@ $color-overlay: rgba(0, 0, 0, .8);
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import "app/app.component";
 
+
+
+
+.pointer{
+  cursor: pointer;
+}
+.btnp{
+  padding: 5px;
+}
+.back-gradient{
+  background: linear-gradient(to right, #44a08d, #093637); 
+  background: -webkit-linear-gradient(to right, #44a08d, #093637);
+}
+.back-gradient-gray{
+  background: linear-gradient(to right, #2c3e50, #bdc3c7);
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+}
+.back-gradient-teal-gray{
+  background: linear-gradient(to right, #808080, #3fada8);
+  background: -webkit-linear-gradient(to right, #808080, #3fada8);
+}
+.back-gradient-dark-blue{
+  background: linear-gradient(to right, #141e30, #243b55);
+  background: -webkit-linear-gradient(to right, #141e30, #243b55);
+}
+.back-gradient-light-purple{
+  background: linear-gradient(to right, #2c3e50, #2980b9);
+  background: -webkit-linear-gradient(to right, #2c3e50, #2980b9);
+}
+
 .form-text{
   font-family: Verdana, Geneva, Tahoma, sans-serif
 }

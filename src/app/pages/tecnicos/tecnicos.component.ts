@@ -60,7 +60,7 @@ export class TecnicosComponent implements OnInit {
   actividades: Array<Actividad>;
   acts: Array<any>;
   idCliente: number;
-  codigoReporte: number;
+  codigoReporte: string;
   clienteSelected: any;
   equipoSelected: any;
   tecnicoSelected: any;
@@ -75,6 +75,10 @@ export class TecnicosComponent implements OnInit {
   datoschanged: boolean = true;
   allowed: boolean;
   detalleSelected: any;
+  usuario : any;
+  roles: string;
+  es: any;
+  tecnico: any;
   actions: CalendarEventAction[] = [{
     label: '<i class="material-icons icon-sm text-primary">visibility</i>',
     onClick: ({ event }: { event: CalendarEvent }): void => { this.detalleSelected = this.detalles[event.id], this.openScheduleDialog(), this.settings.sidenavUserBlock = true }
@@ -126,7 +130,6 @@ export class TecnicosComponent implements OnInit {
       console.log(this.datoschanged);
     });
   }
-
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -140,59 +143,69 @@ export class TecnicosComponent implements OnInit {
       return true;
     }
   }
-
   ngOnInit() {
-    //this.getCotizacionesDetalles();    
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
+    this.roles = this.usuario.roles[0];
     this.getClientes();
+    this.getTecnico();
   }
-
-  getCotizacionesDetalles() {
-    this.settings.loadingSpinner = true;
-    this._AppService.get('ordenesDetalle/res/3/' + this.idCliente).subscribe(
-      (data: any) => { console.log(data), this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
-      error => { console.log(error); this.settings.loadingSpinner = false; }
+  getTecnico(){
+    this._AppService.get('tecnicos/responsable/'+this.usuario.id).subscribe(
+      (data: any) => {this.tecnico = data}
     );
   }
-
+  getDetalles(){
+    if(this.roles == 'ROLE_ADMIN'){
+      this.getCotizacionesDetallesByIdCliente();
+    }else{
+      this.getCotizacionesDetalles();
+    }
+  }
+  getCotizacionesDetallesByIdCliente() {
+    this.settings.loadingSpinner = true;
+    this._AppService.get('ordenesDetalle/cliente/'+this.idCliente).subscribe(
+      (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
+      error => { this.settings.loadingSpinner = false; }
+    );
+  }
+  getCotizacionesDetalles() {
+    this.settings.loadingSpinner = true;
+    this._AppService.get('ordenesDetalle/res/'+ this.tecnico.idTecnico +'/'+ this.idCliente).subscribe(
+      (data: any) => { this.detalles = data, this.setDates(); this.settings.loadingSpinner = false; },
+      error => { this.settings.loadingSpinner = false; }
+    );
+  }
   getClientes() {
     this._AppService.get('clientes/list').subscribe(
       (data: any) => {
-        console.log(data);
         this.clientes = data;
       }
     );
   }
-
   setDates() {
-    if (this.detalles.length == 0) {
-      this.events = [];
-      this.refresh.next();
-    } else {
-      this.events = [];
-      for (let index = 0; index < this.detalles.length; index++) {
-        let item = this.detalles[index];
-        let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'yyyy-MM-dd'));
-        this.info.idDetalle = index;
-        this.info.equipo = item.fkEquipos.nombre;
-        this.info.responsable = item.fkResponsable.nombre;
-        this.idDetalle = item.idOrdenesDetalle;
-        this.events.push({
-          id: index,
-          start: new Date(fecha),
-          title: item.fkEquipos.nombre,
-          color: this.setColors(item.estadoReporte),
-          actions: this.setActions(item.estadoReporte),
-        }
-        );
+    this.events = [];
+    for (let index = 0; index < this.detalles.length; index++) {
+      let item = this.detalles[index];
+      let fecha = new Date(this.datePipe.transform(item.fechaProgramada, 'yyyy-MM-dd'));
+      this.info.idDetalle = index;
+      this.info.equipo = item.fkEquipos.nombre;
+      this.info.responsable = item.fkResponsable.nombre;
+      this.idDetalle = item.idOrdenesDetalle;
+      this.events.push({
+        id: index,
+        start: new Date(fecha),
+        title: item.fkEquipos.nombre,
+        color: this.setColors(item.estadoReporte),
+        actions: this.setActions(item.estadoReporte),
       }
+      );
     }
     this.refresh.next();
   }
-
   setActions(estado: number): CalendarEventAction[] {
     switch (estado) {
       case 0:
-        return this.actions
+        if(this.roles == 'ROLE_ADMIN'){ return this.actions2 }else{ return this.actions }
         break;
       case 1:
         return this.actions2
@@ -201,7 +214,6 @@ export class TecnicosComponent implements OnInit {
         break;
     }
   }
-  
   setColors(estado: number): any {
     switch (estado) {
       case 0:
@@ -214,7 +226,6 @@ export class TecnicosComponent implements OnInit {
         break;
     }
   }
-
   getActividadesProtocolo(idDetalle: number) {
     let idPro = this.detalles[idDetalle].fkEquipos.fkProtocolo.idProtocolo;
     console.log(idPro);
@@ -222,12 +233,7 @@ export class TecnicosComponent implements OnInit {
       (data: any) => { console.log(data); this.setActividades(data); this.acts = data; this.form = true },
       error => { console.log(error) }
     );
-    this._AppService.get('parametro/filtro_empresa_grupo_parametro/1/0/154').subscribe(
-      (data: any) => { console.log(data); this.codigoReporte = parseInt(String(data[0].codigo)); },
-      error => { console.log(error)}
-    );
   }
-
   setActividades(data: any){
     this.actividades = [];
     for (let index = 0; index < data.length; index++) {
@@ -235,7 +241,6 @@ export class TecnicosComponent implements OnInit {
       this.actividades.push(new Actividad(item.idActividades, item.actividades, false)); 
     }
   }
-
   validarActividades(): boolean{
     for (let index = 0; index < this.actividades.length; index++) {
       let item = this.actividades[index];
@@ -247,17 +252,12 @@ export class TecnicosComponent implements OnInit {
     }
     return this.allowed;
   }
-
   getDataDetalle(idDetalle: number) {
     this.clienteSelected = this.detalles[idDetalle].fkCliente;
     this.equipoSelected = this.detalles[idDetalle].fkEquipos;
-    this.tecnicoSelected = this.detalles[idDetalle].fkResponsable;
+    this.tecnicoSelected = this.tecnico;
     this.ordenSelected = this.detalles[idDetalle].fkOrdenes.idOrdenes;
-    console.log(
-
-    );
   }
-
   dayClicked({ date, events }: { date: Date, events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
@@ -268,7 +268,6 @@ export class TecnicosComponent implements OnInit {
       }
     }
   }
-
   openScheduleDialog() {
     let dialogRef = this.dialog.open(ScheduleDialogComponent, {
       data: this.detalleSelected,
@@ -287,7 +286,6 @@ export class TecnicosComponent implements OnInit {
       }
     });
   }
-
   verReporte(idDetalle){
     swalWithBootstrapButtons.fire({
       text: 'Quiere ver el Reporte?',
@@ -300,13 +298,28 @@ export class TecnicosComponent implements OnInit {
       if (result.value) {
         this.getActividadesProtocolo(idDetalle);
         this.getDataDetalle(idDetalle);
+        this.getConsecutivoReporte(this.usuario.empresa.idEmpresa);
       } else if (
         result.dismiss === Swal.DismissReason.cancel
       ) {
       }
     })
   }
-
+  getConsecutivoReporte(idEmpresa){
+    let count: number;
+    this._AppService.get('ordenesDetalle/reportes/count/'+idEmpresa).subscribe(
+      (data: any) => {
+        console.log(data);
+        count = data;
+        this._AppService.get('parametro/filtro_empresa_grupo_parametro/'+idEmpresa+'/0/153').subscribe(
+          (data: any) => {
+            console.log(data);
+            this.codigoReporte = String(data[0].nombreCorto+data[0].valor+count); 
+          }
+        );
+      }
+    );
+  }
   generarReporte(){
     if(this.datos.valid){
       if(this.validarActividades() == true){
@@ -335,15 +348,15 @@ export class TecnicosComponent implements OnInit {
                 idDetalle: this.idDetalle,
                 informacionReporte: String(JSON.stringify(reporte))
               }
-              console.log(info);
               this._AppService.put('ordenesDetalle/reporte', info).subscribe(
-                (data: any) => { console.log(data);this.settings.loadingSpinner = false;
+                (data: any) => { this.settings.loadingSpinner = false;
                  this.datos.reset();
                  this.form = false;
-                 this.getCotizacionesDetalles();
+                 this.getDetalles();
+                 console.log(data)
                  Swal.fire({type: 'success', text: 'reporte generado', timer: 2000})
                 },
-                error => { console.log(error); this.settings.loadingSpinner = false;}
+                error => { this.settings.loadingSpinner = false;}
               );
           } else if (
             result.dismiss === Swal.DismissReason.cancel
@@ -355,7 +368,6 @@ export class TecnicosComponent implements OnInit {
       }
     }
   }
-
   goBack(){
     this.form = false;
   }
